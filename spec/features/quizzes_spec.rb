@@ -13,7 +13,7 @@ describe "Quiz" do
 
 
   describe "should increase quiz count" do
-    before { visit staffs_dashboard_path }
+    before { visit staffs_dashboard_index_path }
 
     it "by one" do
       expect do
@@ -33,7 +33,7 @@ describe "Quiz" do
     before do
       Quiz.destroy_all
       Question.destroy_all
-      visit staffs_dashboard_path
+      visit staffs_dashboard_index_path
       click_link "Create a New Quiz!"
       expect(page).to have_content "Editing Quiz"
     end
@@ -98,7 +98,7 @@ describe "Quiz" do
 
   describe "editing" do
     let!(:quiz) { create :quiz }
-    before { visit staffs_dashboard_path }
+    before { visit staffs_dashboard_index_path }
 
     it "should go link to show page" do
       click_link(quiz)

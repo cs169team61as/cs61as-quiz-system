@@ -37,7 +37,7 @@ module Staffs
       @lessons = Quiz::LESSON_VALUES
       if @quiz_form.validate_and_save quiz_params
         flash[:success] = "Updated #{@quiz}!"
-        redirect_to staffs_dashboard_path
+        redirect_to staffs_dashboard_index_path
       else
         render :edit
       end
@@ -45,7 +45,7 @@ module Staffs
 
     def destroy
       Quiz.destroy params[:id]
-      redirect_to staffs_dashboard_path, notice: 'Deleted quiz.'
+      redirect_to staffs_dashboard_index_path, notice: 'Deleted quiz.'
     end
 
     def show
