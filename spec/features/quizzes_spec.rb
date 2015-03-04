@@ -7,7 +7,7 @@ def fill_in_quiz_field(lesson, version)
 end
 
 describe "Quiz" do
-  let(:staff) { create :staff }
+  let(:staff) { create :staff, login: "cs61as-tzz" }
   subject { page }
   before { sign_in staff }
 
@@ -147,7 +147,6 @@ describe "Quiz" do
       let(:student) { create :student }
       let!(:taken_quiz) { create :taken_quiz, quiz: quiz, student: student, grade: 5.0, finished: true }
       before do
-        print taken_quiz
         visit stats_staffs_quiz_path(quiz)
       end
 
