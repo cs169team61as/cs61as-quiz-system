@@ -47,7 +47,7 @@ describe 'Logging in' do
       end
 
       it 'goes to staff dashboard' do
-        expect(current_path).to eq(staffs_dashboard_path)
+        expect(current_path).to eq(staffs_dashboard_index_path)
       end
     end
   end

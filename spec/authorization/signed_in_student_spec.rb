@@ -18,7 +18,7 @@ describe 'A signed in student' do
     end
 
     describe 'view staff dashboard' do
-      before { staffs_dashboard_path }
+      before { staffs_dashboard_index_path }
       it { should_not have_content 'Staff' }
       it { should have_content 'Student' }
     end

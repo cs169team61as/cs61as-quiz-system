@@ -22,7 +22,7 @@ describe "Someone that isn't signed in" do
     end
 
     it 'see the staff dashboard' do
-      expect_to_redirect_to_sign_in staffs_dashboard_path
+      expect_to_redirect_to_sign_in staffs_dashboard_index_path
     end
 
     it "edit a user's profile" do

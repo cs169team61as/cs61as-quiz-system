@@ -29,6 +29,8 @@ class Quiz < ActiveRecord::Base
   scope :invalid, -> { where lesson: "" }
 
   # validates :lesson, :version, presence: true
+  
+  # why is this in the object and not in db?
   LESSON_VALUES = ["0-1", "0-2", "0-3", "1", "2", "3", "4", "5", "6",
                    "7", "8", "9", "10", "11", "12", "13", "14"]
   LESSON_TITLES = { "0-1" => "Intro",
