@@ -26,7 +26,7 @@ module Students
         flash[:error] = 'You wish you could turn this in.'
         redirect_to students_dashboard_path
       else
-        @quiz_form = TakeQuizForm.new q1.quiz
+        @quiz_form = TakeQuizForm.new ql.quiz
         inject_current_user_into! params, ql.quiz
         if @quiz_form.validate_and_save params[:quiz]
           reader = Reader.assign_grader
