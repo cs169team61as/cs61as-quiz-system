@@ -34,9 +34,9 @@
 # Environment Variables
 .env
 
-
-#my files
-
-.gigtignore
+#Ignore the Gemfiles
 Gemfile
 Gemfile.lock
+
+#Ignore this file
+.gitignore
