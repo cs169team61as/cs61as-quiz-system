@@ -24,7 +24,7 @@ describe Quiz do
 
   describe ".lessons" do
     it "should return an array of published lessons" do
-      expect(Quiz.lessons).to eq(["1", "2"])
+      expect(Quiz.lessons.map(&:second)).to eq(["1", "2"])
     end
   end
 
