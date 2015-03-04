@@ -1,19 +1,20 @@
-source 'https://rubygems.org'
-ruby '2.1.1'
+source 'http://rubygems.org'
+#ruby '2.1.1'
+ruby '2.0.0'
+
 
 gem 'rails', '4.1.0'
 
 # Server
 gem 'foreman', '~> 0.63.0'
 gem 'puma', '~> 2.8.0'
-
+gem 'sqlite3', '~> 1.3.6'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails', '~> 3.1.0'
 gem 'turbolinks', '~> 2.2.1'
 gem 'jbuilder', '~> 1.2'
-gem 'pg', '~> 0.17.1'
 gem 'cancancan', '~> 1.9'
 gem 'ffaker', '~> 1.22.1'
 gem 'figaro', '~> 0.7.0'
@@ -30,6 +31,8 @@ gem 'newrelic_rpm'
 gem 'json', '~> 1.8.1'
 gem 'redcarpet', '~> 3.1.2'
 gem 'nokogiri', '~> 1.6.1'
+#gem 'nokogiri', '1.6.1'
+
 gem 'pygmentize', '~> 0.0.3'
 gem 'compass-rails', '~> 1.1.3'
 gem 'foundation-rails', '~> 5.1.1.0'
@@ -64,12 +67,14 @@ group :development, :test do
   gem 'poltergeist', '~> 1.5.1'
   gem 'guard-livereload', '~> 2.1.1'
   gem 'guard-rspec', '~> 4.2.8'
-  gem 'zeus', '~> 0.13.3'
+#  gem 'zeus', '~> 0.13.3'
   gem 'pry'
   gem 'pry-byebug'
+  gem 'tzinfo-data'
 end
 
 group :production do
   gem 'rails_12factor'
   gem 'heroku-deflater'
+  gem 'pg', '~> 0.17.1' 
 end
