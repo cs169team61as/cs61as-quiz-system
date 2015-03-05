@@ -21,7 +21,7 @@ FactoryGirl.define do
     first_name "Reader"
     sequence(:last_name) { |n| "#{n}" }
     sequence(:email) { |n| "reader#{n}@gmail.com" }
-    sequence(:login) { |n| "cs61as-t#{logins[n]}" }
+    sequence(:login) { |n| "cs61as-r#{logins[n]}" }
     password 'password'
   end
 

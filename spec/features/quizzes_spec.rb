@@ -7,7 +7,7 @@ def fill_in_quiz_field(lesson, version)
 end
 
 describe "Quiz" do
-  let(:staff) { create :staff, login: "cs61as-tzz" }
+  let(:staff) { create :staff }
   subject { page }
   before { sign_in staff }
 
