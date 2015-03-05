@@ -1,5 +1,5 @@
 Feature: taking a quiz
- 
+
   As a student
   So that I can pass the class
   I want to take a quiz
@@ -7,7 +7,7 @@ Feature: taking a quiz
 Background: ???
 
 Scenario: Request a quiz
-  Given I am on the Student Dashboard  
+  Given I am on the Student Dashboard
   When I select 0-1 - Intro
   And I press "Request quiz!"
   Then I should be on the quiz approval page
@@ -15,7 +15,7 @@ Scenario: Request a quiz
 
 Scenario: Taking a quiz
   Given I am on the quiz approval page
-  I should see "your quiz has been approved"
+  Then I should see "your quiz has been approved"
   Then I press "Take quiz"
   Then I press "Begin quiz"
   Then I should be on the quiz page

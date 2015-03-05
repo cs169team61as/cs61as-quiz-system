@@ -6,16 +6,15 @@ Feature: approving a quiz
 
 Scenario: I don't have any quizzes to approve
   Given that I am on the staff dashboard
-  I should see "Requests"
-  Then I press "Requests"
-  I should see "Quiz Requests"
+  When I press "Requests"
+  Then I should see "Quiz Requests"
   And I should see "You don't have any quiz requests!"
 
 Scenario: approving a quiz
   Given cs61-aa has requested a quiz
-  and given that I am on the staff dashboard
+  And I am on the staff dashboard
   When I press "Requests"
-  I should see "Quiz Requests"
+  Then I should see "Quiz Requests"
   And I should see cs61-aa
   Then I press "Approve"
   Then I should see "Quiz Requests"
@@ -25,9 +24,9 @@ Scenario: many quizzes
   Given cs61-aa and cs61as-bb have requested quizzes
   And given I am on the staff dashboard
   When I press "Requests"
-  I should see "Quiz Requests"
+  Then I should see "Quiz Requests"
   And I should see "cs61as-aa"
   And I should see "cs61as-bb"
   Then I press "Approve" for "cs61as-aa"
-  I should see "cs61as-bb"
+  And I should see "cs61as-bb"
   And I should not see "cs61as-aa"
