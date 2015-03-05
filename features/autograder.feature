@@ -7,7 +7,7 @@ Feature: Number of quizzes to be graded
 Scenario: I should not see T/F or What would scheme output questions in grading
   Given that I am on the staff dashboard
   When I follow "Grading"
-  And I press a quizz to grade
+  And I press a quiz to grade
   I should not see True/False questions
   And I should not see What would scheme output question
   I should only see ungraded questions
