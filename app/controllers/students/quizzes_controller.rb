@@ -30,12 +30,14 @@ module Students
         inject_current_user_into! params, ql.quiz
         if @quiz_form.validate_and_save params[:quiz]
           reader = Reader.assign_grader
+          reader_id = reader ? reader.id : nil
+          reader_login = reader ? reader.login : nil
           TakenQuiz.create student_id: ql.student_id,
                            quiz_id: ql.quiz.id,
                            lesson: ql.quiz.lesson,
                            retake: ql.quiz.retake,
-                           reader_id: reader.id,
-                           login: reader.login
+                           reader_id: reader_id,
+                           login: reader_login
           ql.destroy
           flash[:success] = "Submitted quiz #{@quiz_form.lesson}!"
           redirect_to students_dashboard_path
