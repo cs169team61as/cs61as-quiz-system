@@ -49,7 +49,7 @@ module Staffs
 
     def download
       respond_to do |format|
-        format.html { redirect_to staffs_dashboard_path }
+        format.html { redirect_to staffs_dashboard_index_path }
         format.csv do
           send_data Student.get_csv(params[:lesson]),
                     filename: "lesson#{params[:lesson]}.csv"

@@ -19,7 +19,7 @@ module Staffs
         request.destroy
       end
       flash[:success] = 'Cancelled quiz request!'
-      redirect_to staffs_dashboard_path
+      redirect_to staffs_dashboard_index_path
     end
 
     private
