@@ -15,6 +15,9 @@
 /log/*.log
 /tmp
 
+# Ignore code coverage
+/coverage/
+
 # Ignore custom rake file
 /lib/database.rake
 
