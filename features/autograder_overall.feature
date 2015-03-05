@@ -4,10 +4,6 @@ Feature: autograder for wwso, t/f and multiple choice questions
 	So that I can easily grade wwso, t/f and multiple choice questions
 	I want to be able to automatically grade wwso, t/f and multiple choice questions
 
-Senario: Should have autograde button
-
-	Given that I am on
-
 Scenario: Autograde quiz
 
 	Given that I am on the staff dashboard
