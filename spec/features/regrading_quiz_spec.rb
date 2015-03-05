@@ -13,17 +13,18 @@ end
 
 describe "Regrading a Quiz" do
   subject { page }
-  let(:staff) { create :staff }
+  let(:reader) { create :reader }
   let!(:student) { create :student }
   let!(:quiz) { create :quiz_with_questions }
   let!(:taken_quiz) do
-    TakenQuiz.create quiz: quiz,
-                     student: student,
-                     staff: staff,
-                     lesson: quiz.lesson,
-                     retake: quiz.retake,
-                     grade: 15,
-                     finished: true
+       create :taken_quiz, 
+              quiz: quiz,
+              student: student,
+              reader: reader,
+              lesson: quiz.lesson,
+              retake: quiz.retake,
+              grade: 15,
+              finished: true
   end
 
   before do
@@ -36,7 +37,7 @@ describe "Regrading a Quiz" do
   describe "as a student" do
     before do
       sign_in student
-      visit students_quiz_path(taken_quiz)
+      visit students_quiz_path(taken_quiz.id)
     end
 
     it { should have_content quiz.to_s }
@@ -81,7 +82,7 @@ describe "Regrading a Quiz" do
   describe "as a staff member" do
     let!(:regrade) { create :regrade, student: student, quiz: quiz }
     before do
-      sign_in staff
+      sign_in reader
       taken_quiz.undo
       visit staffs_quiz_requests_path
     end
