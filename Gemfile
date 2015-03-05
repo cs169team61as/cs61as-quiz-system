@@ -17,6 +17,7 @@ gem 'pg', '~> 0.17.1'
 gem 'cancancan', '~> 1.9'
 gem 'ffaker', '~> 1.22.1'
 gem 'figaro', '~> 0.7.0'
+gem 'simplecov', :require => false, :group => :test
 
 # Authentication
 gem 'devise', '~> 3.2.3'
