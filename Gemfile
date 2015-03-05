@@ -57,6 +57,7 @@ end
 
 group :development, :test do
   gem 'sqlite3'
+  gem 'cucumber-rails', require: false
   gem 'awesome_print', '1.2.0', require: 'awesome_print'
   gem 'rspec-rails', '~> 2.14.1'
   gem 'database_cleaner', '~> 1.2.0'
