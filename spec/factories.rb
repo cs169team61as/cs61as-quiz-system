@@ -88,6 +88,7 @@ FactoryGirl.define do
     grade 0
     comment { Faker::Lorem.sentence }
     login { "cs61as-aa" }
+    retake false
   end
 
   factory :grade do

@@ -1,52 +1,74 @@
 require 'spec_helper'
 
+def comments
+  "grade_comments"
+end
+
+def grade
+  "grade_grade"
+end
+
 def fill_in_grade
-  fill_in "Grade", with: 5
-  fill_in "Comments", with: "Good Job!"
+  fill_in grade, with: 5
+  fill_in comments, with: "Good Job!"
   click_button "Update Grade!"
 end
 
 describe "Grading a Quiz" do
   let(:staff) { create :staff }
-  subject { page }
+  let(:staff2) { create :reader }
+
   before do
-    sign_in staff
+    sign_in staff2
     visit staffs_grades_path
   end
 
-  it { should have_content "Quizzes To Grade" }
-  it { should have_content "You have no assignments." }
-  it { should have_content "There are no quizzes to grade!" }
+  describe "with no quizzes present" do
+    it "should be on the quiz grading page" do 
+      expect(page).to have_content "Quizzes To Grade"
+    end
+    it "should have no assignments" do
+      expect(page).to have_content "You have no assignments"
+    end
+    it "should have no quizzes to grade " do 
+      expect(page).to have_content "There are no quizzes to grade!"  
+    end
+  end
 
-  describe "as a staff member" do
+  describe "as a staff member with one quiz to grade" do
     let!(:student) { create :student }
-    let!(:staff2) { create :reader }
     let!(:quiz) { create :quiz_with_questions }
     let!(:taken_quiz) do
-      TakenQuiz.create quiz: quiz, student: student, reader: staff2, lesson: quiz.lesson, retake: quiz.retake
+      create :taken_quiz, quiz: quiz, student: student, reader: staff2, lesson: quiz.lesson, retake: quiz.retake
     end
 
     before do
       quiz.questions.map do |q|
         create :submission, question: q, quiz: quiz, student: student
       end
+
       visit staffs_grades_path
-      expect(page).to_not have_content "There are no quizzes to grade!"
-      expect(page).to have_content "You have no assignments."
+      expect(page).to have_no_content "There are no quizzes to grade!"
+      expect(page).to have_no_content "You have no assignments."
+      expect(page).to have_content "Your Grading Assignments"
       expect(page).to have_content "#{taken_quiz}"
+
       visit staffs_student_quiz_path(taken_quiz.student, taken_quiz.quiz)
     end
 
     describe "before grading quiz" do
-      it { should have_content "#{quiz}" }
-      it { should have_content "Total: 0.0/10" }
-      it { should_not have_content "Finished Grading!" }
+      it "should display the ungraded quiz" do
+        expect(page).to have_content "#{quiz}"
+        expect(page).to have_content "Total: 0.0/10" 
+        expect(page).to_not have_content "Finished Grading!" 
+      end
     end
 
     describe "grading a question" do
-      before { first(:link, 'Grade Question!').click }
-
-      it { should have_content "Grade Question" }
+      before do 
+        expect(page).to have_content "Grade Question!"
+        first(:link, 'Grade Question!').click
+      end
 
       describe "should not be valid" do
         def expect_changes_not_persisted
@@ -55,21 +77,21 @@ describe "Grading a Quiz" do
         end
 
         it "if the grade is blank" do
-          fill_in "Grade", with: ""
+          fill_in grade, with: ""
           click_button "Update Grade!"
           expect(page).to have_content "can't be blank"
           expect_changes_not_persisted
         end
 
         it "if comments are blank" do
-          fill_in "Comments", with: ""
+          fill_in comments, with: ""
           click_button "Update Grade!"
           expect(page).to have_content "can't be blank"
           expect_changes_not_persisted
         end
 
         it "if the grade is not in range of (0..10)" do
-          fill_in "Grade", with: 11
+          fill_in grade, with: 11
           click_button "Update Grade!"
           expect(page).to have_content "Invalid grade"
           expect_changes_not_persisted
@@ -77,8 +99,8 @@ describe "Grading a Quiz" do
       end
 
       it "should increase total quiz grade if valid" do
-        fill_in "Grade", with: 5
-        fill_in "Comments", with: "Good Job!"
+        fill_in grade, with: 5
+        fill_in comments, with: "Good Job!"
         click_button "Update Grade!"
         expect(page).to have_content "#{quiz}"
         expect(page).to have_content "Total: 5.0/10"
@@ -98,10 +120,12 @@ describe "Grading a Quiz" do
       end
 
       # 15/10 really?...
-      it { should have_content "Total: 15.0/10" }
-      it { should have_content "Finished Grading!" }
-      it { should have_content "5.0" }
-      it { should have_content "Good Job!" }
+      it "should display a properly graded quiz" do
+        expect(page).to have_content "Total: 15.0/10" 
+        expect(page).to have_content "Finished Grading!"
+        expect(page).to have_content "5.0"
+        expect(page).to have_content "Good Job!"
+      end
 
       it "should change taken_quiz's finished field to true" do
         click_link "Finished Grading!"
