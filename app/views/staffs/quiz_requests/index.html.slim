@@ -7,7 +7,7 @@ h3 Quiz Requests
     - @requests.each do |request|
       li
         = request
-        = form_tag choose_staffs_quiz_requests_path do
+        = form_tag choose_staffs_quiz_requests_path, id: "approve-#{request.id}" do
           = label_tag :quiz_id, "Choose a quiz"
           = select_tag :quiz_id, options_for_select(get_selections_for_request(request))
           = label_tag :quiz_id, "Select time limit"

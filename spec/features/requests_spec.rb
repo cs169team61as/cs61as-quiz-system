@@ -1,5 +1,15 @@
 require 'spec_helper'
 
+def approve_request(id)
+  within("//form[@id='approve-#{request.id}']") do
+    click_button('Approve Quiz')
+  end 
+end
+
+def cancel_request(id)
+  click_link "cancel-#{id}"
+end
+
 describe 'Staff dashboard requests' do
   let(:staff) { create :staff }
   let!(:request) { create :quiz_request }
@@ -22,7 +32,9 @@ describe 'Staff dashboard requests' do
 
   it 'displays confirm links' do
     [request, other_request].each do |request|
-      expect(page).to have_link "approve-#{request.id}"
+      within("//form[@id='approve-#{request.id}']") do
+        expect(page).to have_button('Approve Quiz')
+      end 
     end
   end
 
@@ -32,17 +44,17 @@ describe 'Staff dashboard requests' do
 
   describe 'approving a request' do
     it 'creates a QuizLock' do
-      expect { click_link "approve-#{request.id}" }.to change(QuizLock, :count).by 1
+      expect { approve_request(request.id) }.to change(QuizLock, :count).by 1
     end
 
     it 'destroys the request' do
-      expect { click_link "approve-#{request.id}" }.to change(QuizRequest, :count).by -1
+      expect { approve_request(request.id) }.to change(QuizRequest, :count).by -1
     end
   end
 
   describe 'cancelling a request' do
     it 'deletes the request' do
-      expect { click_link "cancel-#{request.id}" }
+      expect { cancel_request(request.id) }
              .to change(QuizRequest, :count).by(-1)
     end
   end
