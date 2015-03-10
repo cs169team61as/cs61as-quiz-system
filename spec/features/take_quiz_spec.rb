@@ -17,7 +17,7 @@ end
 describe "Taking a quiz" do
   let!(:quiz) { create :quiz_with_questions }
   let!(:student) { create :student }
-  let!(:staff) { create :staff }
+  let!(:reader) { create :reader }
   let!(:quiz_lock) { create :quiz_lock, student: student, quiz: quiz }
 
   before { sign_in student }
@@ -75,14 +75,14 @@ describe "Taking a quiz" do
           expect(quiz_lock.reload).to be_locked
         end
 
-        it "shows the staff login page" do
+        it "shows the reader login page" do
           expect(page).to have_content "screen change"
         end
 
-        describe "filling in right staff info" do
+        describe "filling in right reader info" do
           before do
-            fill_in "Staff Login", with: staff.login
-            fill_in "Password", with: staff.password
+            fill_in "Staff Login", with: reader.login
+            fill_in "Password", with: reader.password
             click_button "Unlock"
           end
 
@@ -124,9 +124,9 @@ describe "Taking a quiz" do
         describe "and submitting" do
           before { click_button "Submit!" }
 
-          it "assigns the quiz to a staff member" do
+          it "assigns the quiz to a reader" do
             taken_quiz = TakenQuiz.find_by student: student
-            expect(taken_quiz.staff).to be_present
+            expect(taken_quiz.reader).to be_present
           end
 
           it "redirects to dashboard" do
