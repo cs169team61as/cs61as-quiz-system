@@ -20,10 +20,10 @@ end
 describe "Quiz" do
   let(:staff) { create :staff }
   let!(:question) { create :question, lesson: "1" }
-  let!(:new_quiz_not_retake) { create :quiz, lesson: "1", version: 1, retake: false }
-  let!(:new_quiz_retake) { create :quiz, lesson: "1", version: 1, retake: true }
+  let!(:new_quiz_not_retake) { create :quiz, retake: false }
+  let!(:new_quiz_retake) { create :quiz, retake: true }
   let!(:published_quiz) do
-    pq = build :quiz, lesson: "1", version: 1, retake: false, is_draft: false
+    pq = build :quiz, retake: false, is_draft: false
     pq.save(:validate => false)
     pq.relationships.create!  question_id: question.id,
                               number: 1,
