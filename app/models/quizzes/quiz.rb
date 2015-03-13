@@ -29,8 +29,7 @@ class Quiz < ActiveRecord::Base
   scope :invalid, -> { where lesson: "" }
 
   @@correct_total_points = 10
-  validate :points_add_up
-  #, :questions_not_reused
+  #validate :points_add_up, :questions_not_reused
   # validates :lesson, :version, presence: true
   
   # why is this in the object and not in db?
@@ -133,19 +132,19 @@ class Quiz < ActiveRecord::Base
     end
   end
 
-  def points_add_up
-    return if is_draft?
+  # def points_add_up
+  #   return if is_draft?
 
-    total = 0
-    relationships.each do |r|
-      total += r.points 
-    end
+  #   total = 0
+  #   relationships.each do |r|
+  #     total += r.points 
+  #   end
 
-    if total != @@correct_total_points
-      msg = "Points must sum to #{@@correct_total_points} (now #{total})"
-      errors.add(:relationships, msg) 
-    end
-  end
+  #   if total != @@correct_total_points
+  #     msg = "Points must sum to #{@@correct_total_points} (now #{total})"
+  #     errors.add(:relationships, msg) 
+  #   end
+  # end
 
   # def questions_not_reused
   #   my_questions = []

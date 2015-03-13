@@ -29,7 +29,7 @@ FactoryGirl.define do
     lesson '1'
     sequence(:version) { |n| n }
     retake false
-    is_draft true
+    is_draft false
  
     factory :quiz_with_questions do
       ignore { questions_count 3 }
