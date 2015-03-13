@@ -6,6 +6,7 @@ Feature: Academic honesty statement
 Scenario: Student should see academic honesty statement
   Given that I am on the student dashboard
   Then I must see "Welcome to the Student Dashboard!"
+  And I must see "Take a quiz"
   When I press the button "Request quiz!"
   And I press "Begin Quiz"
   And I press "Start"
