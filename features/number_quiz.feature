@@ -6,8 +6,8 @@ Feature: Number of quizzes to be graded
 
 Scenario: I have three quizzes to grade
   Given that I am on the staff dashboard
-  Then I should see "Grading"
-  When I press "Grading"
+  Then I must see "Grading"
+  When I press "Grading" link
   Then I should see "Quizzes to Grade(3)"
   And I should see 3 quizzes below
 
