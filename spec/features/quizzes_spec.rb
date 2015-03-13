@@ -60,6 +60,10 @@ describe "Quiz" do
       
       @pq = build :quiz, lesson: "1", version: 1, retake: false, is_draft: false
       @pq.save(:validate => false)
+
+      @pq2 = build :quiz, lesson: "1", version: 2, retake: false, is_draft: false
+      @pq2.save(:validate => false)
+
       visit edit_staffs_quiz_path(@pq.id)
       expect(page).to have_content "Editing Quiz"
     end
@@ -73,7 +77,7 @@ describe "Quiz" do
     end
 
     it "if it has a version that has already been used" do
-      fill_in_quiz_field "1", 1
+      fill_in_quiz_field "1", 2
       click_button("Update!")
       expect(page).to have_content("This version has already been used!")
       expect(page).to_not have_content("Welcome")

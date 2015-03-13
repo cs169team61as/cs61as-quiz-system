@@ -29,7 +29,8 @@ class Quiz < ActiveRecord::Base
   scope :invalid, -> { where lesson: "" }
 
   @@correct_total_points = 10
-  #validate :points_add_up, :questions_not_reused
+  validate :version_not_reused 
+  # :points_add_up, :questions_not_reused
   # validates :lesson, :version, presence: true
   
   # why is this in the object and not in db?
@@ -130,6 +131,12 @@ class Quiz < ActiveRecord::Base
     quizzes.sort_by do |q|
       [sortValue.find_index(q.lesson), q.version]
     end
+  end
+
+  def version_not_reused
+    return if id == nil
+    quizzes_with_same_version = Quiz.where("lesson = ? AND version = ? AND id != ?", lesson, version, id)
+    errors.add(:version, "This version has already been used!") unless quizzes_with_same_version.empty?
   end
 
   # def points_add_up
