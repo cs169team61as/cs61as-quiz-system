@@ -138,6 +138,7 @@ class Quiz < ActiveRecord::Base
     errors.add(:version, "This version has already been used!") unless quizzes_with_same_version.empty?
   end
 
+  # this function works, but breaks tests
   # def points_add_up
   #   return if is_draft?
 
@@ -152,6 +153,7 @@ class Quiz < ActiveRecord::Base
   #   end
   # end
 
+  # this function is broken
   # def questions_not_reused
   #   my_questions = []
   #   questions.each { |q| my_questions << q.id }
