@@ -111,6 +111,7 @@ describe "Taking a quiz" do
           0.upto(2) do |n|
             page.execute_script("$(\"#{textarea_css(n)}\")[0].value = 'Answer #{n}'")
           end
+          check "honesty_statement"
         end
 
         it "and submitting creates Submissions and a TakenQuiz and destroys the QuizLock" do
