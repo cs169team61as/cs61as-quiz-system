@@ -12,8 +12,10 @@ Feature: Honesty statement
   Scenario: Honesty statement needs to be checked
     Given that I am on the quiz page
     And I press "Submit"
-    Then I should see "Please Agree to the Academic Honesty Statement"
-    And I press "Ok"
+    Then I should see "Please accept the academic honesty statement before submitting."
+
+  Scenario: Checking the honesty statement allows student to submit quiz
+    Given that I am on the quiz page
     And I check "honesty_statement"
     And I press"Submit"
     Then I should be on the Student Dashboard
