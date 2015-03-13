@@ -145,7 +145,7 @@ describe "Grading a Quiz" do
       it "should not be valid if it is blank" do
         fill_in "General Comments", with: ""
         click_button "Save Comments!"
-        expect(page).to have_content "No comments"
+        expect(page).to have_content "can't be blank"
       end
 
       it "should be valid if the comment is not blank" do
