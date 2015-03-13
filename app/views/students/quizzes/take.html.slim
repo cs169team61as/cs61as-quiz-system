@@ -26,6 +26,12 @@ p After you click Begin, you cannot use the computer for anything else!
           div
             = sf.text_area :content, label: false, class: 'textedit expand saves', id: "#{sf.object.question_id}"
             br
+        br
+        br
+        =check_box_tag "honesty_statement", 1
+        ="      Academic Honesty Statement: I assert that all the work on this quiz is my own and I have not been helped by anybody and I will not talk about the questions with anyone except course staff."
+        br
+        br
         = f.submit 'Submit!', class: 'button', id: 'submit_quiz'
 
 = link_to 'Start!', '#', class: 'Small button', id: 'fullscreen'
