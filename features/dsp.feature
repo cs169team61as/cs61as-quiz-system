@@ -1,4 +1,4 @@
-Feature: default time for DSP students
+Feature: Default time for DSP students
 
   As a TA of CS61AS
   So that I give DSP students appropriate amount of time to complete the quiz
