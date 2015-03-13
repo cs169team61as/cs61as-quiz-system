@@ -5,6 +5,7 @@ development:
   encoding: unicode
   database: test-postgres_development 
   username: test-postgres
+  host: localhost
   pool: 5
  
 # Warning: The database defined as "test" will be erased and
