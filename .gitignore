@@ -33,6 +33,3 @@
 
 # Environment Variables
 .env
-
-# Ignore Gemfile.lock
-Gemfile.lock
