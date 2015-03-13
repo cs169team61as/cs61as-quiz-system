@@ -36,7 +36,9 @@ describe "Taking a quiz" do
     it { should have_link "Start" }
 
     describe "clicking start" do
-      before { click_link "Start" }
+      before do
+        click_link "Start" 
+      end
 
       it "shows questions" do
         quiz.questions.each do |question|
@@ -54,7 +56,8 @@ describe "Taking a quiz" do
         before do
           quiz_lock.created_at = 1.hour.ago + 5.seconds
           quiz_lock.save
-          visit take_students_quizzes_path
+          check "honesty_statement"
+          click_button "Submit!"
           sleep 3
         end
 
