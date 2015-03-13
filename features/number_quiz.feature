@@ -9,7 +9,7 @@ Scenario: I have three quizzes to grade
   Then I should see "Grading"
   When I press "Grading"
   Then I should see "Quizzes to Grade(3)"
-  And I should see three quizzes below
+  And I should see 3 quizzes below
 
 Scenario: I don't have any quizzes to grade
   Given that I am on the staff dashboard
