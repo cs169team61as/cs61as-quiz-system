@@ -29,8 +29,8 @@ FactoryGirl.define do
     lesson '1'
     sequence(:version) { |n| n }
     retake false
-    is_draft false
-
+    is_draft true
+ 
     factory :quiz_with_questions do
       ignore { questions_count 3 }
 
@@ -40,6 +40,15 @@ FactoryGirl.define do
         end
       end
     end
+  end
+
+  factory :relationship do
+    quiz_id     1
+    question_id 1
+    created_at  Time.now
+    updated_at  Time.now
+    points 0
+    number 0
   end
 
   factory :rubric do

@@ -3,11 +3,35 @@ require "spec_helper"
 def fill_in_quiz_field(lesson, version)
   select lesson, from: "Lesson"
   fill_in "Version", with: version
-  click_button "Update!"
 end
+
+def add_new_queston(lesson, points)
+  click_link "Add a new question!"
+  expect(page).to have_content "New Question!"
+  select "#{lesson}", from: "Lesson"
+  fill_in "Points", with: points
+  fill_in "Question (parsed as Markdown)", with: "Lorem Ipsum"
+  fill_in "Solution (parsed as Markdown)", with: "Lorem Ipsum"
+  fill_in "Rubric (parsed as Markdown)", with: "Lorem Ipsum"
+  click_button "Create"
+  expect(page).to have_content "Content: Lorem Ipsum"
+end 
 
 describe "Quiz" do
   let(:staff) { create :staff }
+  let!(:question) { create :question, lesson: "1" }
+  let!(:new_quiz_not_retake) { create :quiz, lesson: "1", version: 1, retake: false }
+  let!(:new_quiz_retake) { create :quiz, lesson: "1", version: 1, retake: true }
+  let!(:published_quiz) do
+    pq = build :quiz, lesson: "1", version: 1, retake: false, is_draft: false
+    pq.save(:validate => false)
+    pq.relationships.create!  question_id: question.id,
+                              number: 1,
+                              points: 10
+    pq
+  end
+
+
   subject { page }
   before { sign_in staff }
 
@@ -33,45 +57,40 @@ describe "Quiz" do
     before do
       Quiz.destroy_all
       Question.destroy_all
-      visit staffs_dashboard_index_path
-      click_link "Create a New Quiz!"
+      
+      @pq = build :quiz, lesson: "1", version: 1, retake: false, is_draft: false
+      @pq.save(:validate => false)
+      visit edit_staffs_quiz_path(@pq.id)
       expect(page).to have_content "Editing Quiz"
     end
 
-    let!(:new_quiz_retake) { create :quiz, lesson: "1", version: 1, retake: true }
-    let!(:question) { create :question, lesson: "1" }
-    let!(:new_quiz_not_retake) { create :quiz, lesson: "1", version: 1, retake: false }
 
     it "if it has an invalid version" do
       fill_in_quiz_field "0-1", "a"
+      click_button("Update!")
       expect(page).to have_content("is not a number")
       expect(page).to_not have_content("Welcome")
     end
 
     it "if it has a version that has already been used" do
       fill_in_quiz_field "1", 1
+      click_button("Update!")
       expect(page).to have_content("This version has already been used!")
       expect(page).to_not have_content("Welcome")
     end
 
     it "if doesn't questions that add up to 10 points" do
       fill_in_quiz_field "1", 2
+      click_button("Update!")
       expect(page).to have_content("Points must sum to 10")
       expect(page).to_not have_content("Welcome")
     end
 
     it "if question lessons don't match" do
-      click_link "Add a new question!"
-      expect(page).to have_content "New Question!"
-      select "2", from: "Lesson"
-      fill_in "Points", with: 10
-      fill_in "Question (parsed as Markdown)", with: "Lorem Ipsum"
-      fill_in "Solution (parsed as Markdown)", with: "Lorem Ipsum"
-      fill_in "Rubric (parsed as Markdown)", with: "Lorem Ipsum"
-      click_button "Create"
-      expect(page).to have_content "Content: Lorem Ipsum"
+      add_new_queston(2, 10)
 
       fill_in_quiz_field "1", 2
+      click_button("Update!")
       expect(page).to have_content "Question lessons must match"
       expect(page).to_not have_content "Welcome"
     end
@@ -120,17 +139,26 @@ describe "Quiz" do
         visit edit_staffs_quiz_path(quiz)
       end
 
-      it "should not allow removal if quiz is published" do
-        click_link "Remove"
-        expect(page).to have_content "Can't remove"
-      end
-
-      it "should remove question if quiz is published" do
-        quiz.toggle! :is_draft
-        click_link "Remove"
-        expect(page).to have_content "You have no questions yet!"
-      end
     end
+  end
+
+  describe "that is published" do
+    before do 
+      visit edit_staffs_quiz_path(published_quiz.id)
+    end
+
+    it "should not allow removal if quiz is published" do
+      published_quiz
+      find_by_id("remove_question_#{question.id}").click
+      expect(page).to have_link("remove_question_#{question.id}")
+    end
+
+    it "should remove question if quiz is unpublished" do
+      published_quiz.toggle! :is_draft
+      find_by_id("remove_question_#{question.id}").click
+      expect(page).not_to have_link("remove_question_#{question.id}")
+    end
+
   end
 
   describe "stats" do
