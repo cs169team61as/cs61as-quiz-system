@@ -134,12 +134,7 @@ class Quiz < ActiveRecord::Base
   end
 
   def version_not_reused
-    if id != nil
-      quizzes_with_same_version = Quiz.where("lesson = ? AND version = ? AND id != ?", lesson.to_s, version, id)
-    else
-      quizzes_with_same_version = Quiz.where("lesson = ? AND version = ?", lesson.to_s, version)
-    end
-
+    quizzes_with_same_version = Quiz.where("lesson = ? AND version = ? AND id != ?", lesson.to_s, version, id)
     errors.add(:version, "This version has already been used!") unless quizzes_with_same_version.empty?
   end
 
