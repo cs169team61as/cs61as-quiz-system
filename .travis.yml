@@ -2,7 +2,11 @@ language: ruby
 rvm:
   - 2.1.1
 install: bundle install --without production
+addons:
+  postgresql: "9.3.5"
+before_script:
+  - cp config/database.yml.travis config/database.yml
+  - psql -c 'create database test-postgres_development;' -U postgres
 script: 
   - bundle exec rake spec
   - bundle exec cucumber
-
