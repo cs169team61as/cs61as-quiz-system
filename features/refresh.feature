@@ -8,5 +8,5 @@ Feature: Auto refresh when quiz is approved
 Scenario: Auto refresh the page
   Given I am on the quiz approval page
   And I should see "Your request is not approved yet!"
-  When I approve a quiz it is approved
+  When I approve the quiz
   Then I should see the button "Begin quiz!"

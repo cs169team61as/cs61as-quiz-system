@@ -12,7 +12,6 @@ Scenario: I press "windows" during the quiz
   Then I should not be kicked out
   And I should see the starter menu
 
-
 Scenario: I press "alt" during the quiz
   Given I am on the quiz page
   And I should see "Question 1"
