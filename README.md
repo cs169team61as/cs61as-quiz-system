@@ -3,3 +3,9 @@ CS61AS Quiz System [![Build Status](https://travis-ci.org/cs169team61as/cs61as-q
 
 Quiz System for CS61AS. Aims to help alleviate the workload in making/grading
 quizzes.
+
+Pivotal Tracker: https://www.pivotaltracker.com/n/projects/1282818
+
+Heroku Deployment: https://lit-cove-8292.herokuapp.com/
+
+See wiki for more info.
