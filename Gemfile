@@ -75,3 +75,7 @@ group :production do
   gem 'rails_12factor'
   gem 'heroku-deflater'
 end
+
+# code coverage code climate
+gem "codeclimate-test-reporter", group: :test, require: nil
+
