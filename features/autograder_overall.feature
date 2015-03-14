@@ -9,7 +9,7 @@ Scenario: Autograde quiz
 	Given that I am on the staff dashboard
 	And I press "Grading"
 	And I press "cs61as-aa:Quiz 1a1"
-	I should see "Autograde"
+	Then I should see "Autograde"
 	When I press "Autograde"
-	I should see "Autograder complete"
+	Then I should see "Autograder complete"
 	And I should see "0.0"
