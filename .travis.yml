@@ -16,7 +16,9 @@ script:
   - rake cucumber
   - rake spec
 after_script:
-  - bundle_cache env: global:
+  - bundle_cache
+env:
+  global:
   - BUNDLE_ARCHIVE="bundle.tgz"
   - AWS_S3_BUCKET="cs61as-team"
   - RAILS_ENV=test
