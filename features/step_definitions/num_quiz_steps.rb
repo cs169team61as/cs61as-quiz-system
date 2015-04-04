@@ -1,6 +1,8 @@
 include Warden::Test::Helpers
 Warden.test_mode!
 
+include FactoryGirl::Syntax::Methods
+
 
 Given /^I am logged in as a (staff user|student)/ do |user_type|
   logout(:user)
