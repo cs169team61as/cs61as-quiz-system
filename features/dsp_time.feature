@@ -8,12 +8,12 @@ Background:
   Given cs61as-ta is logged in
 
 Scenario: using default time
-  Given cs61as-st requests a quiz for lesson 1
+  When cs61as-st requests a quiz for lesson 1
   When I press "Requests"
   Then I should see "60 minutes"
 
 Scenario: changing time updates next time
-  Given cs61as-st requests a quiz for lesson 1
+  When cs61as-st requests a quiz for lesson 1
   When I press "Requests"
   Then I should see "60 minutes"
   Then I select "120 minutes" from "Select time limit"
