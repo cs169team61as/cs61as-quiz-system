@@ -9,17 +9,17 @@ Background:
 
 Scenario: using default time
   When cs61as-st requests a quiz for lesson 1
-  When I press "Requests"
+  When I click "Requests"
   Then I should see "60 minutes"
 
 Scenario: changing time updates next time
   When cs61as-st requests a quiz for lesson 1
-  When I press "Requests"
+  When I click "Requests"
   Then I should see "60 minutes"
-  Then I select "120 minutes" from "Select time limit"
+  Then I select "120 minutes" from "quiz_time"
   And I press "Approve Quiz"
-  When I press "Dashboard"
+  When I click "Dashboard"
   Then cs61as-st requests a quiz for lesson 2
-  When I press "Requests"
+  When I click "Requests"
   Then I should see "120 minutes"
   And I sould not see "60 minutes"
