@@ -24,3 +24,8 @@ env:
   - RAILS_ENV=test
   - CODECLIMATE_REPO_TOKEN=2df9384e17b8b855376608fb9840f6127d410b0d7cfa2374962957c8f9d1b68a
   - secure: Szkst9NJvuIPKsvFLbuFHgIiBFfubpM/Fk5c/QktMAw0CQAyryDatD4f1YPP9K6rdKJU2exhOKEmfQc+B52nOfM6diXM36ifMzQkA3X6PiiBkLi3QzcWyzMnPvRLrIo7xDEczGuO1nilNPxyfGw8AcTJoBV43syMWJpg1m8waEM=
+deploy:
+  provider: heroku
+  api_key:
+    secure: CCqg8uXu6gOgKTaVhw3z5Nm8F/YW7dxutoTKuCBoGYFITm01Se1sQM+xapzoRNqoKu7JXCm2+g12qKBmPtGeqY2hskzmdyqpXTvPIvEkTGuoK3At7x5A5LMqetkek5JG322AloyLGJ1qyO5Rhu4LmMVPljxwMY8jqEirEyKIcio=
+  app: lit-cove-8292
