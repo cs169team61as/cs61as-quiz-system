@@ -1,17 +1,24 @@
 include Warden::Test::Helpers
 Warden.test_mode!
 
+include FactoryGirl::Syntax::Methods
+
 
 Given /^I am logged in as a (staff user|student)/ do |user_type|
   logout(:user)
   visit new_user_session_path
   if user_type == "staff user"
-    fill_in "Login", :with=> "cs61as-ab"
+    @staff ||= create :staff, login: "cs61as-ab" 
+    fill_in "Login", :with => @staff.login
+    fill_in "Password", :with => @staff.password
   elsif user_type == "student"
-    fill_in "Login", :with=> "cs61as-aou"
+    @student ||= create :student, login: "cs61as-aou"
+    fill_in "Login", :with => @student.login
+    fill_in "Password", :with => @student.password
   end
-  fill_in "Password", :with=> "password"
   click_button "Sign in"
+  expect(page).to have_content "Welcome"
+  expect(page).to have_content "Dashboard"
 end
 
 Given(/there are (\d+) quizzes to grade/) do |num|
