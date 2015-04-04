@@ -6,12 +6,14 @@ Given /^I am logged in as a (staff user|student)/ do |user_type|
   logout(:user)
   visit new_user_session_path
   if user_type == "staff user"
-    fill_in "Login", :with=> "cs61as-ab"
+    fill_in "Login", :with=> "cs61as-av"
   elsif user_type == "student"
     fill_in "Login", :with=> "cs61as-aou"
   end
   fill_in "Password", :with=> "password"
   click_button "Sign in"
+  expect(page).to have_content "Welcome"
+  expect(page).to have_content "Dashboard"
 end
 
 Given(/there are (\d+) quizzes to grade/) do |num|
