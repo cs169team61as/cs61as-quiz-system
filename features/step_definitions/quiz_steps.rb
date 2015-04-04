@@ -23,7 +23,7 @@ When /^cs61as-(.*) requests a quiz for lesson [0-9]$/ do |name, lesson|
   student.create_quiz_request(lesson: lesson)
 end
 
-When/^cs61as-(.*) is logged in$/ do |name|
+When /^cs61as-(.*) is logged in$/ do |name|
   visit "/users/sign_in"
   fill_in("Login", :with => "cs61as-#{name}")
   fill_in("Password", :with => "password")
