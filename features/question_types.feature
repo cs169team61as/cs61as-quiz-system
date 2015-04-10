@@ -20,3 +20,4 @@ Scenario: I want to see a multiple choice question "test" created in Lession 0-1
   And I should see "Type: multiple choice"
   Then I press "see more"
   And I should see multiple choice options in contents
+
