@@ -14,29 +14,32 @@
     - if add_pts == "true"
       = label_tag :points, '* Points'
       = text_field_tag :points, points
-.row
-  .small-12.columns
-    = f.input :content, as: :text,
-                        label: 'Question (parsed as Markdown)',
-                        input_html: { class: 'expand' },
-                        placeholder: 'Add Question'
-.row
-  .small-12.columns
-    = f.fields_for :solution do |sf|
-      = sf.hidden_field :question_id, value: f.object.id
-      br
-      = sf.input :content, as: :text,
-                           label: 'Solution (parsed as Markdown)',
-                           input_html: { class: 'expand' },
-                           placeholder: 'Add Solution'
-
-    = f.fields_for :rubric do |sf|
-      = sf.hidden_field :question_id, value: f.object.id
-      br
-      = sf.input :rubric, as: :text,
-                          label: 'Rubric (parsed as Markdown)',
-                          input_html: { class: 'expand' },
-                          placeholder: 'Add Rubric'
+- if question_type == "multiple_choice"
+  = render 'multiple_choice'
+-else 
+  = render 'short_answer'
+/!.row
+  /!.small-12.columns
+    /!= f.input :content, as: :text,
+      /!                  label: 'Question (parsed as Markdown)',
+        /!                input_html: { class: 'expand' },
+          /!              placeholder: 'Add Question'
+/!.row
+  /!.small-12.columns
+    /!= f.fields_for :solution do |sf|
+      /!= sf.hidden_field :question_id, value: f.object.id
+      /!br
+      /!= sf.input :content, as: :text,
+        /!                   label: 'Solution (parsed as Markdown)',
+          /!                 input_html: { class: 'expand' },
+            /!               placeholder: 'Add Solution'
+    /!= f.fields_for :rubric do |sf|
+      /!= sf.hidden_field :question_id, value: f.object.id
+      /!br
+      /!= sf.input :rubric, as: :text,
+        /!                  label: 'Rubric (parsed as Markdown)',
+          /!                input_html: { class: 'expand' },
+            /!              placeholder: 'Add Rubric'
 br
   = f.submit button, class: 'small button'
   br

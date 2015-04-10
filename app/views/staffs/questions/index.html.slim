@@ -1,6 +1,8 @@
 h3 Add a Question!
 
-= link_to 'New Question!', new_staffs_question_path(id: nil)
+= link_to 'New Multiple Choice Question!', new_staffs_question_path(id: nil, question_type: "multiple_choice")
+br
+= link_to 'New Short Answer Question!', new_staffs_question_path(id: nil, question_type: "short_answer")
 
 h3 Question Bank:
 
