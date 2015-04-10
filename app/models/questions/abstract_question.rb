@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: new_questions
+# Table name: other_questions
 #
 #  id         :integer          not null, primary key
 #  content    :text
@@ -17,6 +17,17 @@ class AbstractQuestion < ActiveRecord::Base
   has_many :quizzes, through: :relationships, foreign_key: 'quiz_id'
 
   serialize :options, JSON
+
+# some metaprogramming for easy attribute access?
+  def method_missing(method_sym, argument)
+    if method_sym.to_s =~ /^opt_(.*)=$/
+      options[$1.to_sym] = argument
+    elsif method_sym.to_s =~ /^opt_(.*)$/
+      options[$1.to_sym]
+    else
+      super
+    end
+  end
 
   def to_s
     "Question Lesson #{lesson}, #{difficulty}"
@@ -43,5 +54,8 @@ class AbstractQuestion < ActiveRecord::Base
   	return 0
   end
 
+  def partial
+    self.class.name
+  end
 
 end
