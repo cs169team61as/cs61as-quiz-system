@@ -1,16 +1,23 @@
 require 'spec_helper'
 
 class SampleQuestion < AbstractQuestion
-	def initialize(question, answer)
-		options = {:opt_answer => answer.to_s}
+	def build(question_text, answer)
+		super()
+		self.content = question_text
+		self.options[:answer] = answer.to_s
 	end
 end
 
 describe "SampleQuestion inherited from AbstractQuestion" do
 
-	let(:sample_text) {"What's the meaning of life?"}
-	let(:sample_answer) {"42"}
-  	let(:question) { SampleQuestion.new sample_text, sample_answer }
+	let!(:sample_text) {"What's the meaning of life?"}
+	let!(:sample_answer) {"42"}
+  	let!(:question) do 
+  		q = SampleQuestion.new
+  		q.build sample_text, sample_answer 
+  		q
+  	end
+
   	let(:sample_comment) {"Some random comment that shouldn't be there"}
 
 	it "should have a credit given for its completion"
@@ -25,7 +32,15 @@ describe "SampleQuestion inherited from AbstractQuestion" do
 		expect(question.opt_comment).to eq(sample_comment)
 	end
 
-	it "should be able to store the metadata in the database and retrieve it back"
+	it "should be able to store the metadata in the database and retrieve it back" do
+		q = SampleQuestion.new
+  		q.build sample_text, sample_answer
+  		q.opt_blah = sample_comment
+  		q.save
+  		expect(q.id).not_to be_nil
+  		q2 = SampleQuestion.find(q.id)
+  		expect(q2.opt_blah).to eq(sample_comment)
+	end
 
 	it "should have the autograde() function" do
 		begin
