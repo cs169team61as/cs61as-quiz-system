@@ -9,6 +9,7 @@
 #  lesson     :string(255)      default("")
 #  difficulty :string(255)
 #  options    :text
+#  type       :string
 #
 
 class AbstractQuestion < ActiveRecord::Base

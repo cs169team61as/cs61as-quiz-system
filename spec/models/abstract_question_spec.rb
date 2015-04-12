@@ -6,8 +6,7 @@ class SampleQuestion < AbstractQuestion
 	def build(question_text, answer)
 		super()
 		self.content = question_text
-		# please only use string hash keys
-		self.options["answer"] = answer.to_s
+		self.options["answer"] = answer.to_s # please only use string hash keys
 	end
 end
 
