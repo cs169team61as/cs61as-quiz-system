@@ -18,6 +18,10 @@ class AbstractQuestion < ActiveRecord::Base
   has_many :grades
   has_many :submissions
 
+  # some legacy relations so the controllers need less refactoring
+  has_one :rubric, dependent: :destroy
+  has_one :solution, dependent: :destroy
+
   serialize :options, JSON
 
   self.table_name = "questions_v2"
@@ -25,7 +29,7 @@ class AbstractQuestion < ActiveRecord::Base
 # Initialize the default field values
   def build
     self.content = "(empty question)"
-    self.options = Hash.new
+    self.options = HashWithIndifferentAccess.new
     return
   end
 
@@ -35,13 +39,23 @@ class AbstractQuestion < ActiveRecord::Base
 # Sets the solution to some value (when the question is created)
   def solution=(arg); opt_solution = arg; end
 
+# Macro that allows you to define option accessors such as:
+# option_accessor :answer, :comments, :blah
+
+  def self.option_accessor(*args)
+    args.each do |arg|
+      self.class_eval "def #{arg}; options[\"#{arg}\"]; end"
+      self.class_eval "def #{arg}=(val); options[\"#{arg}\"]=val; end"
+    end
+  end
+
 # Defines accessors for variables named opt_(.*)
 # The variables are stored in the option hash.
   def method_missing(method_sym, *arguments, &block)
     if method_sym.to_s =~ /^opt_(.*)=$/
-      options[$1.to_sym] = arguments.first
+      options[$1] = arguments.first
     elsif method_sym.to_s =~ /^opt_(.*)$/
-      return options[$1.to_sym]
+      return options[$1]
     else
       super
     end
