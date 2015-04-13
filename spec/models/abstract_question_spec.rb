@@ -9,10 +9,8 @@ describe "SampleQuestion inherited from AbstractQuestion" do
 
 	let!(:sample_text) {"What's the meaning of life?"}
 	let!(:sample_answer) {"42"}
-  	let!(:question) do 
-  		q = SampleQuestion.new
-  		q.build :content => sample_text, :answer => sample_answer 
-  		q
+  	let!(:question) do
+  		SampleQuestion.build :content => sample_text, :answer => sample_answer
   	end
 
   	let(:sample_comment) {"Some random comment that shouldn't be there"}
@@ -37,8 +35,7 @@ describe "SampleQuestion inherited from AbstractQuestion" do
 	end
 
 	it "should be able to store the metadata in the database and retrieve it back" do
-		q = SampleQuestion.new
-  		q.build :content => sample_text, :answer => sample_answer
+		q = SampleQuestion.build :content => sample_text, :answer => sample_answer
   		q.opt_blah = sample_comment
   		q.opt2 = "some value"
   		q.save
