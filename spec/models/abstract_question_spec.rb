@@ -3,11 +3,6 @@ require 'spec_helper'
 class SampleQuestion < AbstractQuestion
 	option_accessor :opt1, :opt2
 
-	def build(question_text, answer)
-		super()
-		self.content = question_text
-		self.options["answer"] = answer.to_s # please only use string hash keys
-	end
 end
 
 describe "SampleQuestion inherited from AbstractQuestion" do
@@ -16,7 +11,7 @@ describe "SampleQuestion inherited from AbstractQuestion" do
 	let!(:sample_answer) {"42"}
   	let!(:question) do 
   		q = SampleQuestion.new
-  		q.build sample_text, sample_answer 
+  		q.build :content => sample_text, :answer => sample_answer 
   		q
   	end
 
@@ -43,13 +38,14 @@ describe "SampleQuestion inherited from AbstractQuestion" do
 
 	it "should be able to store the metadata in the database and retrieve it back" do
 		q = SampleQuestion.new
-  		q.build sample_text, sample_answer
+  		q.build :content => sample_text, :answer => sample_answer
   		q.opt_blah = sample_comment
   		q.opt2 = "some value"
   		q.save
 
   		expect(q.id).not_to be_nil
   		q2 = SampleQuestion.find(q.id)
+  		expect(q2.content).to eq(sample_text)
   		expect(q2.opt_blah).to eq(sample_comment)
   		expect(q2.opt2).to eq("some value")
 	end
