@@ -14,11 +14,13 @@ class Solution < ActiveRecord::Base
   belongs_to :question
 
   def content
-  	self.queston.solution
+  	self.question.solution
   end
 
-  def content=(val)
-  	self.queston.solution = val
-  end
+# this breaks factorygirl
+  # def content=(val)
+  # 	self.question.solution = val
+  # 	write_attribute(:solution, val)
+  # end
 
 end

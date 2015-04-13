@@ -13,11 +13,14 @@ class Rubric < ActiveRecord::Base
   belongs_to :question
 
   def rubric
-  	self.queston.rubric
+  	self.question.rubric
   end
 
-  def rubric=(val)
-  	self.queston.rubric = val
-  end
+
+# this breaks factorygirl
+#   def rubric=(val)
+#   	self.question.rubric = val
+#   	write_attribute(:rubric, val)
+#   end
 
 end
