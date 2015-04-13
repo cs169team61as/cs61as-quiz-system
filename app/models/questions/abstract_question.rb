@@ -19,9 +19,11 @@ class AbstractQuestion < ActiveRecord::Base
   has_many :grades
   has_many :submissions
 
-  # some legacy relations so the controllers need less refactoring
+# ------ TODO: please refactor me -------
+# Place this stuff in the options hash
   has_one :rubric, dependent: :destroy
   has_one :solution, dependent: :destroy
+# ---------------------------------------
 
   serialize :options, JSON
 
@@ -40,11 +42,14 @@ class AbstractQuestion < ActiveRecord::Base
     end
   end
 
-# Return some sort of solution for the partial to render
-  def solution; opt_solution; end
+# TODO: refactor me
+# Return some text that will go to the rubtic text field
+  def make_rubric; "I'm an abstract question so I don't have a rubric"; end
 
-# Sets the solution to some value (when the question is created)
-  def solution=(arg); opt_solution = arg; end
+# TODO: refactor me
+# Return some text that will go to the solution text field
+  def make_solution; "I'm an abstract question so I don't have a solution"; end
+
 
 # Macro that allows you to define option accessors such as:
 # option_accessor :answer, :comments, :blah
