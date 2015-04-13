@@ -13,7 +13,7 @@
 #
 
 class AbstractQuestion < ActiveRecord::Base
-  
+
   has_many :relationships, dependent: :destroy
   has_many :quizzes, through: :relationships, foreign_key: 'quiz_id'
   has_many :grades
@@ -30,18 +30,20 @@ class AbstractQuestion < ActiveRecord::Base
   self.table_name = "questions_v2"
 
 # Initialize the default field values and populate the options field
-  def build(h={})
-    self.content = "(empty question)"
-    self.options = Hash.new
-    options["rubric"] = "I don't have a rubric (#{self.partial})"
-    options["solution"] = "I don't have a solution (#{self.partial})"
+  def self.build(h={})
+    q = self.new
+    q.content = "(empty question)"
+    q.options = Hash.new
+    q.options["rubric"] = "I don't have a rubric (#{q.partial})"
+    q.options["solution"] = "I don't have a solution (#{q.partial})"
 
     h.each do |key, value|
       if key == :content
-        self.content = value
+        q.content = value
       end
-      self.options[key.to_s] = value
+      q.options[key.to_s] = value
     end
+    return q
   end
 
 # ======= TODO: refactor me ========
