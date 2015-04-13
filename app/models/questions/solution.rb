@@ -14,13 +14,20 @@ class Solution < ActiveRecord::Base
   belongs_to :question
 
   def content
-  	self.question.solution
+  	if (self.question)
+  		self.question.solution
+  	else
+  		read_attribute(:content)
+  	end
   end
 
 # this breaks factorygirl
-  # def content=(val)
-  # 	self.question.solution = val
-  # 	write_attribute(:solution, val)
-  # end
+  def content=(val)
+	if (self.question)
+  		self.question.solution = val
+  	else
+  		write_attribute(:content, val)
+  	end
+  end
 
 end
