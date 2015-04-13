@@ -32,7 +32,9 @@ class AbstractQuestion < ActiveRecord::Base
 # Initialize the default field values and populate the options field
   def build(h={})
     self.content = "(empty question)"
-    self.options = HashWithIndifferentAccess.new
+    self.options = Hash.new
+    options["rubric"] = "I don't have a rubric (#{self.partial})"
+    options["solution"] = "I don't have a solution (#{self.partial})"
 
     h.each do |key, value|
       if key == :content
@@ -42,14 +44,16 @@ class AbstractQuestion < ActiveRecord::Base
     end
   end
 
-# TODO: refactor me
+# ======= TODO: refactor me ========
 # Return some text that will go to the rubtic text field
-  def make_rubric; "I'm an abstract question so I don't have a rubric"; end
+  def rubric; options["rubric"]; end
+  def rubric=(val); options["rubric"]=val; end
 
-# TODO: refactor me
 # Return some text that will go to the solution text field
-  def make_solution; "I'm an abstract question so I don't have a solution"; end
+  def solution; options["solution"]; end
+  def solution=(val); options["solution"]=val; end
 
+# ==================================
 
 # Macro that allows you to define option accessors such as:
 # option_accessor :answer, :comments, :blah

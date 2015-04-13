@@ -18,9 +18,7 @@ module Staffs
       end
       @lesson = 'true'
       question.solution = Solution.new
-      question.solution.content = question.make_content
       question.rubric = Rubric.new
-      question.rubric.rubric = question.make_rubric
       @quest_form = NewQuestionForm.new question
     end
 
