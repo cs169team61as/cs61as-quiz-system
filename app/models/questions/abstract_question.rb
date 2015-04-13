@@ -27,11 +27,17 @@ class AbstractQuestion < ActiveRecord::Base
 
   self.table_name = "questions_v2"
 
-# Initialize the default field values
-  def build
+# Initialize the default field values and populate the options field
+  def build(h={})
     self.content = "(empty question)"
     self.options = HashWithIndifferentAccess.new
-    return
+
+    h.each do |key, value|
+      if key == :content
+        self.content = value
+      end
+      self.options[key.to_s] = value
+    end
   end
 
 # Return some sort of solution for the partial to render
