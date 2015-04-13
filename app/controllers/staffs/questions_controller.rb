@@ -10,8 +10,11 @@ module Staffs
         question = @quiz.questions.new lesson: @quiz.lesson
         @add_pts = 'true'
       else
-        question = Question.new
+        question = AbstractQuestion.new
         @add_pts = 'false'
+      end
+      if params[:question_type]
+        @question_type = params[:question_type]
       end
       @lesson = 'true'
       question.solution = Solution.new
@@ -21,7 +24,7 @@ module Staffs
 
     def create
       quiz = assign_params
-      question = CreateQuestion.call question_params.except :points
+      question = CreateQuestion.call question_params.except :points, :solution
       @quest_form = NewQuestionForm.new question
       if @quest_form.validate_and_save question_params
         flash[:success] = 'Created Question!'
@@ -36,7 +39,7 @@ module Staffs
     end
 
     def show
-      @question = Question.find params[:id]
+      @question = AbstractQuestion.find params[:id]
     end
 
     def edit
@@ -71,7 +74,7 @@ module Staffs
     end
 
     def bank
-      @questions = Question.where(lesson: params[:lesson])
+      @questions = AbstractQuestion.where(lesson: params[:lesson])
                            .includes(:solution).includes(:rubric)
                            .page params[:page]
       @requests = QuizRequest.all
@@ -93,7 +96,7 @@ module Staffs
 
     def download
       file = Tempfile.new('questions')
-      Question.get_assigned_questions.each do |q|
+      AbstractQuestion.get_assigned_questions.each do |q|
         file.puts "Lesson: #{q.lesson} \n"
         file.puts "Difficulty: #{q.difficulty}\n"
         file.puts "Content:\n#{q.content.truncate 100 } \n\n"
@@ -109,7 +112,7 @@ module Staffs
     private
 
     def set_question
-      @question = Question.find params[:id]
+      @question = AbstractQuestion.find params[:id]
     end
 
     # Bad - explicitly require params
