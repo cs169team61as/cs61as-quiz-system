@@ -27,6 +27,10 @@ module ApplicationHelper
     Relationship.find_by(question_id: question, quiz_id: quiz).points
   end
 
+  def get_type(question)
+    AbstractQuestion.find_by(question_id: question).partial
+  end
+
   def get_selections_for_request(request)
     quizzes = Quiz.where lesson: request.lesson, retake: request.retake, is_draft: false
     quizzes.map { |q| [q.to_s, q.id] }.unshift ["Random", nil]
