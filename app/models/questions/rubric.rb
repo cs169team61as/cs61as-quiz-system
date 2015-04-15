@@ -10,11 +10,11 @@
 #
 
 class Rubric < ActiveRecord::Base
-  belongs_to :question
+  belongs_to :question, :class_name => "AbstractQuestion", :foreign_key => "question_id"
 
   def rubric
   	if (self.question)
-  		self.question.rubric
+  		self.question.my_rubric
   	else
   		read_attribute(:rubric)
   	end
@@ -24,10 +24,9 @@ class Rubric < ActiveRecord::Base
 # this breaks factorygirl
    def rubric=(val)
    	if (self.question)
-   		self.question.rubric = val
+   		self.question.my_rubric = val
    	else
    		write_attribute(:rubric, val)
    	end
    end
-
 end

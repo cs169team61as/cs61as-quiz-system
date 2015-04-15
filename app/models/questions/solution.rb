@@ -11,11 +11,11 @@
 
 # Solution model
 class Solution < ActiveRecord::Base
-  belongs_to :question
+  belongs_to :question, :class_name => "AbstractQuestion", :foreign_key => "question_id"
 
   def content
   	if (self.question)
-  		self.question.solution
+  		self.question.my_solution
   	else
   		read_attribute(:content)
   	end
@@ -24,7 +24,7 @@ class Solution < ActiveRecord::Base
 # this breaks factorygirl
   def content=(val)
 	if (self.question)
-  		self.question.solution = val
+  		self.question.my_solution = val
   	else
   		write_attribute(:content, val)
   	end

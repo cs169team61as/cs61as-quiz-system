@@ -15,5 +15,5 @@
 class Relationship < ActiveRecord::Base
   default_scope -> { order 'number ASC' }
   belongs_to :quiz
-  belongs_to :question
+  belongs_to :question, :class_name => "AbstractQuestion", :foreign_key => "question_id"
 end

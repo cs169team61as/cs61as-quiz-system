@@ -14,10 +14,10 @@
 
 class AbstractQuestion < ActiveRecord::Base
 
-  has_many :relationships, dependent: :destroy
+  has_many :relationships, dependent: :destroy, :foreign_key => 'question_id'
   has_many :quizzes, through: :relationships, foreign_key: 'quiz_id'
-  has_many :grades
-  has_many :submissions
+  has_many :grades, :foreign_key => 'question_id'
+  has_many :submissions, :foreign_key => 'question_id'
 
 # ------ TODO: please refactor me -------
 # Place this stuff in the options hash
@@ -48,12 +48,12 @@ class AbstractQuestion < ActiveRecord::Base
 
 # ======= TODO: refactor me ========
 # Return some text that will go to the rubtic text field
-  def rubric; options["rubric"]; end
-  def rubric=(val); options["rubric"]=val; end
+  def my_rubric; options["rubric"]; end
+  def my_rubric=(val); options["rubric"]=val; end
 
 # Return some text that will go to the solution text field
-  def solution; options["solution"]; end
-  def solution=(val); options["solution"]=val; end
+  def my_solution; options["solution"]; end
+  def my_solution=(val); options["solution"]=val; end
 
 # ==================================
 
