@@ -14,7 +14,7 @@
 # Submission model
 class Submission < ActiveRecord::Base
   belongs_to :quiz
-  belongs_to :question
+  belongs_to :question, :class_name => "AbstractQuestion", :foreign_key => "question_id"
   belongs_to :student
 
   delegate :content, to: :question, prefix: true
