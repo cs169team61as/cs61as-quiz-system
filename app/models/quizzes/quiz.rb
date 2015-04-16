@@ -15,7 +15,7 @@
 class Quiz < ActiveRecord::Base
   has_many :students, through: :taken_quizzes, foreign_key: 'quiz_id'
   has_many :taken_quizzes
-  has_many :questions, through: :relationships, foreign_key: 'question_id'
+  has_many :questions, through: :relationships, :class_name => "AbstractQuestion", foreign_key: 'question_id'
   has_many :relationships, dependent: :destroy
   has_many :submissions
   has_many :quiz_requests

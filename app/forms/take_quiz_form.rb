@@ -6,12 +6,11 @@ class TakeQuizForm < Reform::Form
 
   collection :new_submissions do
     property :question_content, virtual: true
-
     property :quiz_id
     property :question_id
     property :student_id
     property :content
-
+    property :question
     validates :quiz_id, :question_id, :student_id, presence: true
   end
 
