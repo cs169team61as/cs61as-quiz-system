@@ -21,8 +21,8 @@ class AbstractQuestion < ActiveRecord::Base
 
 # ------ TODO: please refactor me -------
 # Place this stuff in the options hash
-  has_one :rubric, dependent: :destroy
-  has_one :solution, dependent: :destroy
+  has_one :rubric, dependent: :destroy, :foreign_key => 'question_id'
+  has_one :solution, dependent: :destroy, :foreign_key => 'question_id'
 # ---------------------------------------
 
   serialize :options, JSON
