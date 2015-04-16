@@ -15,17 +15,19 @@ p After you click Begin, you cannot use the computer for anything else!
      = simple_form_for @quiz_form, url: submit_students_quizzes_path,
                         html: { id: 'take_quiz_form', method: :post } do |f|
         = f.fields_for :new_submissions do |sf|
+          - submission = sf.object             
           br
-          strong= "Question #{get_number sf.object.quiz_id, sf.object.question_id}:"
+          strong= "Question #{get_number submission.quiz_id, submission.question_id}:"
           br
           br
-          em= "Points possible: #{get_pts sf.object.quiz_id, sf.object.question_id}"
+          em= "Points possible: #{get_pts submission.quiz_id, submission.question_id}"
           br
           br
           = markdown sf.object.question_content
           br
           div
-            = sf.text_area :content, label: false, class: 'textedit expand saves', id: "#{sf.object.question_id}"
+            / = sf.text_area :content, label: false, class: 'textedit expand saves', id: "#{q.question_id}"
+            = render partial: submission.question.partial, object: sf, as: 'sf'
             br
         br
         br

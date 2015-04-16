@@ -82,8 +82,14 @@ class AbstractQuestion < ActiveRecord::Base
 # How much credit should the student receive for the correct answer
   def full_credit(quiz_id); points(quiz_id); end
 
-# Returns the credit given for the answer
-  def autograde(answer); return 0; end
+# Returns a hash that contains the credit given for the answer
+# and the comment of why this much credit was given
+  def autograde(answer)
+    res[:credit] = 0
+    res[:comment] = "I don't know how to autograde this type yet (#{q.partial})"
+    return res
+  end
+
   def grade(answer); autograde(answer); end
 
 # Returns the name of the partial to render
