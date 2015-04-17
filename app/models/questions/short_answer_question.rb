@@ -16,14 +16,14 @@ class ShortAnswerQuestion < AbstractQuestion
   def give_full_credit(msg, quiz_id)
     res = Hash.new
     res[:credit] = full_credit(quiz_id)
-    res[:comment] = msg + " (#{q.partial} autograder)"
+    res[:comment] = msg + " (#{self.partial} autograder)"
     res
   end
 
   def give_no_credit(msg)
     res = Hash.new
     res[:credit] = 0
-    res[:comment] = msg + " (#{q.partial} autograder)"
+    res[:comment] = msg + " (#{self.partial} autograder)"
     res
   end
 end
