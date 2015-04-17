@@ -9,13 +9,30 @@ describe "SampleQuestion inherited from AbstractQuestion" do
 
 	let!(:sample_text) {"What's the meaning of life?"}
 	let!(:sample_answer) {"42"}
-  	let!(:question) do
-  		SampleQuestion.build :content => sample_text, :answer => sample_answer
+  	let!(:question) do 
+  		q = SampleQuestion.build :content => sample_text, :answer => sample_answer 
+  		q.save
+  		q
   	end
 
   	let(:sample_comment) {"Some random comment that shouldn't be there"}
 
-	it "should have a credit given for its completion"
+  	let!(:quiz) do
+   		pq = build :quiz, retake: false, is_draft: false
+    	pq.save(:validate => false)
+    	pq.relationships.create!  question_id: question.id,
+                              number: 1,
+                              points: 10
+    	pq
+  	end
+
+	it "should have a credit given for its completion" do
+		begin
+			grade = question.full_credit(quiz)
+		rescue
+			fail
+		end
+	end
 
 	it "should have a question text" do
 		expect(question.content).to eq(sample_text)
