@@ -92,7 +92,7 @@ class AbstractQuestion < ActiveRecord::Base
   def autograde(answer, quiz_id)
     res = Hash.new
     res[:credit] = 0
-    res[:comment] = "I don't know how to autograde this type yet (#{q.partial})"
+    res[:comment] = "I don't know how to autograde this type yet (#{self.partial})"
     return res
   end
 
