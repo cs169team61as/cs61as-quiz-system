@@ -21,6 +21,15 @@ is true when there is only one choice needs to be selected to answer.
 
 :answers    Hash of all the potential answers and their respective scores
 
+Sample Question: "Which numbers are larger than 0 smaller than 2?"
+
+  :choices is ["0"=>false, "1"=>true, "2" =>true]
+  :single_answer is false
+  :answers is [[false,true,true]=>2, [false,true,false]=>1
+                , [false,false,true]=>1, [true,true,true]=>1]
+
+  Note: Answer representation up for discussion/change
+
 =end
 
   option_accessor :choices, :single_answer, :answers
