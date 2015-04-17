@@ -37,12 +37,17 @@ class AbstractQuestion < ActiveRecord::Base
     q.options["rubric"] = "I don't have a rubric (#{q.partial})"
     q.options["solution"] = "I don't have a solution (#{q.partial})"
 
-    h.each do |key, value|
-      if key == :content
-        q.content = value
+    [:content, :lesson, :difficulty].each do |a|
+      if h[a]
+        q.send "#{a}=", h[a]
+        h.delete a
       end
+    end
+
+    h.each do |key, value|
       q.options[key.to_s] = value
     end
+    
     return q
   end
 
@@ -84,13 +89,14 @@ class AbstractQuestion < ActiveRecord::Base
 
 # Returns a hash that contains the credit given for the answer
 # and the comment of why this much credit was given
-  def autograde(answer)
+  def autograde(answer, quiz_id)
+    res = Hash.new
     res[:credit] = 0
     res[:comment] = "I don't know how to autograde this type yet (#{q.partial})"
     return res
   end
 
-  def grade(answer); autograde(answer); end
+  def grade(answer, quiz_id); autograde(answer, quiz_id); end
 
 # Returns the name of the partial to render
   def partial; self.class.name.underscore; end
