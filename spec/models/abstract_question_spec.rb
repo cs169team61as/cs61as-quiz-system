@@ -49,7 +49,7 @@ describe "SampleQuestion inherited from AbstractQuestion" do
 
 	it "should have the autograde() function" do
 		begin
-			grade = question.grade(nil)
+			grade = question.grade(nil, 1)
 		rescue
 			fail
 		end

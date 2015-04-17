@@ -20,6 +20,7 @@ module Students
                time_left: quiz_lock.time_left
     end
 
+# Please refactor this method it smells
     def submit
       honest_statement_check = params[:honesty_statement]
       if honest_statement_check == nil
@@ -27,11 +28,13 @@ module Students
         redirect_to take_students_quizzes_path
         return
       end
+
       ql = QuizLock.find_by_student_id(current_user.id)
       if ql.locked
         flash[:error] = 'You wish you could turn this in.'
         redirect_to students_dashboard_path
       else
+
         @quiz_form = TakeQuizForm.new ql.quiz
         inject_current_user_into! params, ql.quiz
         if @quiz_form.validate_and_save params[:quiz]
@@ -47,6 +50,7 @@ module Students
           ql.destroy
           flash[:success] = "Submitted quiz #{@quiz_form.lesson}!"
           redirect_to students_dashboard_path
+
         else
           render 'take'
         end
