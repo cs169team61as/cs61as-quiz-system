@@ -1,7 +1,6 @@
 class MultipleChoiceQuestion < AbstractQuestion
 =begin
 
-
 Multiple Choice Questions can either be select one OR select
 all that apply. This will be defined by option single_answer which
 is true when there is only one choice needs to be selected to answer.
