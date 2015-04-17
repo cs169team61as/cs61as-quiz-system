@@ -36,7 +36,7 @@ FactoryGirl.define do
 
       after(:create) do |quiz, evaluator|
         evaluator.questions_count.times do |n|
-          quiz.questions << create(:question)
+          quiz.questions << create(:short_answer_question)
         end
       end
     end
@@ -53,18 +53,30 @@ FactoryGirl.define do
 
   factory :rubric do
     rubric { Faker::Lorem.paragraph }
-    question
+#    question
   end
 
   factory :solution do
     content { Faker::Lorem.paragraph }
-    question
+#    question
   end
 
   factory :question do
     content { Faker::Lorem.paragraph }
     lesson '1'
     difficulty 'Easy'
+
+    # after(:build) do |question|
+    #   question.solution = create :solution, question: question unless question.solution
+    #   question.rubric = create :rubric, question: question unless question.rubric
+    # end
+  end
+
+  factory :short_answer_question do
+    initialize_with { ShortAnswerQuestion.build({}) }
+    content { Faker::Lorem.paragraph }
+    lesson '1'
+    difficulty "Easy"
 
     after(:build) do |question|
       question.solution = create :solution, question: question unless question.solution
@@ -87,7 +99,7 @@ FactoryGirl.define do
     content { Faker::Lorem.paragraph }
     student
     quiz
-    question
+#    question
   end
 
   factory :taken_quiz do
@@ -103,7 +115,7 @@ FactoryGirl.define do
   factory :grade do
     grade 3
     lesson "1"
-    question
+#    question
     student
   end
 
