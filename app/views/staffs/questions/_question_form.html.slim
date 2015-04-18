@@ -6,6 +6,7 @@
     = hidden_field_tag :quiz_id, quiz_id
     = hidden_field_tag :add_pts, add_pts
     = hidden_field_tag :lesson, lesson
+    = hidden_field_tag "question_type", question_type
     - if lesson == "true"
       = f.input :lesson, collection: Quiz::LESSON_VALUES
       / = f.file_field :photo
@@ -14,10 +15,9 @@
     - if add_pts == "true"
       = label_tag :points, '* Points'
       = text_field_tag :points, points
-- if question_type == "multiple_choice"
-  = render 'multiple_choice', f: f
--else 
-  = render 'short_answer', f: f
+
+= render partial: question_type, object: f, as: 'f'
+
 /!.row
   /!.small-12.columns
     /!= f.input :content, as: :text,

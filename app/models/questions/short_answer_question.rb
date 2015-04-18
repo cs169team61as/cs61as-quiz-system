@@ -11,11 +11,19 @@ class ShortAnswerQuestion < AbstractQuestion
     end
   end
 
-  def type()
-    "short_answer"
+  private
+
+  def give_full_credit(msg, quiz_id)
+    res = Hash.new
+    res[:credit] = full_credit(quiz_id)
+    res[:comment] = msg + " (#{self.partial} autograder)"
+    res
   end
 
-  def human_readable(content)
-    content.try(:[], "answer")
+  def give_no_credit(msg)
+    res = Hash.new
+    res[:credit] = 0
+    res[:comment] = msg + " (#{self.partial} autograder)"
+    res
   end
 end

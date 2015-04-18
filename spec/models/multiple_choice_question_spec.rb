@@ -37,7 +37,10 @@ describe "MultipleChoiceQuestion" do
 		expect(grade({"1" => nil, "3" => nil})).to eq 0
 	end
 
-	it "should return correct human readable content for graders" do
-		expect(question.human_readable({"1" => nil, "2" => nil, "4" => nil})).to eq "Selected answers:\n\n\ * 1\n\ * 2\n * 4\n"
+	it "should not accept chioces without text when building" do
+		q2 = MultipleChoiceQuestion.build :content => "Which of these numbers are even?", 
+			:choices => {"1" => false, "2" => true, "3" => false, "4" => true, "" => false}
+		expect(q2.choices[""]).to be_nil
 	end
+
 end

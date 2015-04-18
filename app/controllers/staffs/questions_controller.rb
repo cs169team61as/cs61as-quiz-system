@@ -11,13 +11,7 @@ module Staffs
         @add_pts = 'true'
       else
         @question_type = params[:question_type]
-        if @question_type == 'multiple_choice'
-          question = MultipleChoiceQuestion.build
-        elsif @question_type == 'short_answer'
-          question = ShortAnswerQuestion.build
-        else
-          question = AbstractQuestion.build
-        end
+        question = @question_type.classify.constantize.build
         @add_pts = 'false'
       end
 
@@ -51,11 +45,7 @@ module Staffs
 
       get_question_options
 
-      if @question.class.name == "MultipleChoiceQuestion"
-        @question_type = "multiple_choice"
-      elsif @question.class.name == "ShortAnswerQuestion"
-        @question_type = "short_answer"
-      end
+      @question_type = @question.type
       @quest_form = EditQuestionForm.new @question
       rlt = Relationship.find_by(quiz_id: params[:quiz_id],
                                  question: @question)

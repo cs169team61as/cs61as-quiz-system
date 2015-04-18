@@ -40,11 +40,8 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
   def self.build(h={})
     q = super
     q.choices ||= Hash.new
+    q.choices = q.choices.reject { |k, v| k == "" }
     q
-  end
-
-  def type()
-    "multiple_choice"
   end
 
   def autograde(content, quiz_id)
@@ -53,27 +50,21 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
     # end
 
     @full_credit = full_credit(quiz_id)
-    score = calculate_score content, quiz_id
+    score = calculate_score(content)
 
     if score
       if score == @full_credit
-        return give_full_credit "The answer matches my solution", quiz_id
+        return give_full_credit "The answer matches my solution"
       else
-        return give_partial_credit score, "The answer partially matches my solition", quiz_id
+        return give_partial_credit(score, "The answer partially matches my solition")
       end
       return give_no_credit "The answer doesn't match my solution"
     end
   end
 
-  def human_readable(content)
-    res = "Selected answers:\n\n"
-    content.each { |text, x| res << " * #{text}\n" }
-    res
-  end
-
   private
 
-  def calculate_score(content, quiz_id)
+  def calculate_score(content)
     total_correct_answers = 0
     choices.each do |key, value|
       total_correct_answers += 1 if value
@@ -88,8 +79,32 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
       end
     end
 
+
     score = pre_score.to_f / total_correct_answers * @full_credit
-    normalize score, quiz_id
+    # puts "pre = #{pre_score}, not_filtered = #{score}, full = #{@full_credit}"
+    score = score >= 0 ? score : 0
+    score = score <= @full_credit ? score : @full_credit
+    score.round(1)
   end
 
+  def give_partial_credit(score, msg)
+    res = Hash.new
+    res[:credit] = score
+    res[:comment] = msg + "(#{self.partial} autograder)"
+    res
+  end
+
+  def give_full_credit(msg)
+    res = Hash.new
+    res[:credit] = @full_credit
+    res[:comment] = msg + "(#{self.partial} autograder)"
+    res
+  end
+
+  def give_no_credit(msg)
+    res = Hash.new
+    res[:credit] = 0
+    res[:comment] = msg + "(#{self.partial} autograder)"
+    res
+  end
 end
