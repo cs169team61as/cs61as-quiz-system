@@ -28,7 +28,7 @@ div
                                                                    quiz_id: @id),
                                                                    method: :post
                 - else
-                  p = link_to 'Edit Question', edit_staffs_question_path(question)
+                  p = link_to 'Edit Question', edit_staffs_question_path(question, :question_type => question.type)
                   p = link_to 'Delete Question', staffs_question_path(question),
                                                                       method: :delete,
                                                  data: { confirm: 'Are you sure?'}

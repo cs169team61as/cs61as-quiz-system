@@ -11,6 +11,10 @@ class ShortAnswerQuestion < AbstractQuestion
     end
   end
 
+  def type()
+    "short_answer"
+  end
+
   private
 
   def give_full_credit(msg, quiz_id)
