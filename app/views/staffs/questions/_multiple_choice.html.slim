@@ -1,1 +1,56 @@
-_multiple_choice.html.slim
+.row
+  .small-12.columns
+    = f.input :content, as: :text,
+                        label: 'Question (parsed as Markdown)',
+                        input_html: { class: 'expand' },
+                        placeholder: 'Add Question'
+
+    = f.fields_for :solution do |sf|
+      = sf.hidden_field :question_id, value: f.object.id
+      br
+
+      table width = "100%"
+        tr
+          td = "A"
+          td = sf.input :content, as: :text,
+                           label: 'Solution (parsed as Markdown)',
+                           input_html: { class: 'expand' },
+                           placeholder: 'Add Solution'
+          td = check_box_tag 'correct', value: 'correct'
+        tr
+          td = "B"
+          td = sf.input :content, as: :text,
+                           label: 'Solution (parsed as Markdown)',
+                           input_html: { class: 'expand' },
+                           placeholder: 'Add Solution'
+          td = check_box_tag 'correct'
+        tr
+          td = "C"
+          td = sf.input :content, as: :text,
+                           label: 'Solution (parsed as Markdown)',
+                           input_html: { class: 'expand' },
+                           placeholder: 'Add Solution'
+          td = check_box_tag 'correct'
+        tr
+          td = "D"
+          td = sf.input :content, as: :text,
+                           label: 'Solution (parsed as Markdown)',
+                           input_html: { class: 'expand' },
+                           placeholder: 'Add Solution'
+          td = check_box_tag 'correct'
+        tr
+          td = "E"
+          td = sf.input :content, as: :text,
+                           label: 'Solution (parsed as Markdown)',
+                           input_html: { class: 'expand' },
+                           placeholder: 'Add Solution'
+          td = check_box_tag 'correct'
+
+
+    = f.fields_for :rubric do |sf|
+      = sf.hidden_field :question_id, value: f.object.id
+      br
+      = sf.input :rubric, as: :text,
+                          label: 'Rubric (parsed as Markdown)',
+                          input_html: { class: 'expand' },
+                          placeholder: 'Add Rubric'
