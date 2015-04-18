@@ -42,5 +42,8 @@ describe "MultipleChoiceQuestion" do
 			:choices => {"1" => false, "2" => true, "3" => false, "4" => true, "" => false}
 		expect(q2.choices[""]).to be_nil
 	end
-
+	
+	it "should return correct human readable content for graders" do
+		expect(question.human_readable({"1" => nil, "2" => nil, "4" => nil})).to eq "Selected answers:\n\n\ * 1\n\ * 2\n * 4\n"
+	end
 end
