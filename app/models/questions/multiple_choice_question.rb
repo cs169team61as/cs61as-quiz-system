@@ -37,6 +37,12 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
 
   option_accessor :choices, :single_answer, :answers
 
+  def self.build(h={})
+    q = super
+    q.choices ||= Hash.new
+    q
+  end
+
   def autograde(content, quiz_id)
     # if (answers == nil)
     #   return give_no_credit "I don't have a solution for this question"
@@ -72,9 +78,12 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
       end
     end
 
-    score = pre_score / total_correct_answers * @full_credit
+
+    score = pre_score.to_f / total_correct_answers * @full_credit
+    # puts "pre = #{pre_score}, not_filtered = #{score}, full = #{@full_credit}"
     score = score >= 0 ? score : 0
     score = score <= @full_credit ? score : @full_credit
+    score.round(1)
   end
 
   def give_partial_credit(score, msg)
