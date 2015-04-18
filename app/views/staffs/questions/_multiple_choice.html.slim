@@ -5,11 +5,14 @@
                         input_html: { class: 'expand' },
                         placeholder: 'Add Question'
 
+    hidden_field_tag 'question_type', 'multiple_choice'
     = f.fields_for :solution do |sf|
       = sf.hidden_field :question_id, value: f.object.id
+
       br
 
       table width = "100%"
+
         tr
           td = "A"
           td = sf.input :content, as: :text,
