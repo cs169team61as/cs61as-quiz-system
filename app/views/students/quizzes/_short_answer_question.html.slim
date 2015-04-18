@@ -1,2 +1,6 @@
 - q = sf.object.question
-= sf.text_area :content, label: false, class: 'textedit expand saves', id: "#{q.id}"
+- for_id = sf.options[:child_index]
+- content_name = "#{sf.object_name}[content]"
+- answer_name = content_name + "[answer]"
+
+= text_area_tag answer_name, nil, class: 'textedit expand saves', id: "#{q.id}", label: false
