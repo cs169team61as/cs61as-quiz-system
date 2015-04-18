@@ -46,8 +46,7 @@ class AbstractQuestion < ActiveRecord::Base
 
     h.each do |key, value|
       q.options[key.to_s] = value
-    end
-    
+    end    
     return q
   end
 

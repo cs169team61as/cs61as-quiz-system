@@ -23,7 +23,7 @@ class EditQuestionForm < Reform::Form
   validate :check_rubric
 
   def validate_and_save(question_params)
-    question = Question.find id
+    question = AbstractQuestion.find id
     question.solution.update_attributes question_params[:solution_attributes]
     question.rubric.update_attributes question_params[:rubric_attributes]
     question_params = update_points(question_params)

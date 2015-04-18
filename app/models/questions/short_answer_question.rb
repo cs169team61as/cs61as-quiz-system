@@ -26,4 +26,5 @@ class ShortAnswerQuestion < AbstractQuestion
     res[:comment] = msg + " (#{self.partial} autograder)"
     res
   end
+
 end

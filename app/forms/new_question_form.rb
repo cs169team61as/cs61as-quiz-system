@@ -1,6 +1,6 @@
 # Edit question here
 class NewQuestionForm < Reform::Form
-  model :question
+  model :abstract_question
 
   property :id
   property :content
