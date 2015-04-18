@@ -12,10 +12,6 @@ class ShortAnswerQuestion < AbstractQuestion
     end
   end
 
-  def type()
-    "short_answer"
-  end
-
   def human_readable(content)
     content.try(:[], "answer")
   end
