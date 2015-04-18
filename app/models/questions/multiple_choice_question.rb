@@ -18,7 +18,7 @@ is true when there is only one choice needs to be selected to answer.
             scores and correctness depending on the rubric.
 
 :single_answer  True when MCQ is a single answer question, false otherwise
-(maybe we should just inherit from this class, to update the 
+(maybe we should just inherit from this class, to update the
 partials name automatically, like
 SimpleChoiceQuestion < MultipleChoiceQuestion
 
@@ -41,6 +41,10 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
     q = super
     q.choices ||= Hash.new
     q
+  end
+
+  def type()
+    "multiple_choice"
   end
 
   def autograde(content, quiz_id)
@@ -66,7 +70,7 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
   def calculate_score(content)
     total_correct_answers = 0
     choices.each do |key, value|
-      total_correct_answers += 1 if value 
+      total_correct_answers += 1 if value
     end
 
     pre_score = 0

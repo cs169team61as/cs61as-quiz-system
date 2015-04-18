@@ -10,12 +10,17 @@ module Staffs
         question = @quiz.questions.new lesson: @quiz.lesson
         @add_pts = 'true'
       else
-        question = AbstractQuestion.new
+        @question_type = params[:question_type]
+        if @question_type == 'multiple_choice'
+          question = MultipleChoiceQuestion.build
+        elsif @question_type == 'short_answer'
+          question = ShortAnswerQuestion.build
+        else
+          question = AbstractQuestion.build
+        end
         @add_pts = 'false'
       end
-      if params[:question_type]
-        @question_type = params[:question_type]
-      end
+
       @lesson = 'true'
       question.solution = Solution.new
       question.rubric = Rubric.new
@@ -43,7 +48,14 @@ module Staffs
     end
 
     def edit
+
       get_question_options
+
+      if @question.class.name == "MultipleChoiceQuestion"
+        @question_type = "multiple_choice"
+      elsif @question.class.name == "ShortAnswerQuestion"
+        @question_type = "short_answer"
+      end
       @quest_form = EditQuestionForm.new @question
       rlt = Relationship.find_by(quiz_id: params[:quiz_id],
                                  question: @question)
@@ -136,7 +148,7 @@ module Staffs
     end
 
     def get_question_options
-      @add_pts, @lesson, @quiz_id = params[:add_pts], params[:lesson], params[:quiz_id]
+      @add_pts, @lesson, @quiz_id, @question_type = params[:add_pts], params[:lesson], params[:quiz_id], params[:question_type]
     end
   end
 end
