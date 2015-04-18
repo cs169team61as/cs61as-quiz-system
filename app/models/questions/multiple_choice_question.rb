@@ -65,6 +65,12 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
     end
   end
 
+  def human_readable(content)
+    res = "Selected answers:\n\n"
+    content.each { |text, x| res << " * #{text}\n" }
+    res
+  end
+
   private
 
   def calculate_score(content, quiz_id)

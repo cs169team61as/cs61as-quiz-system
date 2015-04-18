@@ -15,5 +15,5 @@
 # Grading class
 class Grade < ActiveRecord::Base
   belongs_to :student
-  belongs_to :question
+  belongs_to :question, :class_name => "AbstractQuestion", :foreign_key => "question_id"
 end

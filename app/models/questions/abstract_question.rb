@@ -11,6 +11,18 @@
 #  options    :text
 #  type       :string
 #
+=begin
+  Methods:
+    build(options)
+    option_accessor
+    partial
+    autograde/grade(content)
+    give_full_credit(msg, quiz_id)
+    give_partial_credit(score, msg, quiz_id)
+    give_no_credit(msg)
+    human_readable(content)
+
+=end
 
 class AbstractQuestion < ActiveRecord::Base
 
@@ -109,7 +121,7 @@ class AbstractQuestion < ActiveRecord::Base
     score = normalize(score, quiz_id)
     res = Hash.new
     res[:credit] = score
-    res[:comment] = msg + "(#{self.partial} autograder)"
+    res[:comment] = msg + " (#{self.partial} autograder)"
     res
   end
 
@@ -130,6 +142,13 @@ class AbstractQuestion < ActiveRecord::Base
     res[:comment] = msg + " (#{self.partial} autograder)"
     res
   end
+
+# Represent the student's aswer as a string
+# content - student's answer as a hash
+  def human_readable(content)
+    content.to_s
+  end
+
 
 # Returns the name of the partial to render
   def partial; self.class.name.underscore; end
