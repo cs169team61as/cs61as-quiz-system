@@ -16,6 +16,7 @@ class Submission < ActiveRecord::Base
   belongs_to :quiz
   belongs_to :question, :class_name => "AbstractQuestion", :foreign_key => "question_id"
   belongs_to :student
+  serialize :content, JSON
 
   delegate :content, to: :question, prefix: true
 end

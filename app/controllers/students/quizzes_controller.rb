@@ -33,7 +33,8 @@ module Students
       if ql.locked
         flash[:error] = 'You wish you could turn this in.'
         redirect_to students_dashboard_path
-      else
+      else        
+        #binding.pry
 
         @quiz_form = TakeQuizForm.new ql.quiz
         inject_current_user_into! params, ql.quiz

@@ -84,9 +84,6 @@ class AbstractQuestion < ActiveRecord::Base
     end
   end
 
-# How much credit should the student receive for the correct answer
-  def full_credit(quiz_id); points(quiz_id); end
-
 # Returns a hash that contains the credit given for the answer
 # and the comment of why this much credit was given
   def autograde(answer, quiz_id)
@@ -95,8 +92,7 @@ class AbstractQuestion < ActiveRecord::Base
     res[:comment] = "I don't know how to autograde this type yet (#{self.partial})"
     return res
   end
-
-  def grade(answer, quiz_id); autograde(answer, quiz_id); end
+  alias :grade :autograde
 
 # Returns the name of the partial to render
   def partial; self.class.name.underscore; end
@@ -118,5 +114,5 @@ class AbstractQuestion < ActiveRecord::Base
   def points(quiz_id)
     relationships.find_by_quiz_id(quiz_id).points
   end
-
+  alias :full_credit :points
 end
