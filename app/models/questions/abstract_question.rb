@@ -87,12 +87,49 @@ class AbstractQuestion < ActiveRecord::Base
 # Returns a hash that contains the credit given for the answer
 # and the comment of why this much credit was given
   def autograde(answer, quiz_id)
-    res = Hash.new
-    res[:credit] = 0
-    res[:comment] = "I don't know how to autograde this type yet (#{self.partial})"
-    return res
+    give_no_credit "I don't know how to autograde this question type yet"
   end
   alias :grade :autograde
+
+# Give maximum possible credit for this question
+# msg is a string explaining why you gave this many points
+# quiz_id is the id of the quiz this question is part of
+  def give_full_credit(msg, quiz_id)
+    res = Hash.new
+    res[:credit] = full_credit(quiz_id)
+    res[:comment] = msg + " (#{self.partial} autograder)"
+    res
+  end
+
+# Give partial credit for this question
+# score is how many points you give. 
+# msg is a string explaining why you gave this many points
+# quiz_id is the id of the quiz this question is part of
+  def give_partial_credit(score, msg, quiz_id)
+    score = normalize(score, quiz_id)
+    res = Hash.new
+    res[:credit] = score
+    res[:comment] = msg + "(#{self.partial} autograder)"
+    res
+  end
+
+# Make sure the score is non-negative and not bigger than 
+# the full credit
+  def normalize(score, quiz_id)
+    max_score = full_credit(quiz_id)
+    score = score >= 0 ? score : 0
+    score = score <= max_score ? score : max_score
+    score.round(1)
+  end
+
+# Give no credit for this question
+# msg is a string explaining why you gave no credit
+  def give_no_credit(msg)
+    res = Hash.new
+    res[:credit] = 0
+    res[:comment] = msg + " (#{self.partial} autograder)"
+    res
+  end
 
 # Returns the name of the partial to render
   def partial; self.class.name.underscore; end
