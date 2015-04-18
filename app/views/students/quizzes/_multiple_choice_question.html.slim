@@ -1,2 +1,19 @@
+/ This is the question object of the appropriate type
+/ You can access all of your custom fields like q.blah or q.opt_blah 
 - q = sf.object.question
-= sf.text_area :content, label: false, class: 'textedit expand saves', id: "#{q.id}"
+
+/ This is the name of the field that is serialized as a hash in Submission
+/ Use this as a helper to append your hash keys to.
+- content_name = "#{sf.object_name}[content]"
+
+/ This is the name you need to give your input field.
+/ This will become a key in the content hash 
+- def box_name(id); content_name + "[#{id}]"
+
+/ For example:
+/ = text_area_tag answer_name, nil, class: 'textedit expand saves', id: "#{q.id}", label: false
+
+/ :choices is ["0"=>false, "1"=>true, "2" =>true]
+- q.choices.each_with_index do |option_text, checked, id| 
+	= check_box_tag box_name(id), "[choice_#{id}]", checked, class: 'saves', id: "#{q.id}"
+	= label_tag box_name(id), option_text
