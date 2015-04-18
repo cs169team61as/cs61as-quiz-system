@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe "ShortAnswerQuestion" do
 	def grade(answer)
-		question.autograde(answer, quiz.id)[:credit]
+		content = {"answer" => answer}
+		question.autograde(content, quiz.id)[:credit]
 	end
 
 	let(:points) { 10 }
@@ -43,7 +44,7 @@ describe "ShortAnswerQuestion" do
 	end
 
 	it "should give no credit if the solution is not provided" do
-		my_grade = question_no_answer.autograde("kittens", quiz.id)[:credit]
+		my_grade = question_no_answer.autograde({"answer" =>"kittens"}, quiz.id)[:credit]
 		expect(my_grade).to eq 0
 	end
 end

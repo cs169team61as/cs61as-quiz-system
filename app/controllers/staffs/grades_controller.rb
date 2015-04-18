@@ -22,6 +22,12 @@ module Staffs
       @submission = Submission.find_by question_id: grade.question_id,
                                        student_id: grade.student_id
       @question = Question.find grade.question_id
+
+      #binding.pry
+      autograde = @submission.autograde
+      grade[:grade] = autograde[:credit]
+      grade[:comments] = autograde[:comment]
+
       @grade_form = EditGradeForm.new grade
       @rlt = Relationship.find_by question: @question,
                                   quiz: @submission.quiz

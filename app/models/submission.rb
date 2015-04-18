@@ -19,4 +19,8 @@ class Submission < ActiveRecord::Base
   serialize :content, JSON
 
   delegate :content, to: :question, prefix: true
+
+  def autograde
+  	question.autograde(content, quiz.id)
+  end
 end
