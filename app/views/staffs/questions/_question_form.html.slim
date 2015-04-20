@@ -2,7 +2,7 @@
   .small-3.columns
     h3 Question
     = f.label :difficulty
-    = f.select :difficulty, options_for_select(Question.levels)
+    = f.select :difficulty, options_for_select(AbstractQuestion.levels)
     = hidden_field_tag :quiz_id, @quiz_id
     = hidden_field_tag :add_pts, add_pts
     = hidden_field_tag :lesson, lesson

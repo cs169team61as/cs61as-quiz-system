@@ -91,7 +91,7 @@ class Quiz < ActiveRecord::Base
   def get_quest(lesson)
     questions = []
     ['Easy', 'Medium', 'Hard'].each do |diff|
-      qst = Question.where(lesson: lesson, difficulty: diff)
+      qst = AbstractQuestion.where(lesson: lesson, difficulty: diff)
       questions << qst.select { |q| can_add? q }.sample
     end
     questions
