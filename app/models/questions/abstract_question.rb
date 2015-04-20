@@ -15,23 +15,70 @@
 =begin
   Methods:
     For subclassing quickly:
-      build(options)
-      option_accessor
-    
+      build(options) - Creates a new question, factory-style. Example:
+          q = ShortAnswerQuestion.build content: "What is the password?",
+                                        my_solution: "1234"
+                                        my_rubric: "*sigh*"
+          q = MultipleChoiceQuestion.build content: "Which numbers are even?",
+                                        choices: {"1" => false, "2" => true}                                        
+
+      option_accessor - Declares fields that should be serialized and
+                        stored in the "options" column of the database.
+                        Example:
+
+          def SampleQuestion < AbstractQuestion
+            options_accessor my_awesome_field
+
+            def autograde(quiz_id)
+              return give_full_credit "Awesome!", quiz_id if my_awesome_field
+              give_no_credit "Nope."
+            end
+          end
+          ...
+
+          # this question will give full credit
+          q = SampleQuestion.build content: "Is the awesome field set?",
+                                    my_awesome_field: true
+
+          # this question will give no credit
+          q = SampleQuestion.build content: "Is the awesome field set?",
+                                    my_awesome_field: false
+
     For grading:
-      autograde(content, quiz_id), grade(content, quiz_id)
+      autograde(content, quiz_id), grade(content, quiz_id) 
+                  called to find how much credit 
+                  the student should receive for this question
       give_full_credit(msg, quiz_id)
+                  gives full credit for this answer.
+                  Usage - from autograder function call: 
+                  return give_full_credit(msg, quiz_id)
       give_partial_credit(score, msg, quiz_id)
+                  gives SCORE points  for this answer.
+                  Usage - from autograder function call:
+                  return give_partial_credit(score, msg, quiz_id)
       give_no_credit(msg)
+                  gives no credit for this answer
+                  Usage - from autograder function call:
+                  return give_no_credit(msg, quiz_id)
       normalize(score, quiz_id)
+                  Makes sure the score is non-negative and 
+                  less than full credit. Returns the corrected score.
     
+
     For display:
-      human_readable(content)
+      human_readable(content) 
+          parses the submitted student's answer into a string
+          and returns this string. It will be displayed to graders
+          and the students who look through their taken tests
+
 
     For DRYness:
-      new_form
-      edit_form
-      partial, type
+      new_form -  returns the Reform form for this type of question 
+                  for creating new question
+      edit_form - returns the Reform form for this type of question 
+                  for editing old question
+      partial, type - returns the string containing the partial to be 
+                      rendered and question_type
 =end
 
 class AbstractQuestion < ActiveRecord::Base
