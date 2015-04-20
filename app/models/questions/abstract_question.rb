@@ -13,7 +13,24 @@
 #
 
 =begin
-  Methods:
+  Short list of methods:
+    build(options)
+    option_accessor
+
+    autograde(content, quiz_id), grade(content, quiz_id) 
+    give_full_credit(msg, quiz_id)
+    give_partial_credit(score, msg, quiz_id)
+    give_no_credit(msg, quiz_id)
+    normalize(score, quiz_id)
+
+    human_readable(content) 
+
+    new_form
+    edit_form
+    partial, type
+
+
+  Methods (what they do):
     For subclassing quickly:
       build(options) - Creates a new question, factory-style. Example:
           q = ShortAnswerQuestion.build content: "What is the password?",

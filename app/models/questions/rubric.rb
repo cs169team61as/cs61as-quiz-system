@@ -21,7 +21,7 @@ class Rubric < ActiveRecord::Base
   end
 
 
-# this breaks factorygirl
+
    def rubric=(val)
    	if (self.question)
    		self.question.my_rubric = val

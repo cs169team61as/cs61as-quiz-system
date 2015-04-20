@@ -15,7 +15,8 @@
     - if add_pts == "true"
       = label_tag :points, '* Points'
       = text_field_tag :points, points
-
+- quiz_id = nil
+/= render partial: 'staffs/questions/all_question_types', object: quiz_id, as: 'quiz_id'
 = render partial: question_type, object: f, as: 'f'
 
 /!.row
