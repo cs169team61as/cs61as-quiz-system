@@ -69,6 +69,15 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
     res
   end
 
+  def my_solution
+    res = ""
+    choices.each do |k, v|
+      res << "#{k}\n" if v
+    end
+    return "(no correct answer)" if res.blank?
+    res
+  end
+
   private
 
   def calculate_score(content, quiz_id)

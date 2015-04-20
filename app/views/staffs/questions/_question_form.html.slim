@@ -3,7 +3,7 @@
     h3 Question
     = f.label :difficulty
     = f.select :difficulty, options_for_select(Question.levels)
-    = hidden_field_tag :quiz_id, quiz_id
+    = hidden_field_tag :quiz_id, @quiz_id
     = hidden_field_tag :add_pts, add_pts
     = hidden_field_tag :lesson, lesson
     = hidden_field_tag "question_type", question_type

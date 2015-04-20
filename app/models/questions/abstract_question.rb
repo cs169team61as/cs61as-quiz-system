@@ -14,14 +14,24 @@
 
 =begin
   Methods:
-    build(options)
-    option_accessor
-    partial
-    autograde/grade(content)
-    give_full_credit(msg, quiz_id)
-    give_partial_credit(score, msg, quiz_id)
-    give_no_credit(msg)
-    human_readable(content)
+    For subclassing quickly:
+      build(options)
+      option_accessor
+    
+    For grading:
+      autograde(content, quiz_id), grade(content, quiz_id)
+      give_full_credit(msg, quiz_id)
+      give_partial_credit(score, msg, quiz_id)
+      give_no_credit(msg)
+      normalize(score, quiz_id)
+    
+    For display:
+      human_readable(content)
+
+    For DRYness:
+      new_form
+      edit_form
+      partial, type
 =end
 
 class AbstractQuestion < ActiveRecord::Base
@@ -49,7 +59,7 @@ class AbstractQuestion < ActiveRecord::Base
     q.options["rubric"] = "I don't have a rubric (#{q.partial})"
     q.options["solution"] = "I don't have a solution (#{q.partial})"
 
-    [:content, :lesson, :difficulty].each do |a|
+    [:content, :lesson, :difficulty, :my_solution, :my_rubric].each do |a|
       if h[a]
         q.send "#{a}=", h[a]
         h.delete a
@@ -153,6 +163,11 @@ class AbstractQuestion < ActiveRecord::Base
 # Returns the name of the partial to render
   def partial; self.class.name.underscore; end
   alias :type :partial
+
+# Returns the correct form classes for this
+# question type
+  def new_form; ("New" + self.class.name + "Form").constantize; end
+  def edit_form; ("Edit" + self.class.name + "Form").constantize; end
 
 # ========= Methods the previous question class had =================
 

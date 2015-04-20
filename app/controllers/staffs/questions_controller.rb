@@ -4,27 +4,25 @@ module Staffs
     before_action :set_question, only: [:edit, :update, :destroy, :add]
 
     def new
+      @question_type = params[:question_type]
       if params[:quiz_id]
         @quiz_id = params[:quiz_id]
         @quiz = Quiz.find params[:quiz_id]
-        question = @quiz.questions.new lesson: @quiz.lesson
+        question = @question_type.classify.constantize.build lesson:  @quiz.lesson
         @add_pts = 'true'
       else
-        @question_type = params[:question_type]
-        question = @question_type.classify.constantize.build
+        question = @question_type.classify.constantize.build 
         @add_pts = 'false'
       end
 
       @lesson = 'true'
-      question.solution = Solution.new
-      question.rubric = Rubric.new
-      @quest_form = NewQuestionForm.new question
+      @quest_form = question.new_form.new question
     end
 
     def create
       quiz = assign_params
-      question = CreateQuestion.call question_params.except :points, :solution
-      @quest_form = NewQuestionForm.new question
+      question = CreateQuestion.call(question_params.except(:points, :solution), params[:question_type])
+      @quest_form = question.new_form.new question
       if @quest_form.validate_and_save question_params
         flash[:success] = 'Created Question!'
         redirect_after_editing quiz
@@ -42,11 +40,11 @@ module Staffs
     end
 
     def edit
-
       get_question_options
-
+      @question = AbstractQuestion.find params[:id]
       @question_type = @question.type
-      @quest_form = EditQuestionForm.new @question
+      @quest_form = @question.edit_form.new @question
+      @quest_form.populate_form_fields
       rlt = Relationship.find_by(quiz_id: params[:quiz_id],
                                  question: @question)
       @points = rlt.nil? ? 0 : rlt.points
@@ -54,7 +52,8 @@ module Staffs
 
     def update
       quiz = assign_params
-      @quest_form = EditQuestionForm.new @question
+      @question = @question_type.classify.constantize.find(params[:id])
+      @quest_form = @question.edit_form.new @question
       if @quest_form.validate_and_save question_params
         flash[:success] = 'Updated Question!'
         redirect_after_editing quiz
@@ -119,7 +118,7 @@ module Staffs
 
     # Bad - explicitly require params
     def question_params
-      params.require(:question).permit!
+      params.require(params[:question_type]).permit!
     end
 
     def redirect_after_editing(quiz)

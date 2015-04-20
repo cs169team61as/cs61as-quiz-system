@@ -1,21 +1,16 @@
 # Edit question here
 class NewQuestionForm < Reform::Form
-  model :question
 
   property :id
   property :content
   property :lesson
   property :difficulty
 
-  property :solution do
-    property :content
-    validates :content, presence: true
-  end
+  property :my_solution 
+  validates :content, presence: true
 
-  property :rubric do
-    property :rubric
-    validates :rubric, presence: true
-  end
+  property :my_rubric
+  validates :my_rubric, presence: true
 
   validates :content, :lesson, presence: true
   validates :difficulty, presence: true
@@ -31,14 +26,15 @@ class NewQuestionForm < Reform::Form
     update_points(pts)
   end
 
+
   def check_solution
-    if @model.solution.content.blank?
+    if @model.my_solution.blank?
       errors.add :content, "Doesn't have solution."
     end
   end
 
   def check_rubric
-    if @model.rubric.rubric.blank?
+    if @model.my_rubric.blank?
       errors.add :rubric, "Doesn't have rubric."
     end
   end

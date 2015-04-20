@@ -18,7 +18,8 @@
               = f.input :is_draft, label: 'Draft?', as: :boolean
         = f.submit 'Update!', class: 'small button'
 
-      = link_to 'Add a new question!', new_staffs_question_path(quiz_id: @quiz_form.id)
+      /= link_to 'Add a new question!', new_staffs_question_path(quiz_id: @quiz_form.id)
+      = render partial: 'staffs/questions/all_question_types', object: @quiz_form.id, as: 'quiz_id'
 
       p Or add a question from the question bank!
 
