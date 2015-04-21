@@ -23,6 +23,8 @@ class NewQuestionForm < Reform::Form
     @model.save
     @model.solution.update_attribute(:question_id, @model.id)
     @model.rubric.update_attribute(:question_id, @model.id)
+    @model.my_solution = question_params[:my_solution]
+    @model.my_rubric = question_params[:my_rubric]
     update_points(pts)
   end
 

@@ -1,11 +1,11 @@
 class EditMultipleChoiceQuestionForm < EditQuestionForm 
 	model :multiple_choice_question
 
-
 	def validate_and_save(question_params)
 		if super
+			@me = AbstractQuestion.find id
 			form_2_choices(question_params)
-			@model.save
+			@me.save
 			return true
 		else
 			return false
@@ -23,8 +23,8 @@ class EditMultipleChoiceQuestionForm < EditQuestionForm
 				choices[new_key] = new_value
 			end
 		end
-		@model.choices = choices
-		@model.options.delete "options"
+		@me.choices = choices
+		@me.options.delete "options"
 	end
 
 
