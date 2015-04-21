@@ -41,7 +41,7 @@ module ApplicationHelper
     option2 = 90
     option3 = 120
     id = request.student.id
-    puts id
+#    puts id
     quiztime = QuizTime.find_by(student_id: id)
     if quiztime != nil
       time = quiztime.time
