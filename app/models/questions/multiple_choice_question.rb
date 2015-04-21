@@ -58,7 +58,7 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
 
   def human_readable(content)
     res = "Selected answers:\n\n"
-    content.each { |text, x| res << " * #{text}\n" }
+    content.each { |text, x| res << " * #{text}\n" unless x == "0" }
     res
   end
 
@@ -104,10 +104,12 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
     @correct_choices = Array.new
     @incorrect_choices = Array.new
     content.each do |key, value|
-      if choices[key]
-        @correct_choices << key
-      else
-        @incorrect_choices << key
+      if value != "0"
+        if choices[key]
+          @correct_choices << key
+        else
+          @incorrect_choices << key
+        end
       end
     end
 
