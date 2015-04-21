@@ -33,6 +33,12 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
 
   Note: Answer representation up for discussion/change
 
+
+ So far the formula for calculating the grade is this:
+
+  points_per_choice = full_credit / total_correct_choices
+  credit = (correct_choices - incorrect_choices) * points_per_choice
+
 =end
 
   option_accessor :choices, :single_answer, :answers
@@ -46,21 +52,8 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
 
 
   def autograde(content, quiz_id)
-    # if (answers == nil)
-    #   return give_no_credit "I don't have a solution for this question"
-    # end
-
-    @full_credit = full_credit(quiz_id)
     score = calculate_score content, quiz_id
-
-    if score
-      if score == @full_credit
-        return give_full_credit "The answer matches my solution", quiz_id
-      else
-        return give_partial_credit score, "The answer partially matches my solition", quiz_id
-      end
-      return give_no_credit "The answer doesn't match my solution"
-    end
+    return give_partial_credit score, reason, quiz_id
   end
 
   def human_readable(content)
@@ -81,22 +74,44 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
 
   private
 
-  def calculate_score(content, quiz_id)
-    total_correct_answers = 0
-    choices.each do |key, value|
-      total_correct_answers += 1 if value
+  def reason
+    res = "Selected correctly:\n\n" 
+    if @correct_choices.length != 0
+      @correct_choices.each { |ch| res << (" * #{ch} (+ #{@points_per_choice.round(1)})\n") }
+    else
+      res << ("(nothing)\n")
     end
 
-    pre_score = 0
+    res << "\nSelected incorrectly:\n\n"
+    if @incorrect_choices.length != 0
+      @incorrect_choices.each { |ch| res << (" * #{ch} (- #{@points_per_choice.round(1)})\n") }
+    else
+      res << ("(nothing)\n")
+    end
+    res
+  end
+
+  def calculate_score(content, quiz_id)
+
+    @total_correct_choices = 0
+    choices.each do |key, value|
+      @total_correct_choices += 1 if value
+    end
+
+    @full_credit = full_credit(quiz_id)
+    @points_per_choice = @full_credit / @total_correct_choices
+
+    @correct_choices = Array.new
+    @incorrect_choices = Array.new
     content.each do |key, value|
       if choices[key]
-        pre_score += 1
+        @correct_choices << key
       else
-        pre_score -= 1
+        @incorrect_choices << key
       end
     end
 
-    score = pre_score.to_f / total_correct_answers * @full_credit
+    score = (@correct_choices.length - @incorrect_choices.length) * @points_per_choice
     normalize score, quiz_id
   end
 end

@@ -23,7 +23,9 @@
     give_no_credit(msg, quiz_id)
     normalize(score, quiz_id)
 
-    human_readable(content) 
+    human_readable(content)
+    my_solution
+    my_rubric
 
     new_form
     edit_form
@@ -87,6 +89,10 @@
           parses the submitted student's answer into a string
           and returns this string. It will be displayed to graders
           and the students who look through their taken tests
+      my_solution
+          returns solution text (string) to be displayed to graders and staff
+      my_solution
+          returns rubric text (string) to be displayed to graders and staff
 
 
     For DRYness:
@@ -184,7 +190,7 @@ class AbstractQuestion < ActiveRecord::Base
   def give_full_credit(msg, quiz_id)
     res = Hash.new
     res[:credit] = full_credit(quiz_id)
-    res[:comment] = msg + " (#{self.partial} autograder)"
+    res[:comment] = msg #+ " (#{self.partial} autograder)"
     res
   end
 
@@ -196,7 +202,7 @@ class AbstractQuestion < ActiveRecord::Base
     score = normalize(score, quiz_id)
     res = Hash.new
     res[:credit] = score
-    res[:comment] = msg + " (#{self.partial} autograder)"
+    res[:comment] = msg #+ " (#{self.partial} autograder)"
     res
   end
 
@@ -214,7 +220,7 @@ class AbstractQuestion < ActiveRecord::Base
   def give_no_credit(msg)
     res = Hash.new
     res[:credit] = 0
-    res[:comment] = msg + " (#{self.partial} autograder)"
+    res[:comment] = msg #+ " (#{self.partial} autograder)"
     res
   end
 
