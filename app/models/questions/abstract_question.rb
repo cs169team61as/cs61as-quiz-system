@@ -124,10 +124,17 @@ class AbstractQuestion < ActiveRecord::Base
 # Initialize the default field values and populate the options field
   def self.build(h={})
     q = self.new
-    q.content = "(empty question)"
+    q.content = ""
     q.options = Hash.new
-    q.options["rubric"] = "I don't have a rubric (#{q.partial})"
-    q.options["solution"] = "I don't have a solution (#{q.partial})"
+
+    #Commented out below in order to fix rspec test where you cannot leave
+    #rubric, solution or question blank
+    #q.options["rubric"] = "I don't have a rubric (#{q.partial})"
+    #q.options["solution"] = "I don't have a solution (#{q.partial})"
+
+    #replaced above two lines with:
+    q.options["rubric"] = ""
+    q.options["solution"] = ""
 
     [:content, :lesson, :difficulty, :my_solution, :my_rubric].each do |a|
       if h[a]

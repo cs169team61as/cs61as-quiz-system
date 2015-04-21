@@ -18,9 +18,9 @@ describe Quiz do
   let!(:quiz2) { create :quiz, lesson: "2" }
   let!(:request1) { create :quiz_request, lesson: "1", retake: false }
 
-  let!(:question1) { create :question, difficulty: "Easy", lesson:  "2" }
-  let!(:question2) { create :question, difficulty: "Medium", lesson: "2" }
-  let!(:question3) { create :question, difficulty: "Hard", lesson: "2" }
+  let!(:question1) { create :short_answer_question, difficulty: "Easy", lesson:  "2" }
+  let!(:question2) { create :short_answer_question, difficulty: "Medium", lesson: "2" }
+  let!(:question3) { create :short_answer_question, difficulty: "Hard", lesson: "2" }
 
   describe ".lessons" do
     it "should return an array of published lessons" do

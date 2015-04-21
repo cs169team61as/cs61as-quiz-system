@@ -133,7 +133,8 @@ describe "Quiz" do
     it "should go to edit page when edit link is clicked" do
       visit staffs_quiz_path(quiz)
       click_link("Edit Quiz")
-      expect(page).to have_content("Add a new question!")
+      expect(page).to have_content("New Short Answer Question!")
+      expect(page).to have_content("New Multiple Choice Question!")
     end
 
     describe "removing questions", js: true do
