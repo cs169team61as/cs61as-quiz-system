@@ -19,7 +19,7 @@ end
 def count_doesnt_change
   expect do
     click_button "Create"
-  end.to change(Question, :count).by(0)
+  end.to change(AbstractQuestion, :count).by(0)
 end
 
 describe "Creating a question" do
@@ -82,7 +82,7 @@ describe "Creating a question" do
         fill_in_rubric
         expect do
           click_button "Create"
-        end.to change(Question, :count).by 1
+        end.to change(AbstractQuestion, :count).by 1
         expect(page).to have_content "Add a Question!"
       end
     end

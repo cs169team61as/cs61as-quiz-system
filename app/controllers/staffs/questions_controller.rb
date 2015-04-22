@@ -75,9 +75,7 @@ module Staffs
     end
 
     def bank
-      @questions = AbstractQuestion.where(lesson: params[:lesson])
-                           .includes(:solution).includes(:rubric)
-                           .page params[:page]
+      @questions = AbstractQuestion.where(lesson: params[:lesson]).page params[:page]
       @requests = QuizRequest.all
       @add = params[:add] == 'true'
       @id = params[:quiz_id]

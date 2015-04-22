@@ -31,13 +31,13 @@ class NewQuestionForm < Reform::Form
 
   def check_solution
     if @model.my_solution.blank?
-      errors.add :content, "Doesn't have solution."
+      errors.add :content, "Solution can't be blank."
     end
   end
 
   def check_rubric
     if @model.my_rubric.blank?
-      errors.add :rubric, "Doesn't have rubric."
+      errors.add :rubric, "Rubric can't be blank."
     end
   end
 

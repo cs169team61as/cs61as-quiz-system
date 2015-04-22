@@ -75,16 +75,18 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
   private
 
   def reason
-    res = "Selected correctly:\n\n" 
-    if @correct_choices.length != 0
-      @correct_choices.each { |ch| res << (" * #{ch} (+ #{@points_per_choice.round(1)})\n") }
-    else
-      res << ("(nothing)\n")
-    end
+    res = "Selected correctly:\n\n"
+    res <<  make_list(@correct_choices, @points_per_choice.round(1))
+    res << "\n"
+    res << "Selected incorrectly:\n\n"
+    res <<  make_list(@incorrect_choices, -@points_per_choice.round(1))
+  end
 
-    res << "\nSelected incorrectly:\n\n"
-    if @incorrect_choices.length != 0
-      @incorrect_choices.each { |ch| res << (" * #{ch} (- #{@points_per_choice.round(1)})\n") }
+  def make_list(list, points)
+    res = ""
+    pts = points >= 0 ? "(+ #{points})" : "(- #{-points})" 
+    if list.length != 0
+      list.each { |ch| res << (" * #{ch} #{pts}\n") }
     else
       res << ("(nothing)\n")
     end
