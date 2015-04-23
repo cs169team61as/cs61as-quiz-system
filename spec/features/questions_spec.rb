@@ -9,7 +9,7 @@ def fill_in_question
 end
 
 def fill_in_solution
-  fill_in "Solution (parsed as Markdown)", with: "Lorem Ipsum"
+  fill_in "Solution (regexp)", with: "Lorem Ipsum"
 end
 
 def fill_in_rubric
@@ -19,7 +19,7 @@ end
 def count_doesnt_change
   expect do
     click_button "Create"
-  end.to change(Question, :count).by(0)
+  end.to change(AbstractQuestion, :count).by(0)
 end
 
 describe "Creating a question" do
@@ -30,7 +30,7 @@ describe "Creating a question" do
   describe "through the question dashboard" do
     before do
       click_link "Questions"
-      click_link "New Question!"
+      click_link "New Short Answer Question!"
     end
 
     it "should not have a point field" do
@@ -82,7 +82,7 @@ describe "Creating a question" do
         fill_in_rubric
         expect do
           click_button "Create"
-        end.to change(Question, :count).by 1
+        end.to change(AbstractQuestion, :count).by 1
         expect(page).to have_content "Add a Question!"
       end
     end

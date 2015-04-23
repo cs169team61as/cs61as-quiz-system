@@ -1,0 +1,122 @@
+...*.................27
+28
+.30
+31
+.33
+34
+.36
+37
+37
+.39
+40
+40
+.42
+43
+...........................................................................F.F......FF.F.................F.FFF....
+
+Pending:
+  Quiz#next_number should return the question number for the quiz
+    # implement later
+    # ./spec/models/quiz_spec.rb:58
+
+Failures:
+
+  1) Creating a question through the question dashboard should not be valid if solution is blank
+     Failure/Error: expect(page).to have_content "can't be blank"
+       expected to find text "can't be blank" in "DashboardQuestionsStudentsRequestsGradingImport StudentsAccount Edit ProfileSign OutNew Question!Question* DifficultyEasyMediumHard* Lesson0-10-20-31234567891011121314* Question (parsed as Markdown)Lorem IpsumDoesn't have solution.Solution (regexp)* Rubric (parsed as Markdown)Lorem IpsumThis Markdown...produces this output# This is an h1This is a h1# This is an h3This is a h3> This is a blockquote. This is a blockquote. *These words* are emphasized.These words are emphasized.**So are these**So are these==These words== will be highlighted.These words will be highlighted.- This is an unordered list element.- This is another unordered list element.This is an unordered list element. This is another unordered list element. 1. This is an ordered list element.2. This is another ordered list element.This is an ordered list element. This is another ordered list element. `Backticks` denote inline code.Backticks denote inline code. This is a code block. (4 spaces)This is a code block. (4 spaces) ``` scheme(define (scheme-example x) 'this-is-scheme-code)```(define (scheme-example x) 'this-is-scheme-code) Check out the syntax for more details."
+     # ./spec/features/questions_spec.rb:73:in `block (4 levels) in <top (required)>'
+
+  2) Creating a question through the question dashboard should be valid if all information is filled in
+     Failure/Error: expect do
+       count should have been changed by 1, but was changed by 0
+     # ./spec/features/questions_spec.rb:83:in `block (4 levels) in <top (required)>'
+
+  3) Quiz that is published should not allow removal if quiz is published
+     Failure/Error: find_by_id("remove_question_#{question.id}").click
+     Capybara::ElementNotFound:
+       Unable to find id "remove_question_3"
+     # ./spec/features/quizzes_spec.rb:157:in `block (3 levels) in <top (required)>'
+
+  4) Quiz that is published should remove question if quiz is unpublished
+     Failure/Error: find_by_id("remove_question_#{question.id}").click
+     Capybara::ElementNotFound:
+       Unable to find id "remove_question_4"
+     # ./spec/features/quizzes_spec.rb:163:in `block (3 levels) in <top (required)>'
+
+  5) Quiz should not be valid if question lessons don't match
+     Failure/Error: click_link "Add a new question!"
+     Capybara::ElementNotFound:
+       Unable to find link "Add a new question!"
+     # ./spec/features/quizzes_spec.rb:9:in `add_new_queston'
+     # ./spec/features/quizzes_spec.rb:94:in `block (3 levels) in <top (required)>'
+
+  6) Taking a quiz beginning quiz clicking start shows textareas
+     Failure/Error: expect(page).to have_css textarea_css(n), visible: false
+     Capybara::ExpectationNotMet:
+       expected to find css "textarea[name='quiz[new_submissions_attributes][0][content]']" but there were no matches
+     # ./spec/features/take_quiz_spec.rb:51:in `block (5 levels) in <top (required)>'
+     # ./spec/features/take_quiz_spec.rb:50:in `upto'
+     # ./spec/features/take_quiz_spec.rb:50:in `block (4 levels) in <top (required)>'
+
+  7) Taking a quiz beginning quiz clicking start filling in answers and submitting creates Submissions and a TakenQuiz and destroys the QuizLock
+     Failure/Error: page.execute_script("$(\"#{textarea_css(n)}\")[0].value = 'Answer #{n}'")
+     Capybara::Poltergeist::JavascriptError:
+       One or more errors were raised in the Javascript code on the page. If you don't care about these errors, you can ignore them by setting js_errors: false in your Poltergeist configuration (see documentation for details).
+       
+       TypeError: 'undefined' is not an object (evaluating '$("textarea[name='quiz[new_submissions_attributes][0][content]']")[0].value = 'Answer 0'')
+       TypeError: 'undefined' is not an object (evaluating '$("textarea[name='quiz[new_submissions_attributes][0][content]']")[0].value = 'Answer 0'')
+           at phantomjs://webpage.evaluate():1
+           at phantomjs://webpage.evaluate():1
+           at phantomjs://webpage.evaluate():1
+           at phantomjs://webpage.evaluate():1
+     # ./spec/features/take_quiz_spec.rb:115:in `block (6 levels) in <top (required)>'
+     # ./spec/features/take_quiz_spec.rb:114:in `upto'
+     # ./spec/features/take_quiz_spec.rb:114:in `block (5 levels) in <top (required)>'
+
+  8) Taking a quiz beginning quiz clicking start filling in answers and submitting assigns the quiz to a reader
+     Failure/Error: page.execute_script("$(\"#{textarea_css(n)}\")[0].value = 'Answer #{n}'")
+     Capybara::Poltergeist::JavascriptError:
+       One or more errors were raised in the Javascript code on the page. If you don't care about these errors, you can ignore them by setting js_errors: false in your Poltergeist configuration (see documentation for details).
+       
+       TypeError: 'undefined' is not an object (evaluating '$("textarea[name='quiz[new_submissions_attributes][0][content]']")[0].value = 'Answer 0'')
+       TypeError: 'undefined' is not an object (evaluating '$("textarea[name='quiz[new_submissions_attributes][0][content]']")[0].value = 'Answer 0'')
+           at phantomjs://webpage.evaluate():1
+           at phantomjs://webpage.evaluate():1
+           at phantomjs://webpage.evaluate():1
+           at phantomjs://webpage.evaluate():1
+     # ./spec/features/take_quiz_spec.rb:115:in `block (6 levels) in <top (required)>'
+     # ./spec/features/take_quiz_spec.rb:114:in `upto'
+     # ./spec/features/take_quiz_spec.rb:114:in `block (5 levels) in <top (required)>'
+
+  9) Taking a quiz beginning quiz clicking start filling in answers and submitting redirects to dashboard
+     Failure/Error: page.execute_script("$(\"#{textarea_css(n)}\")[0].value = 'Answer #{n}'")
+     Capybara::Poltergeist::JavascriptError:
+       One or more errors were raised in the Javascript code on the page. If you don't care about these errors, you can ignore them by setting js_errors: false in your Poltergeist configuration (see documentation for details).
+       
+       TypeError: 'undefined' is not an object (evaluating '$("textarea[name='quiz[new_submissions_attributes][0][content]']")[0].value = 'Answer 0'')
+       TypeError: 'undefined' is not an object (evaluating '$("textarea[name='quiz[new_submissions_attributes][0][content]']")[0].value = 'Answer 0'')
+           at phantomjs://webpage.evaluate():1
+           at phantomjs://webpage.evaluate():1
+           at phantomjs://webpage.evaluate():1
+           at phantomjs://webpage.evaluate():1
+     # ./spec/features/take_quiz_spec.rb:115:in `block (6 levels) in <top (required)>'
+     # ./spec/features/take_quiz_spec.rb:114:in `upto'
+     # ./spec/features/take_quiz_spec.rb:114:in `block (5 levels) in <top (required)>'
+
+Finished in 32.97 seconds
+140 examples, 9 failures, 1 pending
+
+Failed examples:
+
+rspec ./spec/features/questions_spec.rb:59 # Creating a question through the question dashboard should not be valid if solution is blank
+rspec ./spec/features/questions_spec.rb:78 # Creating a question through the question dashboard should be valid if all information is filled in
+rspec ./spec/features/quizzes_spec.rb:155 # Quiz that is published should not allow removal if quiz is published
+rspec ./spec/features/quizzes_spec.rb:161 # Quiz that is published should remove question if quiz is unpublished
+rspec ./spec/features/quizzes_spec.rb:93 # Quiz should not be valid if question lessons don't match
+rspec ./spec/features/take_quiz_spec.rb:49 # Taking a quiz beginning quiz clicking start shows textareas
+rspec ./spec/features/take_quiz_spec.rb:120 # Taking a quiz beginning quiz clicking start filling in answers and submitting creates Submissions and a TakenQuiz and destroys the QuizLock
+rspec ./spec/features/take_quiz_spec.rb:131 # Taking a quiz beginning quiz clicking start filling in answers and submitting assigns the quiz to a reader
+rspec ./spec/features/take_quiz_spec.rb:136 # Taking a quiz beginning quiz clicking start filling in answers and submitting redirects to dashboard
+
+Randomized with seed 16287
+

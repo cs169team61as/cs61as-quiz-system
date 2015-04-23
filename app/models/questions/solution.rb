@@ -21,7 +21,7 @@ class Solution < ActiveRecord::Base
   	end
   end
 
-# this breaks factorygirl
+
   def content=(val)
 	if (self.question)
   		self.question.my_solution = val

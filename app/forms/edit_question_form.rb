@@ -1,21 +1,16 @@
 # Edit question here
 class EditQuestionForm < Reform::Form
-  model :question
 
   property :id
   property :content
   property :lesson
   property :difficulty
 
-  property :solution do
-    property :content
-    validates :content, presence: true
-  end
+  property :my_solution 
+  validates :content, presence: true
 
-  property :rubric do
-    property :rubric
-    validates :rubric, presence: true
-  end
+  property :my_rubric
+  validates :my_rubric, presence: true
 
   validates :content, :lesson, presence: true
   validates :difficulty, presence: true
@@ -24,26 +19,26 @@ class EditQuestionForm < Reform::Form
 
   def validate_and_save(question_params)
     question = AbstractQuestion.find id
-    question.solution.update_attributes question_params[:solution_attributes]
-    question.rubric.update_attributes question_params[:rubric_attributes]
+    question.my_solution = question_params[:my_solution]
+    question.my_rubric = question_params[:my_rubric]
+    question.content = question_params[:content]
+    question.difficulty = question_params[:difficulty]
     question_params = update_points(question_params)
     return false unless validate(question_params)
-    question_params.delete :solution_attributes
-    question_params.delete :solution
-    question_params.delete :rubric
-    question_params.delete :rubric_attributes
-    question.update_attributes(question_params)
+    question.save
   end
 
+  def populate_form_fields; end
+
   def check_solution
-    if @fields.solution.content.blank?
+    if @model.my_solution.blank?
       errors.add :content, "Doesn't have solution."
     end
   end
 
   def check_rubric
-    if @fields.rubric.rubric.blank?
-      errors.add :rubric, "Doesn't have rubric"
+    if @model.my_rubric.blank?
+      errors.add :rubric, "Doesn't have rubric."
     end
   end
 

@@ -23,4 +23,8 @@ class Submission < ActiveRecord::Base
   def autograde
   	question.autograde(content, quiz.id)
   end
+
+  def human_readable_content
+  	question.human_readable(content)
+  end
 end

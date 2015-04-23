@@ -7,15 +7,15 @@ h1#show_quiz Grade Question
       = markdown @question.content
 
       h4 Solution:
-      = markdown @question.solution.content
+      = markdown @question.my_solution
 
       h5 Student's Answer:
       textarea.show
-        = @submission.content
+        = @submission.human_readable_content
 
       - if @question.rubric
         h5 Rubric:
-        = markdown @question.rubric.rubric
+        = markdown @question.my_rubric
 
       h5 Points Possible:
       = @rlt.points

@@ -49,10 +49,6 @@ end
 When(/^I log in as a student$/) do
   pending # express the regexp above with the code you wish you had
 end
-Given(/^I am on the Staging Page$/) do
-  visit new_user_session_path
-  # pending # express the regexp above with the code you wish you had
-end
 When(/^I press the "(.*?)" button$/) do |arg1|
   pending # express the regexp above with the code you wish you had
 end

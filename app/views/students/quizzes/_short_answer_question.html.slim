@@ -2,14 +2,5 @@
 / You can access all of your custom fields like q.blah or q.opt_blah 
 - q = sf.object.question
 
-/ This is the name of the field that is serialized as a hash in Submission
-/ Use this as a helper to append your hash keys to.
-- content_name = "#{sf.object_name}[content]"
-
-/ This is the name you need to give your input field.
-/ This will become a key in the content hash 
-- answer_name = content_name + "[answer]"
-
-/ Example : 
-
-= text_area_tag answer_name, nil, class: 'textedit expand saves', id: "#{q.id}", label: false
+= sf.fields_for :content do |cf|
+	= cf.text_area :answer, label: false, class: 'textedit expand saves', id: "#{q.id}"

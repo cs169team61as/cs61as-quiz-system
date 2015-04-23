@@ -6,12 +6,12 @@ def fill_in_quiz_field(lesson, version)
 end
 
 def add_new_queston(lesson, points)
-  click_link "Add a new question!"
+  click_link "New Short Answer Question!"
   expect(page).to have_content "New Question!"
   select "#{lesson}", from: "Lesson"
   fill_in "Points", with: points
   fill_in "Question (parsed as Markdown)", with: "Lorem Ipsum"
-  fill_in "Solution (parsed as Markdown)", with: "Lorem Ipsum"
+  fill_in "Solution (regexp)", with: "Lorem Ipsum"
   fill_in "Rubric (parsed as Markdown)", with: "Lorem Ipsum"
   click_button "Create"
   expect(page).to have_content "Content: Lorem Ipsum"
@@ -19,7 +19,7 @@ end
 
 describe "Quiz" do
   let(:staff) { create :staff }
-  let!(:question) { create :question, lesson: "1" }
+  let!(:question) { create :short_answer_question, lesson: "1" }
   let!(:new_quiz_not_retake) { create :quiz, retake: false }
   let!(:new_quiz_retake) { create :quiz, retake: true }
   let!(:published_quiz) do
@@ -56,7 +56,7 @@ describe "Quiz" do
   describe "should not be valid" do
     before do
       Quiz.destroy_all
-      Question.destroy_all
+      AbstractQuestion.destroy_all
       
       @pq = build :quiz, lesson: "1", version: 1, retake: false, is_draft: false
       @pq.save(:validate => false)
@@ -133,12 +133,13 @@ describe "Quiz" do
     it "should go to edit page when edit link is clicked" do
       visit staffs_quiz_path(quiz)
       click_link("Edit Quiz")
-      expect(page).to have_content("Add a new question!")
+      expect(page).to have_content("New Short Answer Question!")
+      expect(page).to have_content("New Multiple Choice Question!")
     end
 
     describe "removing questions", js: true do
       before do
-        create :question, quizzes: [quiz]
+        create :short_answer_question, quizzes: [quiz]
         page.evaluate_script('window.confirm = function() { return true; }')
         visit edit_staffs_quiz_path(quiz)
       end
