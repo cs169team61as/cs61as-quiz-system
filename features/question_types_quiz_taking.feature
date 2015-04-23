@@ -3,6 +3,8 @@ Feature: Different question types for the quizzes
   As a Student,
   I want different question types to display correctly on the quiz taking page
   so that I can take a quiz made of different types of questions.
+  (Actually maybe it's benificial to separate different question types
+  into different feature files.)
 
 
 Scenario: I want to see a simple choice question when I am taking the test
