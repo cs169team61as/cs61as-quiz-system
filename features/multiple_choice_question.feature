@@ -9,7 +9,7 @@ Feature: Multiple choice question
 Background:
   Given I am logged in as a staff user
   And this multiple choice question exists in "Lesson 1" bank
-  | What coat colors are typical in cats? |
+  | What coat colors are typical in cats? | Correctness |
   | White  | correct |
   | Green  | wrong   |
   | Black  | correct |
@@ -88,9 +88,9 @@ Scenario: I want to be able to create a new question from the quiz
   And I fill "Rubric" with "(no rubric)"
   And I fill in Options as:
   |   red      |	 correct	|
-  |   green	     |	 correct	|
+  |   green	   |	 correct	|
   |   box	     |	 wrong		|
-  |   orange	     |	 correct	|
+  |   orange	 |	 correct	|
   And I click "Create"
   Then I should see "Editing Quiz"
   And I should see "Which of these words stand for colors?"
