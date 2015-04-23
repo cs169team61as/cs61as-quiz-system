@@ -4,8 +4,10 @@ Feature: Honesty statement
   So that I can state that I did not cheat
   I want to be able to agree to the academic honesty statement
 
+Background:
+    Given I am logged in as a student
 
-  Scenario: Honesty statement should be there
+Scenario: Honesty statement should be there
     Given I am taking a quiz
     And I should see "I assert that all the work on this quiz is my own and I have not been helped by anybody and I will not talk about the questions with anyone except course staff"
 
