@@ -8,14 +8,15 @@ Feature: Multiple choice question
 
 Background:
   Given I am logged in as a staff user
-  And this multiple choice question exists in "Lesson 1" bank
-  | What coat colors are typical in cats? | Correctness |
+  And a multiple choice question "What coat colors are typical in cats" exists in "Lesson 1" bank:
+  | option | correctness |
   | White  | correct |
   | Green  | wrong   |
   | Black  | correct |
   | Purple | wrong   |
-  And a test containing this question exists and the question is worth 10 points
-  And a submission of this test exists where the chosen options are:
+  And a test containing cat question exists and the question is worth 10 points
+  And a submission of cat test exists where the chosen options are:
+  | option |
   | White |
   | Green |
   | Black |
@@ -46,6 +47,7 @@ Scenario: I want to be able to edit the options text
   Given I am on the Questions page
   When I edit my question
   And the pre-existing options should be:
+  | option | correctness |
   | White  | correct |
   | Green  | wrong   |
   | Black  | correct |
@@ -67,10 +69,11 @@ Scenario: I want to be able to edit the options correctness
 Scenario: I want to be able to create a new question from the questions page
   Given I am on the Questions page
   When I click "New Multiple Choice Question!"
-  And I fill in "Lesson" with "2"
-  And I fill "Question" with "Which numbers are odd?"
-  And I fill "Rubric" with "(no rubric)"
+  And I select "1" from "Lesson"
+  And I fill in "Question" with "Which numbers are odd?"
+  And I fill in "Rubric" with "(no rubric)"
   And I fill in Options as:
+  | option   | correctness |
   |   1      |	 correct	|
   |   2	     |	 wrong		|
   |   3	     |	 correct	|
@@ -84,9 +87,10 @@ Scenario: I want to be able to create a new question from the quiz
   Given I am on the Dashboard
   And I click "Create a New Quiz!"
   And I click "New Multiple Choice Question!"
-  And I fill "Question" with "Which of these words stand for colors?"
-  And I fill "Rubric" with "(no rubric)"
+  And I fill in "Question" with "Which of these words stand for colors?"
+  And I fill in "Rubric" with "(no rubric)"
   And I fill in Options as:
+  | option     | correctness |
   |   red      |	 correct	|
   |   green	   |	 correct	|
   |   box	     |	 wrong		|

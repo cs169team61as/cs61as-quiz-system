@@ -99,7 +99,7 @@ FactoryGirl.define do
     content { Faker::Lorem.paragraph }
     student
     quiz
-#    question
+    #question
   end
 
   factory :taken_quiz do
