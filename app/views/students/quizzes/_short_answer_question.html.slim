@@ -1,6 +1,6 @@
+/ This is the question object of the appropriate type
+/ You can access all of your custom fields like q.blah or q.opt_blah 
 - q = sf.object.question
-- for_id = sf.options[:child_index]
-- content_name = "#{sf.object_name}[content]"
-- answer_name = content_name + "[answer]"
 
-= text_area_tag answer_name, nil, class: 'textedit expand saves', id: "#{q.id}", label: false
+= sf.fields_for :content do |cf|
+	= cf.text_area :answer, label: false, class: 'textedit expand saves', id: "#{q.id}"

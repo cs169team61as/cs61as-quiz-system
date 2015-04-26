@@ -10,7 +10,7 @@ module Staffs
 
     def new
       qid, sid = params[:qid], params[:sid]
-      @question = Question.find qid
+      @question = AbstractQuestion.find qid
       @grade = Grade.where(question_id: qid,
                            student_id: sid,
                            lesson: @question.lesson).first_or_create
@@ -21,7 +21,12 @@ module Staffs
       grade = Grade.find params[:id]
       @submission = Submission.find_by question_id: grade.question_id,
                                        student_id: grade.student_id
-      @question = Question.find grade.question_id
+      @question = @submission.question
+
+      autograde = @submission.autograde
+      grade[:grade] = autograde[:credit]
+      grade[:comments] = autograde[:comment]
+
       @grade_form = EditGradeForm.new grade
       @rlt = Relationship.find_by question: @question,
                                   quiz: @submission.quiz
@@ -32,7 +37,7 @@ module Staffs
       oldg, newg = grade.grade, params[:grade][:grade].to_f
       @submission = Submission.find_by question_id: grade.question_id,
                                        student_id: grade.student_id
-      @question = Question.find grade.question_id
+      @question = @submission.question
       @grade_form = EditGradeForm.new grade
       quiz = Quiz.find(params[:quiz_id])
       if @grade_form.validate_and_save grade_params

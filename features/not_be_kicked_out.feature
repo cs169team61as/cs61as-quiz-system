@@ -4,6 +4,8 @@ Feature: Ability to press windows/home/alt button as well as ctrl-f
   So that I won't be kicked out because of pressing windows/alt/home key as well as ctrl-f on the keyboard
   I will be able to press those while taking quiz.
 
+Background:
+  Given I am logged in as a student
 
 Scenario: I press "windows" during the quiz
   Given I am taking a quiz

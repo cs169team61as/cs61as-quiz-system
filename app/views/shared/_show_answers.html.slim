@@ -4,7 +4,7 @@
     p = markdown question.content
     p Student Answer:
     textarea.show
-      = subm.content
+      = subm.human_readable_content
     - if score && (current_user.staff? || grade.finished)
       p Grade:
       p = score.grade

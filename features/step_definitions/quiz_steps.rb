@@ -5,9 +5,10 @@ end
 
 When /^A Quiz for lesson ([0-9]) exists$/ do |lesson|
   q = Quiz.create!(lesson: lesson, version: 1, is_draft: false)
-  q1 = Question.create!(content: "This is a test quiz", lesson: lesson, difficulty: "Easy")
-  q1.create_solution(content: "yup")
-  q1.create_rubric(rubric: "This is a test rubric")
+  q1 = AbstractQuestion.build content: "This is a test quiz", 
+                              lesson: lesson, difficulty: "Easy",
+                              my_solution: "yup", my_rubric: "This is a test rubric"
+  q1.save
   q1.relationships.create!(quiz_id: q.id, number: 1, points: 10)
 end
 

@@ -1,0 +1,41 @@
+.row
+  .small-12.columns
+    = f.input :content, as: :text,
+                        label: 'Question (parsed as Markdown)',
+                        input_html: { class: 'expand' },
+                        placeholder: 'Add Question'
+
+
+    = f.fields_for :options do |ssf|
+      = ssf.fields_for :form_choices do |sf|
+        br
+
+        table width = "100%"
+          thead
+            th 
+            th Choice text
+            th Is correct?
+
+          - opt = @quest_form.model.options["options"]
+          - form = opt["form_choices"] if opt
+          - 10.times do |id|
+            - text = form.try(:[], "choice_#{id}") if form
+            - chbox = form.try(:[], "correct_#{id}") if form
+            - chbox ||= "0" 
+            tr
+
+              td = "#{id+1}"
+              td = sf.input "choice_#{id}".to_sym, as: :text,
+                             label: "Option #{id+1}",
+                             input_html: { class: 'expand', value: text }
+              td = sf.input "correct_#{id}".to_sym, as: :boolean, label: "",
+                            input_html: { checked: chbox }
+
+
+    = f.input :my_solution, as: :hidden, :input_html => { :value => "empty" }
+
+    br
+    = f.input :my_rubric, as: :text,
+                          label: 'Rubric (parsed as Markdown)',
+                          input_html: { class: 'expand' },
+                          placeholder: 'Add Rubric'

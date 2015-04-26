@@ -20,15 +20,15 @@ div
               td
                 p = markdown question.content.truncate 100
                 p = link_to 'see more', staffs_question_path(question)
-              td = markdown question.solution.content.truncate 100
-              td = markdown question.rubric.rubric.truncate 100
+              td = markdown question.my_solution.truncate 100
+              td = markdown question.my_rubric.truncate 100
               td
                 - if @add
                   = link_to 'Add question!', add_staffs_question_path(question,
                                                                    quiz_id: @id),
                                                                    method: :post
                 - else
-                  p = link_to 'Edit Question', edit_staffs_question_path(question)
+                  p = link_to 'Edit Question', edit_staffs_question_path(question, :question_type => question.type)
                   p = link_to 'Delete Question', staffs_question_path(question),
                                                                       method: :delete,
                                                  data: { confirm: 'Are you sure?'}

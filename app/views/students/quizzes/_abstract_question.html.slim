@@ -1,3 +1,8 @@
 em This question is abstract and NOT supposed to be instantiated
+
+/ This is the question object of the appropriate type
+/ You can access all of your custom fields like q.blah or q.opt_blah 
 - q = sf.object.question
-= sf.text_area :content, label: false, class: 'textedit expand saves', id: "#{q.id}", placeholder: "It's a bug, not a feature"
+
+= sf.fields_for :content do |cf|
+	= cf.text_area :answer, label: false, class: 'textedit expand saves', id: "#{q.id}"

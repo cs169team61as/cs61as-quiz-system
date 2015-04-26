@@ -1,7 +1,7 @@
 require "spec_helper"
 
 def textarea_name(id)
-  "quiz[new_submissions_attributes][#{id}][content]"
+  "quiz[new_submissions_attributes][#{id}][content][answer]"
 end
 
 def textarea_css(id)

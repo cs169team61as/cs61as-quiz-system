@@ -1,10 +1,21 @@
 class ImportLegacyQuestions < ActiveRecord::Migration
+# TODO -- actually test this mirgation
   def change
-  	ActiveRecord::Base.connection.execute("DELETE from \"questions_v2\"")
-  	Question.all.each do |old|
-  		q = ShortAnswerQuestion.build :content => old.content, :solution => old.solution.content, :rubric => old.rubric.rubric, :lesson => old.lesson, :difficulty => old.difficulty
-  		q.id = old.id
-  		q.save!
+  	Question.includes(:solution, :rubric).each do |old|
+  		if old.rubric and old.solution
+  			q = ShortAnswerQuestion.build :content => old.content, 
+  		                              :lesson => old.lesson, 
+  		                              :difficulty => old.difficulty,
+  		                              :solution => old.solution.read_attribute(content),
+  		                              :rubric => old.rubric.read_attribute(rubric) 
+  			q.save!
+
+  			Grade.update_all {:question_id => q.id}, {:question_id => old.id} 
+  			Rubric.update_all {:question_id => q.id}, {:question_id => old.id}
+  			Solution.update_all {:question_id => q.id}, {:question_id => old.id}
+  			Relationship.update_all {:question_id => q.id}, {:question_id => old.id}
+  			Submission.update_all {:question_id => q.id}, {:question_id => old.id}
+  		end
   	end
   end
 end

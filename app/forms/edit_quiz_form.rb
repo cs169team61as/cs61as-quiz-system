@@ -45,7 +45,7 @@ class EditQuizForm < Reform::Form
   def same_lesson(rlt)
     return true if @fields.is_draft.to_i == 1
     rlt.each do |r|
-      quest = Question.find(r.question_id)
+      quest = AbstractQuestion.find(r.question_id)
       return false if @fields.lesson != quest.lesson
     end
     true

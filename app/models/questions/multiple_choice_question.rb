@@ -7,7 +7,7 @@ all that apply. This will be defined by option single_answer which
 is true when there is only one choice needs to be selected to answer.
 
 :choices    is a hash with the options (string) and whether or
-            it should be checked.
+            it is a correct answer
 
             When single_answer is true the student only has to select
             one option. There can be one or more answers which are
@@ -18,57 +18,104 @@ is true when there is only one choice needs to be selected to answer.
             scores and correctness depending on the rubric.
 
 :single_answer  True when MCQ is a single answer question, false otherwise
+(maybe we should just inherit from this class, to update the
+partials name automatically, like
+SimpleChoiceQuestion < MultipleChoiceQuestion
 
 :answers    Hash of all the potential answers and their respective scores
 
 Sample Question: "Which numbers are larger than 0 smaller than 2?"
 
-  :choices is ["0"=>false, "1"=>true, "2" =>true]
+  :choices is {"0"=>false, "1"=>true, "2" =>false}
   :single_answer is false
   :answers is [[false,true,true]=>2, [false,true,false]=>1
                 , [false,false,true]=>1, [true,true,true]=>1]
 
   Note: Answer representation up for discussion/change
 
+
+ So far the formula for calculating the grade is this:
+
+  points_per_choice = full_credit / total_correct_choices
+  credit = (correct_choices - incorrect_choices) * points_per_choice
+
 =end
 
   option_accessor :choices, :single_answer, :answers
 
-  def autograde(answer, quiz_id)
-    if (answers == nil)
-      return give_no_credit "I don't have a solution for this question"
-    end
-
-    score = answers.try(:[],answer)
-    if score
-      if score == full_credit(quiz_id)
-        return give_full_credit "The answer matches my solution"
-      else
-        return give_partial_credit(score, "The answer partially matches my solition")
-
-    return give_no_credit "The answer doesn't match my solution"
+  def self.build(h={})
+    q = super
+    q.choices ||= Hash.new
+    q.choices = q.choices.reject { |k, v| k == "" }
+    q
   end
+
+
+  def autograde(content, quiz_id)
+    score = calculate_score content, quiz_id
+    return give_partial_credit score, reason, quiz_id
+  end
+
+  def human_readable(content)
+    res = "Selected answers:\n\n"
+    content.each { |text, x| res << " * #{text}\n" unless x == "0" }
+    res
+  end
+
+  def my_solution
+    res = ""
+    choices.each do |k, v|
+      res << " * #{k}\n" if v
+    end
+    return "(no correct answer)" if res.blank?
+    res
+  end
+
 
   private
 
-  def give_partial_credit(score, msg, quiz_id)
-    res = Hash.new
-    res[:credit] = full_credit(quiz_id)
-    res[:comment] = msg + "(#{q.partial} autograder)"
+  def reason
+    res = "Selected correctly:\n\n"
+    res <<  make_list(@correct_choices, @points_per_choice.round(1))
+    res << "\n"
+    res << "Selected incorrectly:\n\n"
+    res <<  make_list(@incorrect_choices, -@points_per_choice.round(1))
+  end
+
+  def make_list(list, points)
+    res = ""
+    pts = points >= 0 ? "(+ #{points})" : "(- #{-points})" 
+    if list.length != 0
+      list.each { |ch| res << (" * #{ch} #{pts}\n") }
+    else
+      res << ("(nothing)\n")
+    end
     res
   end
 
-  def give_full_credit(msg, quiz_id)
-    res = Hash.new
-    res[:credit] = full_credit(quiz_id)
-    res[:comment] = msg + "(#{q.partial} autograder)"
-    res
-  end
+  def calculate_score(content, quiz_id)
 
-  def give_no_credit(msg)
-    res = Hash.new
-    res[:credit] = 0
-    res[:comment] = msg + "(#{q.partial} autograder)"
-    res
+    @total_correct_choices = 0
+    choices.each do |key, value|
+      @total_correct_choices += 1 if value
+    end
+
+    @full_credit = full_credit(quiz_id)
+    @points_per_choice = @full_credit / @total_correct_choices
+
+    @correct_choices = Array.new
+    @incorrect_choices = Array.new
+    content.each do |key, value|
+      if value != "0"
+        if choices[key]
+          @correct_choices << key
+        else
+          @incorrect_choices << key
+        end
+      end
+    end
+
+    score = (@correct_choices.length - @incorrect_choices.length) * @points_per_choice
+    normalize score, quiz_id
   end
 end
