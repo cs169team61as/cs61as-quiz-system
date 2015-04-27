@@ -1,8 +1,11 @@
 h1 View Question
 
 h3 Content:
-p = markdown @question.content
+div#content 
+	= markdown @question.content
 h3 Solution:
-p = markdown @question.my_solution
+div#solution 
+	= markdown @question.my_solution
 h3 Rubric:
-p = markdown @question.my_rubric
+div#rubric 
+	= markdown @question.my_rubric
