@@ -1,15 +1,14 @@
 require 'spec_helper'
 
 describe "TrueFalseQuestion" do
-	def grade(content)
-		question.autograde(content, quiz.id)[:credit]
+	def grade(answer)
+		question.autograde({"answer" => answer}, quiz.id)[:credit]
 	end
 
 	let(:points) { 10 }
-
 	let!(:question) do 
-		q = TrueFalseQuestion.build :content => "Does 1+1 equal 2?"
-		q.choice = "true"
+		q = TrueFalseQuestion.build :content => "Does 1+1 equal 2?", 
+		:my_solution => "True", :my_rubric => "(empty)"
 		q.save
 		q
 	end
@@ -22,15 +21,15 @@ describe "TrueFalseQuestion" do
   	pq
 	end
   
-	it "should give full credit if selected true" do
-		expect(grade("true")).to eq points
+	it "should give full credit for the right answer" do
+		expect(grade("True")).to eq points
 	end
   
-  it "should give no credit toward incorrect answer" do
-    expect(grade("false")).to eq 0
-  end
+  	it "should give no credit toward the wrong answer" do
+    	expect(grade("False")).to eq 0
+ 	end
   
 	it "should return correct human readable content for graders" do
-		expect(question.human_readable("true")).to eq "Selected answer:\n\n\ * true\n"
+		expect(question.human_readable({"answer" => "True"})).to eq "True"
 	end
 end

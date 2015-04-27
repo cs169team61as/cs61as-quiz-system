@@ -3,6 +3,4 @@
 - q = sf.object.question
 
 = sf.fields_for :content do |cf|
-	div
-	  = cf.input "True", as: :boolean, label: "True", id: 0
-	  = cf.input "False", as: :boolean, label: "False", id: 1
+	= cf.select :answer, options_for_select(TrueFalseQuestion.choices)
