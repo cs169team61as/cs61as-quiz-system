@@ -14,8 +14,8 @@ describe "TrueFalseQuestion" do
 	end
 	let!(:quiz) do
  		pq = build :quiz, retake: false, is_draft: false
-  	pq.save(:validate => false)
-  	pq.relationships.create!  question_id: question.id,
+  		pq.save(:validate => false)
+  		pq.relationships.create!  question_id: question.id,
                             number: 1,
                             points: points
   	pq
