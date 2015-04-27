@@ -1,0 +1,6 @@
+/ This is the question object of the appropriate type
+/ You can access all of your custom fields like q.blah or q.opt_blah 
+- q = sf.object.question
+
+= sf.fields_for :content do |cf|
+	= cf.select :answer, options_for_select(TrueFalseQuestion.choices)

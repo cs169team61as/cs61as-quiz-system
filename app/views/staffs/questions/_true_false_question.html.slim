@@ -1,0 +1,12 @@
+.row
+  .small-12.columns
+    = f.input :content, as: :text,
+                        label: 'Question (parsed as Markdown)',
+                        input_html: { class: 'expand' },
+                        placeholder: 'Add Question'
+  .small-3.columns
+    br
+    = f.label :Solution
+    = f.select :my_solution, options_for_select(TrueFalseQuestion.choices)	
+  br
+  = f.input :my_rubric, as: :hidden, :input_html => { :value => "empty" }

@@ -1,5 +1,7 @@
 class ImportLegacyQuestions < ActiveRecord::Migration
-# TODO -- actually test this mirgation
+# This migration turns all the old Questions into  ShotrAnswerQuestions
+# This migration is DESTRUCTIVE towards anything that belongs_to question
+# I ran it once and it worked (so backup your DB first) - Lena Zhivun
   def up
   	Question.includes(:solution, :rubric).each do |old|
   		if old.rubric and old.solution
