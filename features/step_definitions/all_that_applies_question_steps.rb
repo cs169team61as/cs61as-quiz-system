@@ -1,9 +1,9 @@
-Given(/^a multiple choice question "(.*?)" exists in "Lesson (\d+)" bank:$/) do |content, lesson, table|
+Given(/^an all that applies question "(.*?)" exists in "Lesson (\d+)" bank:$/) do |content, lesson, table|
   choices = Hash.new
   table.hashes.each do |row|
     choices[row[:option]] = (row[:correct] == "correct")
   end
-  q = MultipleChoiceQuestion.build content: content, lesson: lesson, 
+  q = AllThatAppliesQuestion.build content: content, lesson: lesson, 
                                    difficulty: "Easy", choices: choices,
                                    my_rubric: "(nothing)", my_solution: "(nothing)"
   q.save!
@@ -24,7 +24,7 @@ Given(/^a submission of cat test exists where the chosen options are:$/) do |tab
   table.hashes.each do |row|
     content[row[:option]] = "1"
   end 
-  @cat_student = FactoryGirl.create :student
+  @cat_student = FactoryGirl.create :student, login: "cs61as-gho", email: "student666@gmail.com"
   @cat_submission = FactoryGirl.create :submission, 
                                        content: content, 
                                        student: @cat_student, 
@@ -37,7 +37,7 @@ Given(/^a submission of cat test exists where the chosen options are:$/) do |tab
 end
 
 Given(/^I fill in Options as:$/) do |table|
-  prefix = "multiple_choice_question_options_form_choices_"
+  prefix = "all_that_applies_question_options_form_choices_"
   table.raw.each_with_index do |row, i|
     choice = row[0]
     correct = row[1] == "correct"
@@ -63,7 +63,7 @@ Then(/^I should see "(.*?)" on the view page for the cat question in "(.*?)"$/) 
 end
 
 When(/^the pre\-existing options should be:$/) do |table|
-  prefix = "multiple_choice_question_options_form_choices_"
+  prefix = "all_that_applies_question_options_form_choices_"
   table.raw.each_with_index do |row, i|
     expected_choice = row[0]
     expected_correct = row[1] == "correct"
@@ -85,7 +85,7 @@ Then(/^I should see "(.*?)" on the bank page for "Lesson (\d+)"$/) do |text, les
 end
 
 When(/^check "Option (\d+)" as correct$/) do |id|
-  prefix = "multiple_choice_question_options_form_choices_"
+  prefix = "all_that_applies_question_options_form_choices_"
   option_id = id.to_i - 1
   check prefix + "correct_#{option_id}"
 end

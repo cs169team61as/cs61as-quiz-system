@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "MultipleChoiceQuestion" do
+describe "AllThatAppliesQuestion" do
 	def grade(content)
 		question.autograde(content, quiz.id)[:credit]
 	end
@@ -8,7 +8,7 @@ describe "MultipleChoiceQuestion" do
 	let(:points) { 10 }
 
 	let!(:question) do 
-		q = MultipleChoiceQuestion.build :content => "Which of these numbers are even?"
+		q = AllThatAppliesQuestion.build :content => "Which of these numbers are even?"
 		q.choices = {"1" => false, "2" => true, "3" => false, "4" => true}
 		q.save
 		q
@@ -38,7 +38,7 @@ describe "MultipleChoiceQuestion" do
 	end
 
 	it "should not accept chioces without text when building" do
-		q2 = MultipleChoiceQuestion.build :content => "Which of these numbers are even?", 
+		q2 = AllThatAppliesQuestion.build :content => "Which of these numbers are even?", 
 			:choices => {"1" => false, "2" => true, "3" => false, "4" => true, "" => false}
 		expect(q2.choices[""]).to be_nil
 	end

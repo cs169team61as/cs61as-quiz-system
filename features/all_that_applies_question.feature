@@ -1,14 +1,14 @@
-Feature: Multiple choice question
+Feature: All that applies question
 
   As a Devleoper,
   I want to know immediately if things break when I modify my class.
   So I included the list of places that I know broke before when I
-  modified MultipleChoiceQuestion class in the past.
+  modified AllThatAppliesQuestion class in the past.
 
 
 Background:
   Given I am logged in as a staff user
-  And a multiple choice question "What coat colors are typical in cats" exists in "Lesson 1" bank:
+  And an all that applies question "What coat colors are typical in cats" exists in "Lesson 1" bank:
   | option | correct |
   | White  | correct |
   | Green  | wrong   |
@@ -62,7 +62,7 @@ Scenario: I want to be able to edit the options correctness
 
 Scenario: I want to be able to create a new question from the questions page
   Given I am on the Questions page
-  When I click "New Multiple Choice Question!"
+  When I click "New All That Applies Question!"
   And I select "2" from "Lesson"
   And I fill in "Question" with "Which numbers are odd?"
   And I fill in "Rubric" with "(no rubric)"
@@ -78,7 +78,7 @@ Scenario: I want to be able to create a new question from the questions page
 Scenario: I want to be able to create a new question from the quiz
   And I am on the Staff Dashboard
   And I create a new quiz
-  And I click "New Multiple Choice Question!"
+  And I click "New All That Applies Question!"
   And I fill in "Question" with "Which of these words stand for colors?"
   And I fill in "Rubric" with "(no rubric)"
   And I fill in Options as:

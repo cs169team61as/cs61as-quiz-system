@@ -38,7 +38,7 @@
           q = ShortAnswerQuestion.build content: "What is the password?",
                                         my_solution: "1234"
                                         my_rubric: "*sigh*"
-          q = MultipleChoiceQuestion.build content: "Which numbers are even?",
+          q = AllThatAppliesQuestion.build content: "Which numbers are even?",
                                         choices: {"1" => false, "2" => true}                                        
 
       option_accessor - Declares fields that should be serialized and

@@ -1,10 +1,7 @@
-class MultipleChoiceQuestion < AbstractQuestion
+class AllThatAppliesQuestion < AbstractQuestion
 =begin
 
 
-Multiple Choice Questions can either be select one OR select
-all that apply. This will be defined by option single_answer which
-is true when there is only one choice needs to be selected to answer.
 
 :choices    is a hash with the options (string) and whether or
             it is a correct answer
@@ -16,11 +13,6 @@ is true when there is only one choice needs to be selected to answer.
             When single_answer is false the student can select any that
             apply. Again, there can be one or more answers with varying
             scores and correctness depending on the rubric.
-
-:single_answer  True when MCQ is a single answer question, false otherwise
-(maybe we should just inherit from this class, to update the
-partials name automatically, like
-SimpleChoiceQuestion < MultipleChoiceQuestion
 
 :answers    Hash of all the potential answers and their respective scores
 
