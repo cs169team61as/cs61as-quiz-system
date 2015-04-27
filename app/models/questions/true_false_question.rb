@@ -7,28 +7,35 @@ class TrueFalseQuestion < AbstractQuestion
   end
   
   def autograde(content, quiz_id)
-    if content == choice
-      return give_full_credit "The answer matches my solution", quiz_id
-    else
-      return give_no_credit "The answer does not match my solution"
+    student_choices(content) do |text|
+      if text == my_solution
+        return give_full_credit "The answer matches my solution", quiz_id
+      else
+        return give_no_credit "The answer does not match my solution"
+      end
     end
   end
 
   def human_readable(content)
     res = "Selected answer:\n\n"
-    res << " * #{content}\n"
+    student_choices(content) do |text|
+      res << "* #{text}\n"
+    end
     res
   end
 
-  def my_solution
-    res = ""
-    res << " *#{choice}\n" if choice
-    #return "(no correct answer)" if res.blank?
-    res
-  end
-  
   def self.choices
     [%w(True True), %w(False False)]
   end
   
+  private
+  
+  def student_choices(content)
+    content.each do |key, value| 
+      if content[key] == "1"
+        yield key
+      end
+    end
+  end
+
 end

@@ -7,6 +7,6 @@
   .small-3.columns
     br
     = f.label :Solution
-    = f.select :my_solution, options_for_select(TrueFalseQuestion.choices)
+    = f.select :my_solution, options_for_select(TrueFalseQuestion.choices)	
   br
   = f.input :my_rubric, as: :hidden, :input_html => { :value => "empty" }

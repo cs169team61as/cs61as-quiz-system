@@ -9,5 +9,6 @@ class CreateQuestion
     question.solution = solution
     question.rubric = rubric
     question.save
+    question
   end
 end
