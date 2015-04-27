@@ -57,6 +57,7 @@ Cs61asQuizzes::Application.routes.draw do
       scope module: 'students' do
         resources :quizzes, only: :show do
           put :finish_grading
+          post :autograde
         end
       end
     end
