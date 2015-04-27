@@ -5,6 +5,18 @@ describe "AllThatAppliesQuestion" do
 		question.autograde(content, quiz.id)[:credit]
 	end
 
+	def answer(*selected)
+		res = {}
+		question.choices.each_with_index do |row, id|
+			text = row[0]
+			correct = selected.include?(text) ? "1" : "0"
+
+			res["choice_#{id}"] = text
+			res["correct_#{id}"] = correct
+		end
+		res
+	end
+
 	let(:points) { 10 }
 
 	let!(:question) do 
@@ -24,17 +36,17 @@ describe "AllThatAppliesQuestion" do
 
 
 	it "should give full credit if all the correct boxes are checked and incorrect are not" do
-		expect(grade({"2" => nil, "4" => nil})).to eq points
+		expect(grade(answer("2", "4"))).to eq points
 	end
 
 	it "should give partial credit if some of the correct answers are checked" do
-		expect(grade({"2" => nil})).to eq points/2
-		expect(grade({"1" => nil, "2" => nil, "4" => nil})).to eq points/2
-		expect(grade({"1" => nil, "2" => nil, "3" => nil, "4" => nil})).to eq 0
+		expect(grade(answer("2"))).to eq points/2
+		expect(grade(answer("1", "2", "4"))).to eq points/2
+		expect(grade(answer("1", "2", "3", "4"))).to eq 0
 	end
 
 	it "should not give less than zero credit" do
-		expect(grade({"1" => nil, "3" => nil})).to eq 0
+		expect(grade(answer("1", "3"))).to eq 0
 	end
 
 	it "should not accept chioces without text when building" do
@@ -44,6 +56,6 @@ describe "AllThatAppliesQuestion" do
 	end
 	
 	it "should return correct human readable content for graders" do
-		expect(question.human_readable({"1" => nil, "2" => nil, "4" => nil})).to eq "Selected answers:\n\n\ * 1\n\ * 2\n * 4\n"
+		expect(question.human_readable(answer("1", "2", "4"))).to eq "Selected answers:\n\n\ * 1\n\ * 2\n * 4\n"
 	end
 end

@@ -8,7 +8,7 @@ Feature: All that applies question
 
 Background:
   Given I am logged in as a staff user
-  And an all that applies question "What coat colors are typical in cats" exists in "Lesson 1" bank:
+  And the "cat" all that applies question "What coat colors are typical in cats" exists in "Lesson 1" bank:
   | option | correct |
   | White  | correct |
   | Green  | wrong   |
@@ -16,10 +16,11 @@ Background:
   | Purple | wrong   |
   And a test containing cat question exists and the question is worth 10 points
   And a submission of cat test exists where the chosen options are:
-  | option |
-  | White |
-  | Green |
-  | Black |
+  | option | correct |
+  | White  | correct |
+  | Green  | correct |
+  | Black  | correct |
+  | Purple | wrong   |
 
 
 Scenario: I want to be able to edit the rubric
@@ -50,14 +51,17 @@ Scenario: I want to be able to edit the options text
   And check "Option 5" as correct
   And I click "Update"
   Then I should see "Yellow" on the view page for the cat question in "Solution"
+  And the cat question should recognize "Yellow" as a "correct" answer
 
 
 Scenario: I want to be able to edit the options correctness
   Given I am on the Questions page
+  And the cat question should recognize "Purple" as a "wrong" answer
   When I edit the cat question
   And check "Option 4" as correct
   And I click "Update"
   Then I should see "Purple" on the view page for the cat question in "Solution"
+  And the cat question should recognize "Purple" as a "correct" answer
 
 
 Scenario: I want to be able to create a new question from the questions page

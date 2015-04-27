@@ -6,4 +6,5 @@
 	- q.choices.each_with_index do |option, id| 
 		- text = option[0]
 		div
-			= cf.input "#{text}".to_sym, as: :boolean, label: text, id: "#{q.id}"
+			= cf.input "correct_#{id}".to_sym, as: :boolean, label: text, id: "#{q.id}"
+			= cf.input "choice_#{id}".to_sym, as: :hidden, input_html: { value: text }
