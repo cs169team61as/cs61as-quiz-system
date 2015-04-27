@@ -7,11 +7,13 @@ h1#show_quiz Grade Question
       = markdown @question.content
 
       h4 Solution:
-      = markdown @question.my_solution
+      div#solution
+        = markdown @question.my_solution
 
       h5 Student's Answer:
-      textarea.show
-        = @submission.human_readable_content
+      div#answer
+        textarea.show
+          = @submission.human_readable_content
 
       - if @question.rubric
         h5 Rubric:
@@ -23,8 +25,10 @@ h1#show_quiz Grade Question
       br
       br
 
-      = f.input :grade
-      = f.input :comments, as: :text, label: "Commments (parsed as markdown)", input_html: { class: "expand" }
+      div#grade
+        = f.input :grade
+      div#comments
+        = f.input :comments, as: :text, label: "Commments (parsed as markdown)", input_html: { class: "expand" }
       = hidden_field_tag :quiz_id, @submission.quiz_id
 
   = f.submit 'Update Grade!', class: 'small button'

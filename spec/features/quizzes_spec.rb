@@ -134,7 +134,6 @@ describe "Quiz" do
       visit staffs_quiz_path(quiz)
       click_link("Edit Quiz")
       expect(page).to have_content("New Short Answer Question!")
-      expect(page).to have_content("New Multiple Choice Question!")
     end
 
     describe "removing questions", js: true do
