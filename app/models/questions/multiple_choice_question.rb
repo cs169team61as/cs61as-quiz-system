@@ -1,8 +1,6 @@
 class MultipleChoiceQuestion < AbstractQuestion
 =begin
 
-
-
 :choices    is an array with the possible answers
 
             When single_answer is false the student can select any that
@@ -22,9 +20,6 @@ answer = 3
 q = MultipleChoiceQuestion.build content: content, 
                                  choices: choices, 
                                  answer: answer
-
-
-TODO - make the question invalid if there are no answer
 
 =end
 
@@ -50,21 +45,15 @@ TODO - make the question invalid if there are no answer
   end
 
   # Converts the student's submission content answer into a string
-  def human_readable(content)
-    selected_answer_text(content)
-  end
+  def human_readable(content); selected_answer_text(content); end
 
   # Converts the correct answer into a string
-  def my_solution
-    correct_answer_text
-  end
+  def my_solution; correct_answer_text; end
 
   private
 
   # Returns the id of the choice selected by a student
-  def selected_answer_id(content)
-    content["answer"].to_i
-  end
+  def selected_answer_id(content); content["answer"].to_i; end
 
   # Returns the text of the choice selected by a student
   def selected_answer_text(content)
@@ -75,16 +64,19 @@ TODO - make the question invalid if there are no answer
 
   # Returns wheter the content of a submission is a valid choice
   def submission_valid(content)
-    content["answer"] != nil and content["answer"] =~ /^\d+$/ and valid_choice(selected_answer_id(content))
+    chosen_option_is_numeric(content) and chosen_option_exists(content)
   end
 
-  # Returns whether the question is valid or not.
-  # The be valid the question must:
-  # 1) have at least two choices
-  # have a valid answer
+  def chosen_option_is_numeric(content); content["answer"] != nil and content["answer"] =~ /^\d+$/; end
+  def chosen_option_exists(content); valid_choice(selected_answer_id(content)); end
+
+  # Returns whether the question is valid or not
   def question_valid
-    valid_choice(answer) and choices.length >= 2
+    has_at_least_two_choices and answer_is_valid
   end
+
+  def answer_is_valid; valid_choice(answer); end
+  def has_at_least_two_choices; choices.length >= 2; end
 
   # Returns the answer text for this question
   def correct_answer_text

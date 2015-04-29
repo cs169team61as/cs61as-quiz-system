@@ -10,7 +10,7 @@ describe "MultipleChoiceQuestion" do
 	end
 
 	let!(:valid_question1) do 
-		q = MultipleChoiceQuestion.build :content => "Where do you need to look to cross the strees safely?",
+		q = MultipleChoiceQuestion.build :content => "Where do you need to look to cross the street safely?",
 			:choices => ["Right, then left", "Left, then right", "Up, then down", "It depends"], :answer => 3
 		q.save
 		q
@@ -70,7 +70,7 @@ describe "MultipleChoiceQuestion" do
   	end
 
   	it "should give no credit for a non-numeric answer" do
-		expect(grade(valid_question1, "blaaargshhhhfsh!!")).to eq 0
+		expect(grade(valid_question1, "blaaargshhhhfsh!!")).to eq 0 
 		expect(grade(valid_question2, "blaaargshhhhfsh!!")).to eq 0
   	end
   
