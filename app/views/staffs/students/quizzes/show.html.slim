@@ -27,6 +27,15 @@ p = @grade.comment
       = f.input :comment, label: 'General Comments'
       = f.hidden_field :taken_id, value: @grade.id
       = f.submit 'Save Comments!', class: 'button'
+      br
+
+
+= link_to 'Autograde!',
+          staffs_student_quiz_autograde_path(@student, @quiz),
+          method: 'post',
+          class: 'large button'
+
+
 
 br
 br

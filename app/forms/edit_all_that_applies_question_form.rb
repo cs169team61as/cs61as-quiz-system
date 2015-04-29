@@ -1,5 +1,5 @@
-class EditMultipleChoiceQuestionForm < EditQuestionForm 
-	model :multiple_choice_question
+class EditAllThatAppliesQuestionForm < EditQuestionForm 
+	model :all_that_applies_question
 
 	def validate_and_save(question_params)
 		if super

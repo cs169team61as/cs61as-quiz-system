@@ -1,10 +1,7 @@
-class MultipleChoiceQuestion < AbstractQuestion
+class AllThatAppliesQuestion < AbstractQuestion
 =begin
 
 
-Multiple Choice Questions can either be select one OR select
-all that apply. This will be defined by option single_answer which
-is true when there is only one choice needs to be selected to answer.
 
 :choices    is a hash with the options (string) and whether or
             it is a correct answer
@@ -16,11 +13,6 @@ is true when there is only one choice needs to be selected to answer.
             When single_answer is false the student can select any that
             apply. Again, there can be one or more answers with varying
             scores and correctness depending on the rubric.
-
-:single_answer  True when MCQ is a single answer question, false otherwise
-(maybe we should just inherit from this class, to update the
-partials name automatically, like
-SimpleChoiceQuestion < MultipleChoiceQuestion
 
 :answers    Hash of all the potential answers and their respective scores
 
@@ -58,7 +50,9 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
 
   def human_readable(content)
     res = "Selected answers:\n\n"
-    content.each { |text, x| res << " * #{text}\n" unless x == "0" }
+    student_choices(content) do |text, is_selected|
+      res << " * #{text}\n" if is_selected
+    end
     res
   end
 
@@ -93,8 +87,17 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
     res
   end
 
-  def calculate_score(content, quiz_id)
+  def student_choices(content)
+    content.each do |key, value| 
+      if key =~ /choice_(.*)/
+        text = content[key]
+        is_selected = content["correct_#{$1}"] == "1"
+        yield text, is_selected
+      end
+    end
+  end
 
+  def calculate_score(content, quiz_id)
     @total_correct_choices = 0
     choices.each do |key, value|
       @total_correct_choices += 1 if value
@@ -105,12 +108,13 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
 
     @correct_choices = Array.new
     @incorrect_choices = Array.new
-    content.each do |key, value|
-      if value != "0"
-        if choices[key]
-          @correct_choices << key
+
+    student_choices(content) do |text, is_selected|
+      if is_selected
+        if choices[text]
+          @correct_choices << text
         else
-          @incorrect_choices << key
+          @incorrect_choices << text
         end
       end
     end
