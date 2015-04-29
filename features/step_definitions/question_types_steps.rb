@@ -31,13 +31,18 @@ Given(/^a quiz with a short answer question "(.*?)" and answer "(.*?)" exists$/)
   @this_question = q
 end
 
+Given(/^a quiz with a true false question "(.*?)" and answer "(.*?)" exists$/) do |content, answer|
+  q = TrueFalseQuestion.build content: content,
+                              difficulty: "Easy",
+                              my_rubric: "empty",
+                              my_solution: answer
+  q.save!
+  @this_quiz = make_quiz(q.id)
+  @this_question = q
+end
 
 Given(/^a quiz with a multiple choice question "(.*?)" and answer "(.*?)" exists:$/) do |arg1, arg2, table|
   # table is a Cucumber::Ast::Table
-  pending # express the regexp above with the code you wish you had
-end
-
-Given(/^a quiz with a true\/false question "(.*?)" and answer "(.*?)" exists$/) do |content, answer|
   pending # express the regexp above with the code you wish you had
 end
 
