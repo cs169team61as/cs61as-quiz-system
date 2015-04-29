@@ -41,6 +41,6 @@ Scenario: Solution correctly displays when I grade this question
   
 Scenario: Autograder grades this question correctly
   Given I am grading the cat question
-  And Grade should be "10.0" 
+  And Grade should be "0.0" 
   
   
