@@ -47,10 +47,6 @@ Given(/^a quiz with a true\/false question "(.*?)" and answer "(.*?)" exists$/) 
   @this_question = q
 end
 
-Given(/^a quiz with a scheme code question "(.*?)" and answer "(.*?)" exists$/) do |content, answer|
-  pending # express the regexp above with the code you wish you had
-end
-
 Given(/^I am taking this quiz$/) do
   FactoryGirl.create :quiz_lock, student: @student, quiz: @this_quiz 
   visit take_students_quizzes_path
@@ -75,9 +71,4 @@ end
 
 Then(/^I want to see this true\/false question with these options in the quiz$/) do
   expect(page).to have_content @this_question.content
-end
-
-
-Then(/^I want to see this schema question with these options in the quiz$/) do
-  pending # express the regexp above with the code you wish you had
 end
