@@ -9,8 +9,6 @@ Feature: Different question types for the quizzes
 Background:
   Given I am logged in as a student
 
-
-
 Scenario: I want to see a short answer question when I am taking the quiz
   Given a quiz with a short answer question "What is the binomal name of the domestic cat specie?" and answer "Felis catus" exists
   Given I am taking this quiz
