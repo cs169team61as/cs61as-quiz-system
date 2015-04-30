@@ -14,7 +14,6 @@ end
 
 Given(/^the web site is set up$/) do
   step "The Student cs61as-st exists"
-  step "The Student cs61as-bb exists"
   step "The Gsi cs61as-ta exists"
   step "A Quiz for lesson 1 exists"
   step "A Quiz for lesson 2 exists"
