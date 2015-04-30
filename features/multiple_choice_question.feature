@@ -39,7 +39,7 @@ Feature: Multiple choice question
  Scenario: I want to be able to edit the options text
    Given I am on the Questions page
    When I edit the "cat" question
-   And the pre-existing options should be:
+   And the pre-existing options of my multiple choice question should be:
    | One    | wrong   |
    | Two    | wrong   |
    | Three  | wrong   |
@@ -69,7 +69,7 @@ Feature: Multiple choice question
    And I select "2" from "Lesson"
    And I fill in "Question" with "Which color does grass have?"
    And I fill in "Rubric" with "(no rubric)"
-   And I fill in Options as:
+   And I fill in Options of my multiple choice question as:
    |   White      |   correct    |
    |   Green      |   wrong      |
    |   Black      |   correct    |
@@ -84,7 +84,7 @@ Feature: Multiple choice question
    And I click "New Multiple Choice Question!"
    And I fill in "Question" with "Where do squirrels live??"
    And I fill in "Rubric" with "(no rubric)"
-   And I fill in Options as:
+   And I fill in Options of my multiple choice question as:
    |   On GitHub        |   wrong      |
    |   On Mars          |   wrong      |
    |   In the ocean     |   wrong      |
@@ -102,13 +102,13 @@ Feature: Multiple choice question
 
 
  Scenario: Autograder gives full credit for the right answer
-   Given I am grading the "cat" question
-   And a submission of the "cat" test exists where the student selected option "3"
+   Given a submission of the "cat" test exists where the student selected "3"
+   And I am grading the "cat" question
    Then the Grade should be "10.0"
 
 
  Scenario: Autograder gives no credit for the wrong answer
-   Given I am grading the "cat" question
-   And a submission of the "cat" test exists where the student selected option "2"
+   Given a submission of the "cat" test exists where the student selected "2"
+   And I am grading the "cat" question
    Then the Grade should be "0.0"
 

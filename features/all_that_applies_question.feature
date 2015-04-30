@@ -42,7 +42,7 @@ Scenario: I want to be able to edit the question text
 Scenario: I want to be able to edit the options text
   Given I am on the Questions page
   When I edit the cat question
-  And the pre-existing options should be:
+  And the pre-existing options of my all that applies question should be:
   | White  | correct |
   | Green  | wrong   |
   | Black  | correct |
@@ -70,7 +70,7 @@ Scenario: I want to be able to create a new question from the questions page
   And I select "2" from "Lesson"
   And I fill in "Question" with "Which numbers are odd?"
   And I fill in "Rubric" with "(no rubric)"
-  And I fill in Options as:
+  And I fill in Options of my all that applies question as:
   |   1      |	 correct	|
   |   2	     |	 wrong		|
   |   3	     |	 correct	|
@@ -85,7 +85,7 @@ Scenario: I want to be able to create a new question from the quiz
   And I click "New All That Applies Question!"
   And I fill in "Question" with "Which of these words stand for colors?"
   And I fill in "Rubric" with "(no rubric)"
-  And I fill in Options as:
+  And I fill in Options of my all that applies question as:
   |   red      |	 correct	|
   |   green	   |	 correct	|
   |   box	     |	 wrong		|
