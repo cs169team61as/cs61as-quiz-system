@@ -9,12 +9,10 @@ Feature: Different question types for the quizzes
 Background:
   Given I am logged in as a student
 
-
-
 Scenario: I want to see a short answer question when I am taking the quiz
   Given a quiz with a short answer question "What is the binomal name of the domestic cat specie?" and answer "Felis catus" exists
   Given I am taking this quiz
-  Then I want to see this short answer question question with these options in the quiz
+  Then I want to see this short answer question with these options in the quiz
   
 
 Scenario: I want to see an all that applies question when I am taking the quiz
@@ -43,9 +41,3 @@ Scenario: I want to see a true/false question when I am taking the quiz
   Given a quiz with a true/false question "Can cats fly?" and answer "false" exists
   Given I am taking this quiz
   Then I want to see this true/false question with these options in the quiz
-
-
-Scenario: I want to see a schema code question when I am taking the quiz
-  Given a quiz with a scheme code question "Please write a code that says 'Hello World!" and answer "Hello World!" exists
-  Given I am taking this quiz
-  Then I want to see this schema question with these options in the quiz

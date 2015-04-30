@@ -16,16 +16,10 @@ end
 Given(/^cs(\d+)\-aa and cs(\d+)as\-bb have requested quizzes$/) do |arg1, arg2|
   pending # express the regexp above with the code you wish you had
 end
-Then(/^I press "(.*?)" for "(.*?)"$/) do |arg1, arg2|
-  pending # express the regexp above with the code you wish you had
-end
 When(/^I press a quiz to grade$/) do
   pending # express the regexp above with the code you wish you had
 end
 Then(/^I should not see True\/False questions$/) do
-  pending # express the regexp above with the code you wish you had
-end
-Then(/^I should not see What would scheme output question$/) do
   pending # express the regexp above with the code you wish you had
 end
 Then(/^I should only see ungraded questions$/) do

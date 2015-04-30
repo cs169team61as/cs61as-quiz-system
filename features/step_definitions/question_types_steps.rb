@@ -38,11 +38,13 @@ Given(/^a quiz with a multiple choice question "(.*?)" and answer "(.*?)" exists
 end
 
 Given(/^a quiz with a true\/false question "(.*?)" and answer "(.*?)" exists$/) do |content, answer|
-  pending # express the regexp above with the code you wish you had
-end
-
-Given(/^a quiz with a scheme code question "(.*?)" and answer "(.*?)" exists$/) do |content, answer|
-  pending # express the regexp above with the code you wish you had
+  q = TrueFalseQuestion.build content: content,
+                              difficulty: "Easy",
+                              my_rubric: "empty",
+                              my_solution: answer
+  q.save!
+  @this_quiz = make_quiz(q.id)
+  @this_question = q
 end
 
 Given(/^I am taking this quiz$/) do
@@ -51,7 +53,7 @@ Given(/^I am taking this quiz$/) do
 end
 
 
-Then(/^I want to see this short answer question question with these options in the quiz$/) do
+Then(/^I want to see this short answer question with these options in the quiz$/) do
   expect(page).to have_content @this_question.content
 end
 
@@ -68,10 +70,5 @@ end
 
 
 Then(/^I want to see this true\/false question with these options in the quiz$/) do
-  pending # express the regexp above with the code you wish you had
-end
-
-
-Then(/^I want to see this schema question with these options in the quiz$/) do
-  pending # express the regexp above with the code you wish you had
+  expect(page).to have_content @this_question.content
 end

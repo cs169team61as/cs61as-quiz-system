@@ -11,7 +11,7 @@
 #  is_draft   :boolean          default(TRUE)
 #
 
-# Quiz class; knows its questions and its submisisons
+# Quiz class; knows its questions and its submissions
 class Quiz < ActiveRecord::Base
   has_many :students, through: :taken_quizzes, foreign_key: 'quiz_id'
   has_many :taken_quizzes
