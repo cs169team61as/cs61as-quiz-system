@@ -35,10 +35,9 @@ Given(/^a submission of cat test exists where the chosen options are:$/) do |tab
   @cat_taken_quiz = FactoryGirl.create :taken_quiz,
                                        student: @cat_student, 
                                        quiz: @cat_quiz
-
 end
 
-Given(/^I fill in Options as:$/) do |table|
+Given(/^I fill in Options of my all that applies question as:$/) do |table|
   prefix = "all_that_applies_question_options_form_choices_"
   table.raw.each_with_index do |row, i|
     choice = row[0]
@@ -64,7 +63,7 @@ Then(/^I should see "(.*?)" on the view page for the cat question in "(.*?)"$/) 
   end
 end
 
-When(/^the pre\-existing options should be:$/) do |table|
+When(/^the pre\-existing options of my all that applies question should be:$/) do |table|
   prefix = "all_that_applies_question_options_form_choices_"
   table.raw.each_with_index do |row, i|
     expected_choice = row[0]
