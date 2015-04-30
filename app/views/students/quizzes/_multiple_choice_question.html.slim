@@ -1,0 +1,12 @@
+/ This is the question object of the appropriate type
+/ You can access all of your custom fields like q.blah or q.opt_blah 
+- q = sf.object.question
+
+= sf.fields_for :content do |cf|
+	- q.choices.each_with_index do |text, id| 
+		div
+			/ = cf.input "correct_#{id}".to_sym, as: :boolean, label: text, id: "#{q.id}"
+			/ = cf.input "choice_#{id}".to_sym, as: :hidden, input_html: { value: text }
+			= cf.radio_button "correct_#{id}".to_sym, id, :name => "#{cf.object_name}[answer]", 
+					label: text
+			= text
