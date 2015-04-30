@@ -12,7 +12,7 @@ Background:
 Scenario: I want to see a short answer question when I am taking the quiz
   Given a quiz with a short answer question "What is the binomal name of the domestic cat specie?" and answer "Felis catus" exists
   Given I am taking this quiz
-  Then I want to see this short answer question question with these options in the quiz
+  Then I want to see this short answer question with these options in the quiz
   
 
 Scenario: I want to see an all that applies question when I am taking the quiz
