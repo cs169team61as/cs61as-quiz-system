@@ -1,11 +1,7 @@
 class MultipleChoiceQuestion < AbstractQuestion
 =begin
 
-:choices    is an array with the possible answers
-
-            When single_answer is false the student can select any that
-            apply. Again, there can be one or more answers with varying
-            scores and correctness depending on the rubric.
+:choices    is an array with the possible answers text
 
 :answer     id of the answer in :choices that is correct
 
@@ -29,7 +25,7 @@ q = MultipleChoiceQuestion.build content: content,
     q = super
     q.choices ||= Array.new
     q.choices = q.choices.reject { |value| value == "" }
-    q.answer ||= -1
+    q.answer ||= "-1"
     q
   end
 
@@ -53,13 +49,13 @@ q = MultipleChoiceQuestion.build content: content,
   private
 
   # Returns the id of the choice selected by a student
-  def selected_answer_id(content); content["answer"].to_i; end
+  def selected_answer_id(content); content["answer"]; end
 
   # Returns the text of the choice selected by a student
   def selected_answer_text(content)
     return "(invalid choice)" unless submission_valid(content)
     return "(invalid question)" unless question_valid
-    choices[selected_answer_id(content)]
+    choices[selected_answer_id(content).to_i]
   end
 
   # Returns wheter the content of a submission is a valid choice
@@ -68,20 +64,20 @@ q = MultipleChoiceQuestion.build content: content,
   end
 
   def chosen_option_is_numeric(content); content["answer"] != nil and content["answer"] =~ /^\d+$/; end
-  def chosen_option_exists(content); valid_choice(selected_answer_id(content)); end
+  def chosen_option_exists(content); valid_choice(selected_answer_id(content).to_i); end
 
   # Returns whether the question is valid or not
   def question_valid
     has_at_least_two_choices and answer_is_valid
   end
 
-  def answer_is_valid; valid_choice(answer); end
+  def answer_is_valid; valid_choice(answer.to_i); end
   def has_at_least_two_choices; choices.length >= 2; end
 
   # Returns the answer text for this question
   def correct_answer_text
     return "(no correct answer, question invalid)" unless question_valid
-    choices[answer]
+    choices[answer.to_i]
   end
 
   # Returns true if the selected answer id is within the range of all possible answers

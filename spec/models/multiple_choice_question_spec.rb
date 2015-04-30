@@ -11,20 +11,20 @@ describe "MultipleChoiceQuestion" do
 
 	let!(:valid_question1) do 
 		q = MultipleChoiceQuestion.build :content => "Where do you need to look to cross the street safely?",
-			:choices => ["Right, then left", "Left, then right", "Up, then down", "It depends"], :answer => 3
+			:choices => ["Right, then left", "Left, then right", "Up, then down", "It depends"], :answer => "3"
 		q.save
 		q
 	end
 
 	let!(:valid_question2) do 
 		q = MultipleChoiceQuestion.build :content => "How many wings do you have?",
-			:choices => ["zero", "one", "two", "six"], :answer => 0
+			:choices => ["zero", "one", "two", "six"], :answer => "0"
 		q.save
 		q
 	end
 
 	let!(:invalid_question_no_choices) do 
-		q = MultipleChoiceQuestion.build :content => "I have no choices", :answer => 3
+		q = MultipleChoiceQuestion.build :content => "I have no choices", :answer => "3"
 		q.save
 		q
 	end
