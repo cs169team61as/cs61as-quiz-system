@@ -43,7 +43,7 @@ describe "MultipleChoiceQuestion" do
     	pq.relationships.create!  question_id: valid_question1.id,
                               number: 1, points: points
         pq.relationships.create!  question_id: valid_question2.id,
-                              number: 1, points: points
+                              number: 2, points: points
     	pq
   	end
 

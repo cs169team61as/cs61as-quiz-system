@@ -72,7 +72,7 @@ FactoryGirl.define do
     # end
   end
 
-  factory :short_answer_question do
+  factory :abstract_question do
     initialize_with { ShortAnswerQuestion.build({}) }
     content { Faker::Lorem.paragraph }
     lesson '1'
@@ -82,7 +82,42 @@ FactoryGirl.define do
       question.solution = create :solution, question: question unless question.solution
       question.rubric = create :rubric, question: question unless question.rubric
     end
+
+
+    factory :short_answer_question do
+      initialize_with { ShortAnswerQuestion.build({}) }
+    end
+
+    factory :multiple_choice_question do
+      initialize_with do 
+        MultipleChoiceQuestion.build({content: "Which hand do you use to write?",
+            choices: ["Left", "Right", "Middle", "Upper"], answer: "1", my_rubric: "(none)",
+            my_solution: "(none)", no_credit_submission: {"answer" => "3"}, 
+            full_credit_submission: {"answer" => "1"}}) 
+        end
+    end
+
+    factory :all_that_applies_question do
+      initialize_with do 
+        AllThatAppliesQuestion.build({content: "Where would you want to go for vacation?",
+            choices: {"To prison" => false, "Somewhere" => true, "To Hawaii" => true, "To sewers" => false, 
+              "To the office" => false}, my_rubric: "(none)", my_solution: "(none)", 
+              no_credit_submission: {"choice_0" => "To prison", "correct_0" => "1"},
+              half_credit_submission:  {"choice_0" => "To Hawaii", "correct_0" => "1"},
+              full_credit_submission: {"choice_0" => "To Hawaii", "correct_0" => "1",
+                "choice_1" => "Somewhere", "correct_1" => "1"}}) 
+        end
+    end
+
+    factory :true_false_question do
+      initialize_with { TrueFalseQuestion.build({content: "Are you a smart person??",
+            my_rubric: "(none)", my_solution: "True", 
+            no_credit_submission: {"answer" => "False"}, 
+            full_credit_submission: {"answer" => "True"}}) }
+    end
+
   end
+  
 
   factory :quiz_request do
     sequence(:lesson) { |n| n }
