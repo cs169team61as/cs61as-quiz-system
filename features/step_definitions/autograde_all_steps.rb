@@ -55,6 +55,6 @@ end
 
 Given(/^that I am grading the quiz with id "(.*?)" done by student "(.*?)"$/) do |quiz_id, student_id|
   visit staffs_student_quiz_path(student_id, quiz_id)
-  click_link "Grade Question!"
+  #click_link "Grade Question!"
 end
 

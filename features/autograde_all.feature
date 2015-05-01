@@ -28,7 +28,7 @@ Background:
   | option  | correct |
   | 2       | correct |
   | 3       | correct |
-  | 4       | correct |
+  | 4       | wrong   |
   | 2/1     | correct |
 
 
@@ -38,7 +38,7 @@ Scenario: I should see the autograder button
 
 Scenario: The autograde button should update the scores
   Given that I am grading the quiz with id "44" done by student "11"
-  Then I should see "Total: 0.0/10"
+  Then I should see "0.0"
   When I click "Autograde!"
   Then I should see "Total: 0.0/10"
 
@@ -46,5 +46,5 @@ Scenario: The autograde button should update the scores
   Given that I am grading the quiz with id "44" done by student "12"
   Then I should see "Total: 0.0/10"
   When I click "Autograde!"
-  Then I should see "Total: 10.0/10"
+  Then I should see "Total: 5.0/10"
 
