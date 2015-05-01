@@ -1,10 +1,12 @@
 Given(/^the "(.*?)" multiple choice question "(.*?)" exists in "(.*?)" bank:$/) do |name, content, lesson, table|
   choices =Array.new
+  correct = "(nothing)"
   table.hashes.each do |row|
     choices << row[:option]
     correct = row[:option] if row[:correct] == "correct"
   end
-  correct = choices.find_index correct
+
+  correct = choices.find_index(correct).to_s
   correct ||= "-1"
   
   q = MultipleChoiceQuestion.build content: content, lesson: lesson, 
@@ -39,10 +41,14 @@ Given(/^the "(.*?)" question should recognize "(.*?)" as a "(.*?)" answer$/)  do
   question = eval("@#{name}_question")
   question.reload
   if question.is_a? MultipleChoiceQuestion
-  	index = question.choices.find_index correct
-	expect(question.answer).to eq index.to_s	
+  	index = question.choices.find_index choice
+    if correct == "correct"
+	    expect(question.answer).to eq index.to_s	
+    else
+      expect(question.answer).not_to eq index.to_s  
+    end
   elsif question.is_a? AllThatAppliesQuestion
-	expect(question.choices[choice]).to eq (correct == "correct")
+	  expect(question.choices[choice]).to eq (correct == "correct")
   else
   	fail "I don't know how to handle this question type (#{question.partial})"
   end
@@ -63,7 +69,7 @@ Given(/^a submission of the "(.*?)" test exists where the student selected "(.*?
   if question.is_a? MultipleChoiceQuestion
   	content["answer"] = question.choices.find_index(selected).to_s
   elsif question.is_a? TrueFalseQuestion or question.is_a? ShortAnswerQuestion 
-	content["answer"] = selected
+	  content["answer"] = selected
   else
   	fail "I don't know how to handle this question type (#{question.partial})"
   end
@@ -120,4 +126,10 @@ Given(/^I fill in Options of my multiple choice question as:$/) do |table|
       choose prefix + "correct_#{i}_#{i}"
   	end
   end
+end
+
+When(/^choose "Option (\d+)" as correct$/) do |id|
+  prefix = "multiple_choice_question_options_"
+  option_id = id.to_i - 1
+  choose prefix + "correct_#{option_id}_#{option_id}"
 end
