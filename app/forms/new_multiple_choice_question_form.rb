@@ -4,6 +4,7 @@ class NewMultipleChoiceQuestionForm < NewQuestionForm
 	def validate_and_save(question_params)
 		if super
 			form_2_choices
+			return false unless @model.valid?
 			@model.save
 			return true
 		else

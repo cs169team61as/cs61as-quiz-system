@@ -5,6 +5,7 @@ class EditAllThatAppliesQuestionForm < EditQuestionForm
 		if super
 			@me = AbstractQuestion.find id
 			form_2_choices(question_params)
+			return false unless @me.valid?
 			@me.save
 			return true
 		else
