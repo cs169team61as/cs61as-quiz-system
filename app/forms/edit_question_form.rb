@@ -14,8 +14,7 @@ class EditQuestionForm < Reform::Form
 
   validates :content, :lesson, presence: true
   validates :difficulty, presence: true
-  validate :check_solution
-  validate :check_rubric
+
 
   def validate_and_save(question_params)
     question = AbstractQuestion.find id
@@ -25,21 +24,27 @@ class EditQuestionForm < Reform::Form
     question.difficulty = question_params[:difficulty]
     question_params = update_points(question_params)
     return false unless validate(question_params)
+    return false unless check_solution(question)
+    return false unless check_rubric(question)
     question.save
   end
 
   def populate_form_fields; end
 
-  def check_solution
-    if @model.my_solution.blank?
+  def check_solution(question)
+    if question.my_solution.blank?
       errors.add :content, "Doesn't have solution."
+      return false
     end
+    return true
   end
 
-  def check_rubric
-    if @model.my_rubric.blank?
+  def check_rubric(question)
+    if question.my_rubric.blank?
       errors.add :rubric, "Doesn't have rubric."
+      return false
     end
+    return true
   end
 
   def update_points(params)

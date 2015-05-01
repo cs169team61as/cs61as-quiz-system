@@ -70,7 +70,7 @@ Scenario: I want to make sure form submits properly for multiple choice
 
 
 Scenario: I want to see a true/false question when I am taking the quiz
-  Given a quiz with a true/false question "Can cats fly?" and answer "false" exists
+  Given a quiz with a true/false question "Can cats fly?" and answer "False" exists
   Given I am taking this quiz
   Then I want to see this true/false question with these options in the quiz
 
