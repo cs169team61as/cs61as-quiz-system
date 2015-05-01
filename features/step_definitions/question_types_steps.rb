@@ -20,7 +20,6 @@ Given(/^a quiz with an all that applies question "(.*?)" exists:$/) do |content,
   @this_question = q
 end
 
-
 Given(/^a quiz with a short answer question "(.*?)" and answer "(.*?)" exists$/) do |content, answer|
   q = ShortAnswerQuestion.build content: content, 
                                    difficulty: "Easy",
@@ -29,12 +28,6 @@ Given(/^a quiz with a short answer question "(.*?)" and answer "(.*?)" exists$/)
   q.save!
   @this_quiz = make_quiz(q.id)
   @this_question = q
-end
-
-
-Given(/^a quiz with a multiple choice question "(.*?)" and answer "(.*?)" exists:$/) do |arg1, arg2, table|
-  # table is a Cucumber::Ast::Table
-  pending # express the regexp above with the code you wish you had
 end
 
 Given(/^a quiz with a true\/false question "(.*?)" and answer "(.*?)" exists$/) do |content, answer|
@@ -65,10 +58,30 @@ end
 
 
 Then(/^I want to see this multiple choice question with these options in the quiz$/) do
-  pending # express the regexp above with the code you wish you had
+  #pending # express the regexp above with the code you wish you had
+  expect(page).to have_content @this_question.content
 end
 
 
 Then(/^I want to see this true\/false question with these options in the quiz$/) do
   expect(page).to have_content @this_question.content
 end
+
+Then(/^I check all that applies box "(.*?)"$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^the submission from this quiz with a single question will score "(.*?)"$/) do |expected_score|
+
+  @questions = @this_quiz.questions
+  @subm = @questions.map { |q| q.submissions.find_by student: @student }
+  @scores = @questions.map { |q| q.grades.find_by student: @student }
+  @ques_subm = QuizSubmission.new(@questions, @subm, @scores).ques_subm
+  @ques_subm.size.should == 1
+
+  @ques_subm.each do |question, subm, score, rlt|
+    autograder = subm.autograde
+    autograder[:credit].to_f.to_s.should == expected_score
+  end
+end
+

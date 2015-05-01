@@ -15,6 +15,7 @@ Given(/^the "(.*?)" multiple choice question "(.*?)" exists in "(.*?)" bank:$/) 
                                    my_rubric: "(nothing)", my_solution: "(nothing)"
   q.save!
   eval("@#{name}_question = q")
+  eval ("@#{name}_quiz = make_quiz(q.id)")
 end
 
 Given(/^a test containing "(.*?)" question exists and the question is worth (\d+) points$/) do |name, points|
