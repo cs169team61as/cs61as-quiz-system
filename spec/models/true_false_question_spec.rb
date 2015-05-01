@@ -12,6 +12,12 @@ describe "TrueFalseQuestion" do
 		q.save
 		q
 	end
+	let!(:invalid_question) do 
+		q = TrueFalseQuestion.build :content => "What is your favorite food?", 
+		:my_solution => "Potatoes", :my_rubric => "(empty)"
+		q.save
+		q
+	end
 	let!(:quiz) do
  		pq = build :quiz, retake: false, is_draft: false
   		pq.save(:validate => false)
@@ -31,5 +37,11 @@ describe "TrueFalseQuestion" do
   
 	it "should return correct human readable content for graders" do
 		expect(question.human_readable({"answer" => "True"})).to eq "True"
+	end
+
+	it "should check if the question is valid" do
+		expect(question).to be_valid
+		expect(invalid_question).not_to be_valid
+		expect(invalid_question.errors[:my_solution].join(" ")).to match /answer/
 	end
 end
