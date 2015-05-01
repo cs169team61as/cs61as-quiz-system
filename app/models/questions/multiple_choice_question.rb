@@ -30,7 +30,7 @@ q = MultipleChoiceQuestion.build content: content,
   end
 
   validate do |question|
-    choices_msg = "The multiple choice question needs to have at least two choices"
+    choices_msg = "This multiple choice question needs to have at least two choices"
     answer_msg = "The answer needs to be a valid choice"
     errors[:content] << choices_msg unless has_at_least_two_choices
     errors[:content] << answer_msg unless answer_is_valid

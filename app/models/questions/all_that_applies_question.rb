@@ -35,6 +35,14 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
 
   option_accessor :choices, :single_answer, :answers
 
+  validate do |question|
+    choices_msg = "This all that applies question needs to have at least two choices"
+    correct_msg = "This all that applies question needs to have at least one correct choice"
+
+    errors[:content] << choices_msg unless has_at_least_two_choices
+    errors[:content] << correct_msg unless has_at_least_one_correct_choice
+  end
+
   def self.build(h={})
     q = super
     q.choices ||= Hash.new
@@ -67,6 +75,14 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
 
 
   private
+
+  def has_at_least_two_choices
+    choices.length >= 2
+  end
+
+  def has_at_least_one_correct_choice
+    choices.values.count(true) >= 1
+  end
 
   def reason
     res = "Selected correctly:\n\n"
