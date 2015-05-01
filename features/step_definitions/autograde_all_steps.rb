@@ -20,7 +20,6 @@ Given(/^a test with id "(.*?)" with only question id "(.*?)" exists$/) do |test_
   pq.relationships.create!  question_id: q.id,
                             number: 1,
                             points: 10
-  #@cat_quiz = pq
 end
 
 Given(/^that "(.*?)" with login "(.*?)" and password "(.*?)" and id "(.*?)" exists$/) do |type, login, password, id|
