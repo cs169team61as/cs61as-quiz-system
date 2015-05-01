@@ -14,8 +14,8 @@ Background:
   | Green  | wrong   |
   | Black  | correct |
   | Purple | wrong   |
-  And a test containing cat question exists and the question is worth 10 points
-  And a submission of cat test exists where the chosen options are:
+  And a test containing "cat" question exists and the question is worth 10 points
+  And a submission of the "cat" test exists where the chosen options are:
   | option | correct |
   | White  | correct |
   | Green  | correct |
@@ -25,24 +25,24 @@ Background:
 
 Scenario: I want to be able to edit the rubric
   Given I am on the Questions page
-  When I edit the cat question
+  When I edit the "cat" question
   And I fill in "Rubric" with "Blah blah blah!!1"
   And I click "Update"
-  Then I should see "Blah blah blah!!1" on the view page for the cat question in "Rubric"
+  Then I should see "Blah blah blah!!1" on the view page for the "cat" question in "Rubric"
 
 
 Scenario: I want to be able to edit the question text
   Given I am on the Questions page
-  When I edit the cat question
+  When I edit the "cat" question
   And I fill in "Question" with "What chromatic patterns of felines are statistically prevalent?"
   And I click "Update"
-  Then I should see "What chromatic patterns of felines are statistically prevalent?" on the view page for the cat question in "Content"
+  Then I should see "What chromatic patterns of felines are statistically prevalent?" on the view page for the "cat" question in "Content"
 
 
 Scenario: I want to be able to edit the options text
   Given I am on the Questions page
-  When I edit the cat question
-  And the pre-existing options should be:
+  When I edit the "cat" question
+  And the pre-existing options of my all that applies question should be:
   | White  | correct |
   | Green  | wrong   |
   | Black  | correct |
@@ -50,18 +50,18 @@ Scenario: I want to be able to edit the options text
   And I fill in "Option 5" with "Yellow" 
   And check "Option 5" as correct
   And I click "Update"
-  Then I should see "Yellow" on the view page for the cat question in "Solution"
-  And the cat question should recognize "Yellow" as a "correct" answer
+  Then I should see "Yellow" on the view page for the "cat" question in "Solution"
+  And the "cat" question should recognize "Yellow" as a "correct" answer
 
 
 Scenario: I want to be able to edit the options correctness
   Given I am on the Questions page
-  And the cat question should recognize "Purple" as a "wrong" answer
-  When I edit the cat question
+  And the "cat" question should recognize "Purple" as a "wrong" answer
+  When I edit the "cat" question
   And check "Option 4" as correct
   And I click "Update"
-  Then I should see "Purple" on the view page for the cat question in "Solution"
-  And the cat question should recognize "Purple" as a "correct" answer
+  Then I should see "Purple" on the view page for the "cat" question in "Solution"
+  And the "cat" question should recognize "Purple" as a "correct" answer
 
 
 Scenario: I want to be able to create a new question from the questions page
@@ -70,7 +70,7 @@ Scenario: I want to be able to create a new question from the questions page
   And I select "2" from "Lesson"
   And I fill in "Question" with "Which numbers are odd?"
   And I fill in "Rubric" with "(no rubric)"
-  And I fill in Options as:
+  And I fill in Options of my all that applies question as:
   |   1      |	 correct	|
   |   2	     |	 wrong		|
   |   3	     |	 correct	|
@@ -85,7 +85,7 @@ Scenario: I want to be able to create a new question from the quiz
   And I click "New All That Applies Question!"
   And I fill in "Question" with "Which of these words stand for colors?"
   And I fill in "Rubric" with "(no rubric)"
-  And I fill in Options as:
+  And I fill in Options of my all that applies question as:
   |   red      |	 correct	|
   |   green	   |	 correct	|
   |   box	     |	 wrong		|
@@ -96,13 +96,13 @@ Scenario: I want to be able to create a new question from the quiz
 
 
 Scenario: Solution correctly displays when I grade this question
-  Given I am grading the cat question
+  Given I am grading the "cat" question
   Then "Solution" should contain "White, Black" 
   And "Solution" should not contain "Green, Purple"
 
 
 Scenario: Autograder grades this question correctly
-  Given I am grading the cat question
+  Given I am grading the "cat" question
   Then "Comments" should contain "White, Green, Black"
   And Grade should be "5.0"
 
