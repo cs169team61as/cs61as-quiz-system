@@ -29,8 +29,15 @@ q = MultipleChoiceQuestion.build content: content,
     q
   end
 
+  validate do |question|
+    choices_msg = "The multiple choice question needs to have at least two choices"
+    answer_msg = "The answer needs to be a valid choice"
+    errors[:content] << choices_msg unless has_at_least_two_choices
+    errors[:content] << answer_msg unless answer_is_valid
+  end
+
   def autograde(content, quiz_id)
-    return give_no_credit "This submission is invalid" unless submission_valid(content)
+    return give_no_credit "This submission is incorrect" unless submission_valid(content)
     return give_no_credit "This question is invalid" unless question_valid
 
     if selected_answer_id(content) == answer
