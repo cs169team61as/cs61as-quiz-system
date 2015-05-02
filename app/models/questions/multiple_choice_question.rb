@@ -60,7 +60,7 @@ q = MultipleChoiceQuestion.build content: content,
 
   # Returns the text of the choice selected by a student
   def selected_answer_text(content)
-    return "(invalid choice)" unless submission_valid(content)
+    return "(nothing selected or invalid choice)" unless submission_valid(content)
     return "(invalid question)" unless question_valid
     choices[selected_answer_id(content).to_i]
   end
