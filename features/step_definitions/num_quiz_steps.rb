@@ -51,6 +51,15 @@ When /^I try to add a new question/ do
   visit new_staffs_question_path
 end
 
+Then(/^I should see (\d+) quizzes below$/) do |arg1|
+  page.all('ul#to_be_graded li').count.to_s.should == arg1
+end
+Then(/^I should see no quiz below$/) do
+  steps %{
+    Then I should see "There are no quizzes to grade! Way to Go!"
+  }
+end
+
 
 Then /^I must see "([^\"]*)"$/ do |expected|
   if expected == "staff"
