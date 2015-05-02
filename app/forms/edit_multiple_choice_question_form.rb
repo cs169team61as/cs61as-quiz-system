@@ -14,6 +14,7 @@ class EditMultipleChoiceQuestionForm < EditQuestionForm
 		end
 	end
 
+
 	def form_2_choices(question_params)
 		choices = Array.new
 		ch = question_params["options"]["form_choices"]

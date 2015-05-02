@@ -58,11 +58,8 @@ module Staffs
         flash[:success] = 'Updated Question!'
         redirect_after_editing quiz
       else
-        if AbstractQuestion.exists?(params[:id])
-          redirect_to edit_staffs_question_path(params[:id]) 
-        else
-          redirect_after_editing quiz
-        end
+        @quest_form.populate_form_fields
+        render 'edit'
       end
     end
 
