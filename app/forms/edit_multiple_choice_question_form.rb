@@ -6,12 +6,14 @@ class EditMultipleChoiceQuestionForm < EditQuestionForm
 			@me = AbstractQuestion.find id
 			form_2_choices(question_params)
 			@me.answer = question_params["answer"]
+			return false unless @me.valid?
 			@me.save
 			return true
 		else
 			return false
 		end
 	end
+
 
 	def form_2_choices(question_params)
 		choices = Array.new
