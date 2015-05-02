@@ -43,12 +43,6 @@ end
 When(/^I log in as a student$/) do
   pending # express the regexp above with the code you wish you had
 end
-When(/^I press the "(.*?)" button$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
-end
-Then(/^I should not be kicked out$/) do
-  pending # express the regexp above with the code you wish you had
-end
 Then(/^I should see the starter menu$/) do
   pending # express the regexp above with the code you wish you had
 end
