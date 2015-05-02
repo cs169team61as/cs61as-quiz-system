@@ -37,7 +37,7 @@ q = MultipleChoiceQuestion.build content: content,
   end
 
   def autograde(content, quiz_id)
-    return give_no_credit "This submission is incorrect" unless submission_valid(content)
+    return give_no_credit "Nothing selected" unless submission_valid(content)
     return give_no_credit "This question is invalid" unless question_valid
 
     if selected_answer_id(content) == answer
