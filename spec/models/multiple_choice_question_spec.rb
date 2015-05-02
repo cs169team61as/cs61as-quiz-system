@@ -112,4 +112,14 @@ describe "MultipleChoiceQuestion" do
 		expect(q2.choices.include?("")).to be false
 	end
 
+	it "should validate the choices and the answer" do
+		expect(invalid_question_no_choices).not_to be_valid
+		expect(invalid_question_no_answer).not_to be_valid
+		expect(valid_question1).to be_valid
+		expect(valid_question1).to be_valid
+
+		expect(invalid_question_no_answer.errors[:content].join(" ")).to match /answer/
+		expect(invalid_question_no_choices.errors[:content].join(" ")).to match /choice/
+	end
+
 end

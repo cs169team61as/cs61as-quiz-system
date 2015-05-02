@@ -3,6 +3,10 @@
 - q = sf.object.question
 
 = sf.fields_for :content do |cf|
+
+	/ This fixes the controller error if no options are selected 
+	= cf.input :empty, as: :hidden, input_html: { value: "empty" }
+
 	- q.choices.each_with_index do |option, id| 
 		- text = option[0]
 		div

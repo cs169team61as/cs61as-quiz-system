@@ -58,6 +58,7 @@ module Staffs
         flash[:success] = 'Updated Question!'
         redirect_after_editing quiz
       else
+        @quest_form.populate_form_fields
         render 'edit'
       end
     end
