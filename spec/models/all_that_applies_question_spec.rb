@@ -25,6 +25,21 @@ describe "AllThatAppliesQuestion" do
 		q.save
 		q
 	end
+
+	let!(:invalid_question_no_choices) do 
+		q = AllThatAppliesQuestion.build :content => "Which of these numbers are even?"
+		q.save
+		q
+	end
+
+	let!(:invalid_question_no_correct_choices) do 
+		q = AllThatAppliesQuestion.build :content => "Which of these numbers are negative?"
+		q.choices = {"1" => false, "2" => false, "3" => false, "4" => false}
+		q.save
+		q
+	end
+
+
   	let!(:quiz) do
    		pq = build :quiz, retake: false, is_draft: false
     	pq.save(:validate => false)
@@ -57,5 +72,13 @@ describe "AllThatAppliesQuestion" do
 	
 	it "should return correct human readable content for graders" do
 		expect(question.human_readable(answer("1", "2", "4"))).to eq "Selected answers:\n\n\ * 1\n\ * 2\n * 4\n"
+	end
+
+	it "should validate the choices" do
+		expect(question).to be_valid
+		expect(invalid_question_no_choices).not_to be_valid
+		expect(invalid_question_no_correct_choices).not_to be_valid
+		expect(invalid_question_no_choices.errors[:content].join(" ")).to match /least two/
+		expect(invalid_question_no_correct_choices.errors[:content].join(" ")).to match /least one/
 	end
 end
