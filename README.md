@@ -15,7 +15,7 @@ Heroku Deployment: https://lit-cove-8292.herokuapp.com/
 * Remember DSP students
 * New question types: short answer, true/false, multiple choice, all that applies
 * Autograding: Big Blue Autograde Button
-* Migration to import the old questions (destructive)
+* Migration to import the legacy questions into autogradable questions (destructive)
 
 
 See wiki for more info.
