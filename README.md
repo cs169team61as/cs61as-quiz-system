@@ -16,6 +16,6 @@ Heroku Deployment: https://lit-cove-8292.herokuapp.com/
 * Academic honesty statement
 * New question types: short answer, true/false, multiple choice, all that applies
 * Autograding: Big Blue Autograde Button
-* Migration to import the legacy questions into autogradable questions (destructive, poorly tested)
+* Migration to import the legacy questions into autogradable questions (destructive, poorly tested so backup first)
 
 
