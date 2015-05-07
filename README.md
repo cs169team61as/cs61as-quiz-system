@@ -8,7 +8,7 @@ Pivotal Tracker: https://www.pivotaltracker.com/n/projects/1282818
 
 Heroku Deployment: https://lit-cove-8292.herokuapp.com/
 
-### Short summary of features added:
+### Short summary of the features added:
 
 * Fixed old rspec tests, added cucumber tests
 * Hint cs61as-xx when logging in
