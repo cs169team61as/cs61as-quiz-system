@@ -19,4 +19,3 @@ Heroku Deployment: https://lit-cove-8292.herokuapp.com/
 * Migration to import the legacy questions into autogradable questions (destructive, poorly tested)
 
 
-See wiki for more info.
