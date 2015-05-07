@@ -13,9 +13,10 @@ Heroku Deployment: https://lit-cove-8292.herokuapp.com/
 * Fixed old rspec tests, added cucumber tests
 * Hint cs61as-xx when logging in
 * Remember DSP students
+* Academic honesty statement
 * New question types: short answer, true/false, multiple choice, all that applies
 * Autograding: Big Blue Autograde Button
-* Migration to import the legacy questions into autogradable questions (destructive)
+* Migration to import the legacy questions into autogradable questions (destructive, poorly tested)
 
 
 See wiki for more info.
