@@ -8,4 +8,14 @@ Pivotal Tracker: https://www.pivotaltracker.com/n/projects/1282818
 
 Heroku Deployment: https://lit-cove-8292.herokuapp.com/
 
+### Short summary of fearutes added:
+
+* Fixed old rspec tests, added cucumber tests
+* Hint cs61as-xx when logging in
+* Remember DSP students
+* New question types: short answer, true/false, multiple choice, all that applies
+* Autograding: Big Blue Autograde Button
+* Migration to import the old questions (destructive)
+
+
 See wiki for more info.
