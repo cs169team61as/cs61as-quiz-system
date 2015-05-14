@@ -106,3 +106,53 @@ Scenario: Autograder grades this question correctly
   Then "Comments" should contain "White, Green, Black"
   And Grade should be "5.0"
 
+
+ Scenario: Creating a question with less than two options is not allowed
+   Given I am on the Questions page
+   When I click "New All That Applies Question!"
+   And I select "2" from "Lesson"
+   And I fill in "Question" with "Which color does grass have?"
+   And I fill in "Rubric" with "(no rubric)"
+   And I fill in Options of my all that applies question as:
+   |   Green      |   correct    |
+   And I click "Create"
+   Then I should see "New Question!"
+   And I should not see "Which color does grass have?" on the bank page for "Lesson 2"
+
+Scenario: Creating a question with no correct answer is not allowed
+   Given I am on the Questions page
+   When I click "New All That Applies Question!"
+   And I select "2" from "Lesson"
+   And I fill in "Question" with "Which color does grass have?"
+   And I fill in "Rubric" with "(no rubric)"
+   And I fill in Options of my all that applies question as:
+   |   White      |   wrong    |
+   |   Green      |   wrong    |
+   |   Yellow     |   wrong    |
+   And I click "Create"
+   Then I should see "New Question!"
+   And I should not see "Which color does grass have?" on the bank page for "Lesson 2"
+
+Scenario: Editing an existing question so that it has less than two choices is not allowed
+   When I edit the "cat" question
+   And I fill in Options of my all that applies question as:
+   | White  | correct |
+   |        | wrong   |
+   |        | wrong   |
+   |        | wrong   |
+   |        | wrong   |
+   |        | wrong   |
+   And I click "Update"
+   Then I should see "Edit question!"
+
+Scenario: Editing an existing question so that it has no correct answer is not allowed
+   When I edit the "cat" question
+   And I fill in Options of my all that applies question as:
+   | Green  | wrong   |
+   | Blue   | wrong   |
+   | Red    | wrong   |
+   |        | correct |
+   |        | wrong   |
+   |        | wrong   |
+   And I click "Update"
+   Then I should see "Edit question!"
