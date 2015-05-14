@@ -2,30 +2,11 @@ class EditAllThatAppliesQuestionForm < EditQuestionForm
 	model :all_that_applies_question
 
 	def validate_and_save(question_params)
-		if super
-			@me = AbstractQuestion.find id
-			form_2_choices(question_params)
-			return false unless @me.valid?
-			@me.save
-			return true
-		else
-			return false
-		end
-	end
-
-	def form_2_choices(question_params)
-		choices = Hash.new
-		ch = question_params["options"]["form_choices"]
-		ch.each do |k, v|
-			if k =~ /choice_(.*)/
-				new_key = ch[k]
-				new_value = ch["correct_#{$1}"] != "0"
-				next if new_key.blank?
-				choices[new_key] = new_value
-			end
-		end
-		@me.choices = choices
-		@me.options.delete "options"
+		question = AbstractQuestion.find id
+    	return false unless validate_params(question, question_params)
+    	AllThatAppliesQuestion.form_2_choices(question, question_params)
+		return false unless question.valid?
+    	question.save
 	end
 
 

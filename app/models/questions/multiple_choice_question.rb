@@ -53,6 +53,20 @@ q = MultipleChoiceQuestion.build content: content,
   # Converts the correct answer into a string
   def my_solution; correct_answer_text; end
 
+  #Parses the form fields into the valid choices hash
+  def self.form_2_choices(question, question_params)
+    choices = Array.new
+    ch = question_params["options"]["form_choices"]
+    ch.each do |key, text|
+      if key =~ /choice_(.*)/
+        next if text.blank?
+        choices << text
+      end
+    end
+    question.choices = choices
+    question.options.delete "options"
+  end
+
   private
 
   # Returns the id of the choice selected by a student
@@ -93,4 +107,6 @@ q = MultipleChoiceQuestion.build content: content,
     return false unless answer_id.is_a? Integer
     answer_id >= 0 and answer_id < choices.length
   end
+
+
 end
