@@ -21,25 +21,28 @@ def make_quizzes
   q = Quiz.create! lesson: '1',
                    version: 1,
                    is_draft: false
-  q1 = Question.create! content: 'What is 1 + 1?',
+  q1 = ShortAnswerQuestion.build content: 'What is 1 + 1?',
                         lesson: '1',
                         difficulty: 'Easy'
+  q1.save!
   q1.relationships.create! quiz_id: q.id,
                            number: 1,
                            points: 3
   q1.create_solution content: '2'
   q1.create_rubric rubric: '5: Hello'
-  q2 = Question.create! content: 'What is 1 * 3?',
+  q2 = ShortAnswerQuestion.build content: 'What is 1 * 3?',
                         lesson: '1',
                         difficulty: 'Medium'
+  q2.save!
   q2.relationships.create! quiz_id: q.id,
                            number: 2,
                            points: 3
   q2.create_solution content: '3'
   q2.create_rubric rubric: '5: Hello'
-  q3 = Question.create! content: 'What is 10 + 1?',
+  q3 = ShortAnswerQuestion.build content: 'What is 10 + 1?',
                         lesson: '1',
                         difficulty: 'Hard'
+  q3.save!
   q3.relationships.create! quiz_id: q.id,
                            number: 3,
                            points: 4
@@ -48,9 +51,10 @@ def make_quizzes
   q = Quiz.create! lesson: '2',
                    version: 1,
                    is_draft: false
-  q4 = Question.create! content: 'What do you say after Hello?',
+  q4 = ShortAnswerQuestion.build content: 'What do you say after Hello?',
                         lesson: '2',
                         difficulty: 'Easy'
+  q4.save!
   q4.relationships.create! quiz_id: q.id,
                            number: 1,
                            points: 10
