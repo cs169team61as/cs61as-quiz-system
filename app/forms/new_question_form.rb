@@ -19,6 +19,10 @@ class NewQuestionForm < Reform::Form
 
   def validate_and_save(question_params)
     return false unless validate(question_params)
+    save_with_params(question_params)
+  end
+
+  def save_with_params(question_params)
     pts = question_params.delete :points
     @model.save
     @model.solution.update_attribute(:question_id, @model.id)

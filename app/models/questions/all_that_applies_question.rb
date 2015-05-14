@@ -56,6 +56,7 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
     return give_partial_credit score, reason, quiz_id
   end
 
+  # Converts the student's submission content answer into a string
   def human_readable(content)
     res = "Selected answers:\n\n"
     student_choices(content) do |text, is_selected|
@@ -64,6 +65,7 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
     res
   end
 
+  # Converts the correct answer into a string
   def my_solution
     res = ""
     choices.each do |k, v|
@@ -73,6 +75,22 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
     res
   end
 
+
+  #Parses the form fields into the valid choices hash
+  def self.form_2_choices(question, question_params)
+    choices = Hash.new
+    ch = question_params["options"]["form_choices"]
+    ch.each do |k, v|
+      if k =~ /choice_(.*)/
+        new_key = ch[k]
+        new_value = ch["correct_#{$1}"] != "0"
+        next if new_key.blank?
+        choices[new_key] = new_value
+      end
+    end
+    question.choices = choices
+    question.options.delete "options"
+  end
 
   private
 
@@ -84,6 +102,7 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
     choices.values.count(true) >= 1
   end
 
+  # Returns the comment produced by the autograder
   def reason
     res = "Selected correctly:\n\n"
     res <<  make_list(@correct_choices, @points_per_choice.round(1))
@@ -92,6 +111,9 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
     res <<  make_list(@incorrect_choices, -@points_per_choice.round(1))
   end
 
+  # Helper function to generate the comment produced by the autograder.
+  # list is the array of the answers selected, points is how much
+  # points is given (or taken off) for each of these answer
   def make_list(list, points)
     res = ""
     pts = points >= 0 ? "(+ #{points})" : "(- #{-points})" 
@@ -103,6 +125,12 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
     res
   end
 
+  # Iterates over the student's choices, given the content of
+  # the student's submission
+  # example of use: 
+  # student_choices(content) do |text, is_selected|
+  # ...
+  # end
   def student_choices(content)
     content.each do |key, value| 
       if key =~ /choice_(.*)/
@@ -113,6 +141,12 @@ Sample Question: "Which numbers are larger than 0 smaller than 2?"
     end
   end
 
+  # Calculated the grade given the student's, given the content of
+  # the student's submission and the quiz.
+  #
+  # So far the formula for calculating the grade is this:
+  # points_per_choice = full_credit / total_correct_choices
+  # credit = (correct_choices - incorrect_choices) * points_per_choice
   def calculate_score(content, quiz_id)
     @total_correct_choices = 0
     choices.each do |key, value|
