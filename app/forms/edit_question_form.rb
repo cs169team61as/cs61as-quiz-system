@@ -28,6 +28,7 @@ class EditQuestionForm < Reform::Form
     return false unless check_rubric(question)
     question.save
   end
+  
 
   def populate_form_fields; end
 

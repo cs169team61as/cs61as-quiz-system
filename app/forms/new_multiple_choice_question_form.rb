@@ -5,14 +5,7 @@ class NewMultipleChoiceQuestionForm < NewQuestionForm
   def validate_and_save(question_params)
     return false unless validate(question_params)
     form_2_choices
-    return false unless @model.valid?
-    pts = question_params.delete :points
-    @model.save 
-    @model.solution.update_attribute(:question_id, @model.id)
-    @model.rubric.update_attribute(:question_id, @model.id)
-    @model.my_solution = question_params[:my_solution]
-    @model.my_rubric = question_params[:my_rubric]
-    update_points(pts)
+    save_with_params(question_params)
   end
 
   def form_2_choices
