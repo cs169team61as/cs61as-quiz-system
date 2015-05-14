@@ -2,30 +2,12 @@ class EditMultipleChoiceQuestionForm < EditQuestionForm
     model :multiple_choice_question
 
 	def validate_and_save(question_params)
-		if super
-			@me = AbstractQuestion.find id
-			form_2_choices(question_params)
-			@me.answer = question_params["answer"]
-			return false unless @me.valid?
-			@me.save
-			return true
-		else
-			return false
-		end
-	end
-
-
-	def form_2_choices(question_params)
-		choices = Array.new
-		ch = question_params["options"]["form_choices"]
-		ch.each do |key, text|
-			if key =~ /choice_(.*)/
-				next if text.blank?
-				choices << text
-			end
-		end
-		@me.choices = choices
-		@me.options.delete "options"
+		question = AbstractQuestion.find id
+    	return false unless validate_params(question, question_params)
+    	MultipleChoiceQuestion.form_2_choices(question, question_params)
+		question.answer = question_params["answer"]
+		return false unless question.valid?
+    	question.save
 	end
 
 	def populate_form_fields

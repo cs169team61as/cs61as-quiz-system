@@ -8,7 +8,7 @@ Feature: Multiple choice question
 
  Background:
    Given I am logged in as a staff user
-   And the "dog" multiple choice question "How many legs do dogs nurmally have?" exists in "Lesson 1" bank:
+   And the "dog" multiple choice question "How many legs do dogs normally have?" exists in "Lesson 1" bank:
    | option | correct |
    | One    | wrong   |
    | Two    | wrong   |
@@ -113,3 +113,52 @@ Feature: Multiple choice question
    And I am grading the "dog" question
    Then the Grade should be "0.0"
 
+ Scenario: Creating a question with less than two options is not allowed
+   Given I am on the Questions page
+   When I click "New Multiple Choice Question!"
+   And I select "2" from "Lesson"
+   And I fill in "Question" with "Which color does grass have?"
+   And I fill in "Rubric" with "(no rubric)"
+   And I fill in Options of my multiple choice question as:
+   |   Green      |   correct    |
+   And I click "Create"
+   Then I should see "New Question!"
+   And I should not see "Which color does grass have?" on the bank page for "Lesson 2"
+
+Scenario: Creating a question with no correct answer is not allowed
+   Given I am on the Questions page
+   When I click "New Multiple Choice Question!"
+   And I select "2" from "Lesson"
+   And I fill in "Question" with "Which color does grass have?"
+   And I fill in "Rubric" with "(no rubric)"
+   And I fill in Options of my multiple choice question as:
+   |   White      |   wrong    |
+   |   Green      |   wrong    |
+   |   Yellow     |   wrong    |
+   And I click "Create"
+   Then I should see "New Question!"
+   And I should not see "Which color does grass have?" on the bank page for "Lesson 2"
+
+Scenario: Editing an existing question so that it has less than two choices is not allowed
+   When I edit the "dog" question
+   And I fill in Options of my multiple choice question as:
+   | One    | correct |
+   |        | wrong   |
+   |        | wrong   |
+   |        | wrong   |
+   |        | wrong   |
+   |        | wrong   |
+   And I click "Update"
+   Then I should see "Edit question!"
+
+Scenario: Editing an existing question so that it has no correct answer is not allowed
+   When I edit the "dog" question
+   And I fill in Options of my multiple choice question as:
+   | One    | wrong   |
+   | Two    | wrong   |
+   | Three  | wrong   |
+   |        | correct |
+   |        | wrong   |
+   |        | wrong   |
+   And I click "Update"
+   Then I should see "Edit question!"

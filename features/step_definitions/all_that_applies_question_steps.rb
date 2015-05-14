@@ -73,6 +73,11 @@ Then(/^I should see "(.*?)" on the bank page for "Lesson (\d+)"$/) do |text, les
   expect(page).to have_content(text)
 end
 
+Then(/^I should not see "(.*?)" on the bank page for "Lesson (\d+)"$/) do |text, lesson|
+  visit  bank_staffs_questions_path + "?add=false&lesson=#{lesson}"
+  expect(page).to have_no_content(text)
+end
+
 When(/^check "Option (\d+)" as correct$/) do |id|
   prefix = "all_that_applies_question_options_form_choices_"
   option_id = id.to_i - 1

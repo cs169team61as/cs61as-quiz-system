@@ -38,6 +38,7 @@ Then(/^I should see "(.*?)" on the view page for the "(.*?)" question in "(.*?)"
   end
 end
 
+
 Given(/^the "(.*?)" question should recognize "(.*?)" as a "(.*?)" answer$/)  do |name, choice, correct|
   question = eval("@#{name}_question")
   question.reload

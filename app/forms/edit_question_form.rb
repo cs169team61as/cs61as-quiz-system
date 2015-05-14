@@ -18,6 +18,11 @@ class EditQuestionForm < Reform::Form
 
   def validate_and_save(question_params)
     question = AbstractQuestion.find id
+    return false unless validate_params(question, question_params)
+    question.save
+  end
+
+  def validate_params(question, question_params)
     question.my_solution = question_params[:my_solution]
     question.my_rubric = question_params[:my_rubric]
     question.content = question_params[:content]
@@ -26,7 +31,7 @@ class EditQuestionForm < Reform::Form
     return false unless validate(question_params)
     return false unless check_solution(question)
     return false unless check_rubric(question)
-    question.save
+    return true
   end
 
   def populate_form_fields; end
