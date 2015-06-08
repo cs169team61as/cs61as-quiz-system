@@ -6,7 +6,7 @@ quizzes.
 
 Pivotal Tracker: https://www.pivotaltracker.com/n/projects/1282818
 
-Heroku Deployment: https://lit-cove-8292.herokuapp.com/
+Heroku Deployment: https://nameless-temple-5890.herokuapp.com
 
 ### Short summary of the features added:
 
