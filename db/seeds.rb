@@ -46,13 +46,13 @@ def make_quizzes
   q2.create_rubric rubric: '5: Hello'
   q3 = ShortAnswerQuestion.build content: 'What is 10 + 1?',
                         lesson: '1',
-                        difficulty: 'Hard'
+                        difficulty: 'Hard',
+                        my_solution: '11',
+                        my_rubric: '5: Hello'
   q3.save!
   q3.relationships.create! quiz_id: q.id,
                            number: 3,
-                           points: 4,
-                           my_solution: '11',
-                           my_rubric: '5: Hello'
+                           points: 4
   q3.create_solution content: '11'
   q3.create_rubric rubric: '5: Hello'
   q = Quiz.create! lesson: '2',
